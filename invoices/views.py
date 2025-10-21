@@ -8,6 +8,9 @@ from xhtml2pdf import pisa
 from io import BytesIO
 from django.urls import reverse
 
+def landing_page(request):
+    return render(request, 'invoices/landing.html')
+
 def invoice_create(request):
     if request.method == 'POST':
         form = InvoiceForm(request.POST)
