@@ -29,7 +29,7 @@ def landing_page(request):
     return render(request, 'invoices/landing.html')
 
 
-def invoice_create(request):
+def create_invoice(request):
     if request.method == 'POST':
         form = InvoiceForm(request.POST)
         if form.is_valid():
@@ -43,6 +43,21 @@ def invoice_create(request):
         form = InvoiceForm()
     return render(request, 'invoices/invoice_form.html', {'form': form})
 
+def invoice_preview(request):
+    """Show a dummy sample invoice so users always see something nice."""
+    dummy_data = {
+        'client_name': 'Acme Corp.',
+        'invoice_number': 'INV-001',
+        'date': '2025-10-21',
+        'due_date': '2025-11-01',
+        'items': [
+            {'description': 'Website Development', 'quantity': 1, 'price': 1200},
+            {'description': 'Hosting (3 months)', 'quantity': 1, 'price': 90},
+        ],
+        'total': 1290,
+        'status': 'Pending',
+    }
+    return render(request, 'invoices/sample_invoice.html', dummy_data)
 
 def invoice_detail(request, pk):
     invoice = get_object_or_404(Invoice, pk=pk)

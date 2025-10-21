@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Sample Invoice</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 p-10 text-gray-800">
+  <div class="max-w-3xl mx-auto bg-white shadow-xl rounded-lg p-8">
+    <h1 class="text-3xl font-bold text-violet-600 mb-4">Invoice Preview</h1>
+    <p><strong>Client:</strong> {{ client_name }}</p>
+    <p><strong>Invoice #:</strong> {{ invoice_number }}</p>
+    <p><strong>Date:</strong> {{ date }}</p>
+    <p><strong>Due Date:</strong> {{ due_date }}</p>
+
+    <table class="w-full mt-6 border-collapse">
+      <thead>
+        <tr class="bg-violet-100 text-left">
+          <th class="p-3 border">Description</th>
+          <th class="p-3 border">Quantity</th>
+          <th class="p-3 border">Price</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for item in items %}
+        <tr class="border-b">
+          <td class="p-3 border">{{ item.description }}</td>
+          <td class="p-3 border text-center">{{ item.quantity }}</td>
+          <td class="p-3 border">${{ item.price }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+    <div class="flex justify-between items-center mt-6">
+      <span class="text-lg font-semibold">Total:</span>
+      <span class="text-xl font-bold text-violet-600">${{ total }}</span>
+    </div>
+
+    <p class="mt-4 text-sm text-gray-500">Status: <span class="font-semibold text-violet-500">{{ status }}</span></p>
+
+    <div class="mt-8 text-center">
+      <a href="/invoices/create/" class="inline-block bg-violet-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-violet-700 transition">Create New Invoice</a>
+    </div>
+  </div>
+</body>
+</html>
