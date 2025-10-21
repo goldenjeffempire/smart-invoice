@@ -5,83 +5,48 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Smart Invoice — Built by Jeffery Onome</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            brand: {
-              purple: '#7C3AED',
-              dark: '#1E1B4B',
-            }
-          }
-        }
-      }
-    }
-  </script>
   <style>
-    @keyframes fadeInUp {
-      from {
-        opacity: 0;
-        transform: translateY(20px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    .animate-fadeInUp {
-      animation: fadeInUp 1s ease-out forwards;
-    }
-
-    .glass-card {
+    .glass {
       background: rgba(255, 255, 255, 0.08);
-      backdrop-filter: blur(20px);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.15);
     }
-
-    .glow {
-      box-shadow: 0 0 20px rgba(124, 58, 237, 0.6);
+    .btn-animate {
+      transition: all 0.3s ease;
+      transform: scale(1);
     }
-
-    .gradient-text {
-      background: linear-gradient(90deg, #7C3AED, #9333EA, #EC4899);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+    .btn-animate:hover {
+      transform: scale(1.05);
     }
   </style>
 </head>
-<body class="bg-gray-950 text-gray-100 flex flex-col items-center justify-center min-h-screen relative overflow-hidden">
+<body class="bg-gradient-to-br from-gray-900 via-violet-900 to-gray-800 text-gray-100 flex flex-col items-center justify-center min-h-screen">
+  <header class="absolute top-6 left-0 w-full flex justify-center">
+    <div class="glass px-6 py-2 rounded-full flex items-center gap-3">
+      <img src="https://cdn-icons-png.flaticon.com/512/2329/2329231.png" alt="Smart Invoice Logo" class="w-6 h-6" />
+      <span class="text-lg font-semibold">Smart Invoice</span>
+    </div>
+  </header>
 
-  <!-- Gradient Orbs -->
-  <div class="absolute top-[-10%] left-[-10%] w-[300px] h-[300px] bg-purple-700 rounded-full blur-[180px] opacity-40"></div>
-  <div class="absolute bottom-[-10%] right-[-10%] w-[300px] h-[300px] bg-pink-500 rounded-full blur-[180px] opacity-30"></div>
-
-  <main class="glass-card rounded-3xl p-10 md:p-14 text-center max-w-2xl mx-6 animate-fadeInUp">
-    <img src="https://cdn-icons-png.flaticon.com/512/891/891462.png" alt="Invoice Icon" class="w-20 h-20 mx-auto mb-6 opacity-90">
-
-    <h1 class="text-5xl md:text-6xl font-extrabold mb-4 gradient-text">Smart Invoice</h1>
-    <p class="text-gray-400 mb-8 text-lg">
-      Automate your invoicing, look professional, and get paid faster —
-      built with <strong>Django</strong>, styled with <strong>Tailwind</strong>,
-      and engineered by <strong>Jeffery Onome</strong>.
+  <main class="text-center px-6 glass rounded-2xl shadow-2xl py-12 mt-12 w-[90%] md:w-[600px]">
+    <h1 class="text-4xl md:text-5xl font-bold mb-4 leading-tight">Create Smart, Stunning Invoices</h1>
+    <p class="text-gray-300 mb-8 max-w-lg mx-auto text-lg">
+      Generate and send professional invoices instantly — powered by <span class="font-semibold text-violet-400">Django</span>, styled with <span class="font-semibold text-violet-400">Tailwind</span>, and crafted by <strong>Jeffery Onome</strong>.
     </p>
 
-    <div class="flex flex-col sm:flex-row justify-center gap-4">
-      <a href="/invoices/create/" class="px-8 py-3 bg-brand-purple text-white font-semibold rounded-xl hover:scale-105 glow transition transform duration-300">
+    <div class="flex justify-center gap-4 flex-wrap">
+      <a href="/invoices/invoice/" class="btn-animate px-6 py-3 bg-violet-600 rounded-xl text-white font-semibold hover:bg-violet-500 transition">
         🚀 Create Invoice
       </a>
-      <a href="https://onome-portfolio-ten.vercel.app" target="_blank" class="px-8 py-3 border border-gray-600 rounded-xl text-gray-300 hover:bg-gray-800 transition transform hover:scale-105">
+      <a href="https://onome-portfolio-ten.vercel.app" class="btn-animate px-6 py-3 border border-gray-500 rounded-xl hover:bg-gray-800 transition">
         💼 View Portfolio
       </a>
     </div>
   </main>
 
-  <footer class="mt-12 text-gray-500 text-sm text-center animate-fadeInUp">
-    Built with ❤️ by <strong>Jeffery Onome</strong><br>
-    <span class="text-gray-600">© 2025 Smart Invoice. All rights reserved.</span>
+  <footer class="mt-10 text-gray-400 text-sm">
+    Built with ❤️ by <strong>Jeffery Onome</strong>
   </footer>
 </body>
 </html>
