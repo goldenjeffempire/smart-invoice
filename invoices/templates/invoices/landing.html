@@ -36,7 +36,8 @@
     </p>
 
     <div class="flex justify-center gap-4 flex-wrap">
-      <a href="/invoices/invoice/" class="btn-animate px-6 py-3 bg-violet-600 rounded-xl text-white font-semibold hover:bg-violet-500 transition">
+      <!-- ✅ Fixed link below -->
+      <a href="{% url 'invoice_create' %}" class="btn-animate px-6 py-3 bg-violet-600 rounded-xl text-white font-semibold hover:bg-violet-500 transition">
         🚀 Create Invoice
       </a>
       <a href="https://onome-portfolio-ten.vercel.app" class="btn-animate px-6 py-3 border border-gray-500 rounded-xl hover:bg-gray-800 transition">
