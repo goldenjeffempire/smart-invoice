@@ -4,8 +4,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Smart Invoice - The most advanced invoicing platform for modern businesses. Create professional invoices in seconds, get paid faster.">
-  <title>Smart Invoice - Enterprise Invoicing Platform</title>
+  <meta name="description" content="Smart Invoice - Enterprise-grade invoicing platform for modern businesses. Create professional invoices, get paid faster, and scale your business.">
+  <meta name="keywords" content="invoice, billing, payment, business, accounting, paystack">
+  <title>Smart Invoice - Enterprise Invoicing Platform for Modern Businesses</title>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📄</text></svg>">
   <link rel="stylesheet" href="{% static 'css/output.css' %}">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -13,7 +14,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 </head>
 
-<body class="min-h-screen">
+<body>
   <!-- Progress Bar -->
   <div class="progress-bar" id="progressBar"></div>
 
@@ -27,33 +28,34 @@
   </div>
 
   <!-- Navigation -->
-  <nav class="glass-nav fixed w-full top-0 z-50" id="navbar">
-    <div class="max-w-7xl mx-auto px-6 py-4">
+  <nav class="glass-nav fixed w-full top-0 z-50 transition-all duration-300" id="navbar">
+    <div class="container-custom py-4">
       <div class="flex items-center justify-between">
         <!-- Logo -->
         <a href="/" class="flex items-center gap-3 group">
-          <div class="w-10 h-10 rounded-xl bg-gradient-primary flex items-center justify-center text-2xl shadow-glow transition-all duration-300 group-hover:scale-110 group-hover:rotate-12">
+          <div class="w-12 h-12 rounded-2xl bg-gradient-primary flex items-center justify-center text-2xl shadow-glow transition-all duration-300 group-hover:scale-110 group-hover:rotate-6">
             📄
           </div>
-          <span class="text-xl font-bold">Smart Invoice</span>
+          <span class="text-xl font-bold text-white">Smart Invoice</span>
         </a>
 
         <!-- Desktop Navigation -->
-        <div class="hidden md:flex items-center gap-8">
+        <div class="hidden lg:flex items-center gap-8">
           <a href="#features" class="text-sm font-medium text-gray-300 hover:text-white transition-colors">Features</a>
+          <a href="#testimonials" class="text-sm font-medium text-gray-300 hover:text-white transition-colors">Testimonials</a>
           <a href="{% url 'faq' %}" class="text-sm font-medium text-gray-300 hover:text-white transition-colors">FAQ</a>
           <a href="{% url 'support' %}" class="text-sm font-medium text-gray-300 hover:text-white transition-colors">Support</a>
           {% if user.is_authenticated %}
             <a href="{% url 'invoice_list' %}" class="text-sm font-medium text-gray-300 hover:text-white transition-colors">Dashboard</a>
-            <a href="{% url 'logout' %}" class="btn btn-ghost btn-sm">Logout</a>
+            <a href="{% url 'logout' %}" class="btn-ghost btn-sm">Logout</a>
           {% else %}
             <a href="{% url 'login' %}" class="text-sm font-medium text-gray-300 hover:text-white transition-colors">Login</a>
-            <a href="{% url 'signup' %}" class="btn btn-primary btn-sm">Get Started Free</a>
+            <a href="{% url 'signup' %}" class="btn-primary btn-sm ripple-effect shadow-glow">Get Started Free</a>
           {% endif %}
         </div>
 
         <!-- Mobile Menu Button -->
-        <button class="md:hidden text-white p-2" id="mobileMenuBtn" aria-label="Toggle menu">
+        <button class="lg:hidden text-white p-2 hover:bg-white/10 rounded-xl transition-colors" id="mobileMenuBtn" aria-label="Toggle menu">
           <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
           </svg>
@@ -62,25 +64,35 @@
     </div>
   </nav>
 
+  <!-- Mobile Menu Overlay -->
+  <div class="fixed inset-0 bg-black/70 backdrop-blur-sm z-[60] opacity-0 pointer-events-none transition-opacity duration-300" id="mobileOverlay"></div>
+  
   <!-- Mobile Menu -->
-  <div class="fixed inset-0 bg-black/60 backdrop-blur-sm z-[60] opacity-0 pointer-events-none transition-opacity duration-300" id="mobileOverlay"></div>
-  <div class="fixed top-0 right-0 h-full w-80 max-w-full glass-strong z-[70] transform translate-x-full transition-transform duration-300" id="mobileMenu">
-    <div class="p-6">
-      <button class="absolute top-6 right-6 text-white hover:text-violet-400 transition-colors" id="closeMobileMenu">
-        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
-        </svg>
-      </button>
-      <div class="mt-16 flex flex-col gap-6">
-        <a href="#features" class="text-white text-lg hover:text-violet-400 transition-colors mobile-link">Features</a>
-        <a href="{% url 'faq' %}" class="text-white text-lg hover:text-violet-400 transition-colors mobile-link">FAQ</a>
-        <a href="{% url 'support' %}" class="text-white text-lg hover:text-violet-400 transition-colors mobile-link">Support</a>
+  <div class="fixed top-0 right-0 h-full w-80 max-w-[90%] glass-strong z-70 transform translate-x-full transition-transform duration-300 shadow-glass-xl" id="mobileMenu">
+    <div class="p-6 h-full flex flex-col">
+      <div class="flex items-center justify-between mb-12">
+        <span class="text-lg font-bold text-white">Menu</span>
+        <button class="text-white hover:text-primary-400 transition-colors p-2 hover:bg-white/10 rounded-xl" id="closeMobileMenu">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+          </svg>
+        </button>
+      </div>
+      <div class="flex-1 flex flex-col gap-4">
+        <a href="#features" class="text-white text-base hover:text-primary-400 transition-colors p-3 hover:bg-white/5 rounded-xl mobile-link">✨ Features</a>
+        <a href="#testimonials" class="text-white text-base hover:text-primary-400 transition-colors p-3 hover:bg-white/5 rounded-xl mobile-link">💬 Testimonials</a>
+        <a href="{% url 'faq' %}" class="text-white text-base hover:text-primary-400 transition-colors p-3 hover:bg-white/5 rounded-xl mobile-link">❓ FAQ</a>
+        <a href="{% url 'support' %}" class="text-white text-base hover:text-primary-400 transition-colors p-3 hover:bg-white/5 rounded-xl mobile-link">💁 Support</a>
         {% if user.is_authenticated %}
-          <a href="{% url 'invoice_list' %}" class="text-white text-lg hover:text-violet-400 transition-colors mobile-link">Dashboard</a>
-          <a href="{% url 'logout' %}" class="btn btn-ghost w-full">Logout</a>
+          <a href="{% url 'invoice_list' %}" class="text-white text-base hover:text-primary-400 transition-colors p-3 hover:bg-white/5 rounded-xl mobile-link">📊 Dashboard</a>
+          <div class="mt-auto space-y-3">
+            <a href="{% url 'logout' %}" class="btn-ghost w-full">Logout</a>
+          </div>
         {% else %}
-          <a href="{% url 'login' %}" class="text-white text-lg hover:text-violet-400 transition-colors mobile-link">Login</a>
-          <a href="{% url 'signup' %}" class="btn btn-primary w-full">Get Started Free</a>
+          <div class="mt-auto space-y-3">
+            <a href="{% url 'login' %}" class="btn-outline w-full">Login</a>
+            <a href="{% url 'signup' %}" class="btn-primary w-full ripple-effect">Get Started Free</a>
+          </div>
         {% endif %}
       </div>
     </div>
@@ -89,146 +101,182 @@
   <!-- Main Content -->
   <main class="relative z-10">
     <!-- Hero Section -->
-    <section class="pt-32 pb-20 px-6">
-      <div class="max-w-7xl mx-auto">
+    <section class="min-h-screen flex items-center justify-center px-6 pt-24 pb-20">
+      <div class="container-custom">
         <div class="grid lg:grid-cols-2 gap-16 items-center">
           <!-- Left Column -->
           <div class="scroll-reveal">
-            <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full glass mb-6">
-              <span class="text-sm font-semibold text-violet-300">✨ Trusted by 50,000+ Businesses Worldwide</span>
+            <!-- Trust Badge -->
+            <div class="inline-flex items-center gap-2 px-4 py-2 glass-subtle rounded-full mb-6 animate-fade-in-down">
+              <span class="flex h-2 w-2 relative">
+                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-success-400 opacity-75"></span>
+                <span class="relative inline-flex rounded-full h-2 w-2 bg-success-500"></span>
+              </span>
+              <span class="text-sm font-semibold text-success-300">Trusted by 50,000+ Businesses Worldwide</span>
             </div>
-            <h1 class="text-5xl lg:text-7xl font-black leading-tight mb-6">
-              <span class="gradient-text">Smart, Simple</span><br>
+
+            <!-- Headline -->
+            <h1 class="text-5xl sm:text-6xl lg:text-7xl font-black leading-tight mb-6 animate-fade-in-up">
+              <span class="gradient-text-animated">Smart, Simple</span><br>
               <span class="text-white">Invoicing</span>
             </h1>
-            <p class="text-lg text-gray-300 mb-8 leading-relaxed max-w-xl">
-              The most advanced invoicing platform for modern businesses. Create professional invoices in <span class="font-bold text-violet-400">seconds</span>, get paid <span class="font-bold text-fuchsia-400">3x faster</span>, and focus on growing your business.
+
+            <!-- Description -->
+            <p class="text-lg text-gray-300 mb-8 leading-relaxed max-w-xl animate-fade-in-up" style="animation-delay: 0.1s">
+              The most advanced invoicing platform for modern businesses. Create professional invoices in <span class="font-bold text-primary-400">seconds</span>, get paid <span class="font-bold text-secondary-400">3x faster</span>, and focus on growing your business.
             </p>
-            <div class="flex flex-col sm:flex-row gap-4 mb-12">
-              <a href="{% url 'signup' %}" class="btn btn-primary btn-lg ripple-effect text-center">
+
+            <!-- CTA Buttons -->
+            <div class="flex flex-col sm:flex-row gap-4 mb-12 animate-fade-in-up" style="animation-delay: 0.2s">
+              <a href="{% url 'signup' %}" class="btn-primary btn-lg ripple-effect shadow-glow hover:shadow-glow-xl">
                 🚀 Start Free Trial
               </a>
-              <a href="#features" class="btn btn-outline btn-lg text-center">
-                👀 See Features
+              <a href="#features" class="btn-outline btn-lg hover-lift">
+                👀 Explore Features
               </a>
             </div>
-            <!-- Stats -->
-            <div class="flex items-center gap-8 flex-wrap mb-10">
+
+            <!-- Quick Stats -->
+            <div class="flex items-center gap-8 flex-wrap animate-fade-in-up" style="animation-delay: 0.3s">
               <div class="hover-lift cursor-pointer">
-                <div class="text-3xl font-black gradient-text">10000</div>
+                <div class="text-4xl font-black gradient-text">10K+</div>
                 <div class="text-sm text-gray-400">Active Users</div>
               </div>
               <div class="hover-lift cursor-pointer">
-                <div class="text-3xl font-black gradient-text">99%</div>
-                <div class="text-sm text-gray-400">Satisfaction Rate</div>
+                <div class="text-4xl font-black gradient-text">99%</div>
+                <div class="text-sm text-gray-400">Satisfaction</div>
               </div>
               <div class="hover-lift cursor-pointer">
-                <div class="text-3xl font-black">⚡</div>
+                <div class="text-4xl font-black">⚡</div>
                 <div class="text-sm text-gray-400">Lightning Fast</div>
               </div>
             </div>
-            <!-- Trust Badges -->
-            <div class="pt-8 border-t border-white/10">
-              <p class="text-xs text-gray-400 mb-4 uppercase tracking-wider">Trusted by Leading Companies</p>
-              <div class="flex items-center gap-6 opacity-40">
-                <span class="text-2xl hover-lift cursor-pointer">🏢</span>
-                <span class="text-2xl hover-lift cursor-pointer">🏭</span>
-                <span class="text-2xl hover-lift cursor-pointer">🏪</span>
-                <span class="text-2xl hover-lift cursor-pointer">🏗️</span>
-                <span class="text-2xl hover-lift cursor-pointer">💼</span>
+          </div>
+
+          <!-- Right Column - Preview -->
+          <div class="scroll-reveal hidden lg:block" style="animation-delay: 0.2s">
+            <div class="relative">
+              <!-- Glow Effect -->
+              <div class="absolute inset-0 bg-gradient-primary opacity-20 blur-[100px] rounded-full"></div>
+              
+              <!-- Mock Invoice Card -->
+              <div class="relative glass-card p-8 hover-lift">
+                <div class="flex items-center justify-between mb-6">
+                  <div class="text-3xl">📄</div>
+                  <span class="badge-success">Paid</span>
+                </div>
+                <div class="space-y-4 mb-6">
+                  <div class="skeleton h-4 w-3/4 rounded-lg"></div>
+                  <div class="skeleton h-4 w-1/2 rounded-lg"></div>
+                  <div class="h-px bg-white/10 my-4"></div>
+                  <div class="skeleton h-3 w-full rounded-lg"></div>
+                  <div class="skeleton h-3 w-5/6 rounded-lg"></div>
+                  <div class="skeleton h-3 w-4/5 rounded-lg"></div>
+                </div>
+                <div class="flex items-center justify-between pt-4 border-t border-white/10">
+                  <span class="text-gray-400 text-sm">Total</span>
+                  <span class="text-2xl font-bold gradient-text">$1,250</span>
+                </div>
               </div>
             </div>
           </div>
-          <!-- Right Column -->
-          <div class="scroll-reveal">
-            <div class="relative">
-              <div class="absolute inset-0 bg-gradient-primary opacity-20 blur-3xl rounded-full"></div>
-              <img src="{% static 'invoice-preview.png' %}" alt="Invoice Preview" class="relative w-full rounded-2xl shadow-glass-lg hover-lift">
-            </div>
-          </div>
         </div>
       </div>
     </section>
 
-    <!-- Stats Cards -->
-    <section class="py-16 px-6 scroll-reveal">
-      <div class="max-w-6xl mx-auto">
-        <div class="glass-card p-12 rounded-3xl">
-          <div class="grid grid-cols-2 lg:grid-cols-4 gap-12 text-center">
-            <div class="hover-lift">
-              <div class="text-5xl font-black gradient-text mb-2">50K+</div>
+    <!-- Stats Section -->
+    <section class="section scroll-reveal">
+      <div class="container-custom">
+        <div class="glass-card p-8 lg:p-12 hover-glow">
+          <div class="grid grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12 text-center">
+            <div class="hover-lift cursor-pointer">
+              <div class="text-4xl lg:text-6xl font-black gradient-text mb-2">50K+</div>
               <div class="text-sm text-gray-400">Invoices Generated</div>
             </div>
-            <div class="hover-lift">
-              <div class="text-5xl font-black gradient-text mb-2">$50M+</div>
+            <div class="hover-lift cursor-pointer">
+              <div class="text-4xl lg:text-6xl font-black gradient-text mb-2">$50M+</div>
               <div class="text-sm text-gray-400">Revenue Processed</div>
             </div>
-            <div class="hover-lift">
-              <div class="text-5xl font-black gradient-text mb-2">150+</div>
+            <div class="hover-lift cursor-pointer">
+              <div class="text-4xl lg:text-6xl font-black gradient-text mb-2">150+</div>
               <div class="text-sm text-gray-400">Countries</div>
             </div>
-            <div class="hover-lift">
-              <div class="text-5xl font-black gradient-text mb-2">24/7</div>
-              <div class="text-sm text-gray-400">Support Available</div>
+            <div class="hover-lift cursor-pointer">
+              <div class="text-4xl lg:text-6xl font-black gradient-text mb-2">24/7</div>
+              <div class="text-sm text-gray-400">Support</div>
             </div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Features -->
-    <section id="features" class="py-24 px-6 scroll-reveal">
-      <div class="max-w-7xl mx-auto">
+    <!-- Features Section -->
+    <section id="features" class="section scroll-reveal">
+      <div class="container-custom">
+        <!-- Section Header -->
         <div class="text-center mb-16">
-          <div class="inline-block px-4 py-2 rounded-full glass-subtle mb-4">
-            <span class="text-sm font-semibold text-violet-400 uppercase">Powerful Features</span>
+          <div class="inline-block px-4 py-2 glass-subtle rounded-full mb-4">
+            <span class="text-sm font-semibold gradient-text uppercase tracking-wider">Powerful Features</span>
           </div>
-          <h2 class="text-5xl font-black mb-4">
+          <h2 class="text-4xl lg:text-6xl font-black mb-4">
             <span class="gradient-text">Everything You Need</span>
           </h2>
           <p class="text-lg text-gray-400 max-w-2xl mx-auto">
             Professional invoicing tools designed for businesses of all sizes
           </p>
         </div>
+
+        <!-- Feature Grid -->
         <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          <div class="glass-card p-8 rounded-2xl hover-glow scroll-reveal">
-            <div class="text-5xl mb-4">⚡</div>
-            <h3 class="text-2xl font-bold mb-3">Instant PDF Export</h3>
+          <!-- Feature 1 -->
+          <div class="card-hover scroll-reveal" style="animation-delay: 0.1s">
+            <div class="text-5xl mb-4 animate-bounce-slow">⚡</div>
+            <h3 class="text-2xl font-bold mb-3 text-white">Instant PDF Export</h3>
             <p class="text-gray-400 leading-relaxed">
               Generate beautiful, professional PDFs with one click. Download instantly and share with clients.
             </p>
           </div>
-          <div class="glass-card p-8 rounded-2xl hover-glow scroll-reveal">
-            <div class="text-5xl mb-4">🎨</div>
-            <h3 class="text-2xl font-bold mb-3">Custom Branding</h3>
+
+          <!-- Feature 2 -->
+          <div class="card-hover scroll-reveal" style="animation-delay: 0.2s">
+            <div class="text-5xl mb-4 animate-bounce-slow">🎨</div>
+            <h3 class="text-2xl font-bold mb-3 text-white">Custom Branding</h3>
             <p class="text-gray-400 leading-relaxed">
               Add your logo, customize colors, and personalize every invoice to match your brand identity.
             </p>
           </div>
-          <div class="glass-card p-8 rounded-2xl hover-glow scroll-reveal">
-            <div class="text-5xl mb-4">☁️</div>
-            <h3 class="text-2xl font-bold mb-3">Cloud-Based</h3>
+
+          <!-- Feature 3 -->
+          <div class="card-hover scroll-reveal" style="animation-delay: 0.3s">
+            <div class="text-5xl mb-4 animate-bounce-slow">☁️</div>
+            <h3 class="text-2xl font-bold mb-3 text-white">Cloud-Based</h3>
             <p class="text-gray-400 leading-relaxed">
               Access your invoices from anywhere. Secure Django backend ensures your data is always protected.
             </p>
           </div>
-          <div class="glass-card p-8 rounded-2xl hover-glow scroll-reveal">
-            <div class="text-5xl mb-4">📧</div>
-            <h3 class="text-2xl font-bold mb-3">Email & WhatsApp</h3>
+
+          <!-- Feature 4 -->
+          <div class="card-hover scroll-reveal" style="animation-delay: 0.4s">
+            <div class="text-5xl mb-4 animate-bounce-slow">📧</div>
+            <h3 class="text-2xl font-bold mb-3 text-white">Email & WhatsApp</h3>
             <p class="text-gray-400 leading-relaxed">
               Send invoices directly via email or WhatsApp. Get paid faster with instant delivery.
             </p>
           </div>
-          <div class="glass-card p-8 rounded-2xl hover-glow scroll-reveal">
-            <div class="text-5xl mb-4">💰</div>
-            <h3 class="text-2xl font-bold mb-3">Multi-Currency</h3>
+
+          <!-- Feature 5 -->
+          <div class="card-hover scroll-reveal" style="animation-delay: 0.5s">
+            <div class="text-5xl mb-4 animate-bounce-slow">💰</div>
+            <h3 class="text-2xl font-bold mb-3 text-white">Multi-Currency</h3>
             <p class="text-gray-400 leading-relaxed">
               Support for USD, EUR, GBP, NGN, CAD, AUD. Bill clients globally with ease.
             </p>
           </div>
-          <div class="glass-card p-8 rounded-2xl hover-glow scroll-reveal">
-            <div class="text-5xl mb-4">📊</div>
-            <h3 class="text-2xl font-bold mb-3">Smart Analytics</h3>
+
+          <!-- Feature 6 -->
+          <div class="card-hover scroll-reveal" style="animation-delay: 0.6s">
+            <div class="text-5xl mb-4 animate-bounce-slow">📊</div>
+            <h3 class="text-2xl font-bold mb-3 text-white">Smart Analytics</h3>
             <p class="text-gray-400 leading-relaxed">
               Track invoice status, payment history, and business insights in real-time dashboard.
             </p>
@@ -237,102 +285,46 @@
       </div>
     </section>
 
-    <!-- Testimonials -->
-    <section class="py-24 px-6 scroll-reveal">
-      <div class="max-w-7xl mx-auto">
+    <!-- How It Works Section -->
+    <section class="section scroll-reveal">
+      <div class="container-custom">
+        <!-- Section Header -->
         <div class="text-center mb-16">
-          <div class="inline-block px-4 py-2 rounded-full glass-subtle mb-4">
-            <span class="text-sm font-semibold text-fuchsia-400 uppercase">Testimonials</span>
+          <div class="inline-block px-4 py-2 glass-subtle rounded-full mb-4">
+            <span class="text-sm font-semibold text-blue-400 uppercase tracking-wider">How It Works</span>
           </div>
-          <h2 class="text-5xl font-black mb-4">
-            <span class="gradient-text">Loved by Businesses</span>
-          </h2>
-          <p class="text-lg text-gray-400 max-w-2xl mx-auto">
-            See what our customers say about their experience
-          </p>
-        </div>
-        <div class="grid md:grid-cols-3 gap-6">
-          <div class="glass-card p-8 rounded-2xl hover-lift scroll-reveal">
-            <div class="flex gap-1 mb-4">
-              <span class="text-yellow-400">⭐⭐⭐⭐⭐</span>
-            </div>
-            <p class="text-gray-300 mb-6 leading-relaxed">
-              "Smart Invoice transformed how we bill our clients. We've reduced billing time by 80% and get paid 3x faster. Absolutely game-changing!"
-            </p>
-            <div class="flex items-center gap-3">
-              <div class="w-12 h-12 rounded-full bg-gradient-to-br from-violet-500 to-purple-600 flex items-center justify-center text-white font-bold">JD</div>
-              <div>
-                <div class="font-semibold">James Davidson</div>
-                <div class="text-sm text-gray-400">CEO, TechStart Inc.</div>
-              </div>
-            </div>
-          </div>
-          <div class="glass-card p-8 rounded-2xl hover-lift scroll-reveal">
-            <div class="flex gap-1 mb-4">
-              <span class="text-yellow-400">⭐⭐⭐⭐⭐</span>
-            </div>
-            <p class="text-gray-300 mb-6 leading-relaxed">
-              "As a freelance designer, this platform has made my invoicing so smooth. Professional invoices in seconds, and my clients love it too!"
-            </p>
-            <div class="flex items-center gap-3">
-              <div class="w-12 h-12 rounded-full bg-gradient-to-br from-fuchsia-500 to-pink-600 flex items-center justify-center text-white font-bold">SM</div>
-              <div>
-                <div class="font-semibold">Sarah Martinez</div>
-                <div class="text-sm text-gray-400">Freelance Designer</div>
-              </div>
-            </div>
-          </div>
-          <div class="glass-card p-8 rounded-2xl hover-lift scroll-reveal">
-            <div class="flex gap-1 mb-4">
-              <span class="text-yellow-400">⭐⭐⭐⭐⭐</span>
-            </div>
-            <p class="text-gray-300 mb-6 leading-relaxed">
-              "The WhatsApp integration is brilliant! I can send invoices directly to clients' phones and they can pay me instantly. Love it!"
-            </p>
-            <div class="flex items-center gap-3">
-              <div class="w-12 h-12 rounded-full bg-gradient-to-br from-rose-500 to-red-600 flex items-center justify-center text-white font-bold">AP</div>
-              <div>
-                <div class="font-semibold">Ahmed Patel</div>
-                <div class="text-sm text-gray-400">Founder, Digital Solutions</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- How It Works -->
-    <section class="py-24 px-6 scroll-reveal">
-      <div class="max-w-7xl mx-auto">
-        <div class="text-center mb-16">
-          <div class="inline-block px-4 py-2 rounded-full glass-subtle mb-4">
-            <span class="text-sm font-semibold text-blue-400 uppercase">How It Works</span>
-          </div>
-          <h2 class="text-5xl font-black mb-4">
+          <h2 class="text-4xl lg:text-6xl font-black mb-4">
             <span class="gradient-text">Three Simple Steps</span>
           </h2>
           <p class="text-lg text-gray-400 max-w-2xl mx-auto">
             Start creating professional invoices in under 60 seconds
           </p>
         </div>
+
+        <!-- Steps Grid -->
         <div class="grid md:grid-cols-3 gap-8">
-          <div class="glass-card p-8 rounded-2xl text-center hover-lift scroll-reveal">
-            <div class="w-20 h-20 rounded-full bg-gradient-to-br from-violet-500 to-purple-600 flex items-center justify-center text-white font-black text-3xl mx-auto mb-6 shadow-glow">1</div>
-            <h3 class="text-2xl font-bold mb-3">Fill Details</h3>
+          <!-- Step 1 -->
+          <div class="card-hover text-center scroll-reveal" style="animation-delay: 0.1s">
+            <div class="w-20 h-20 rounded-full bg-gradient-to-br from-primary-500 to-purple-600 flex items-center justify-center text-white font-black text-3xl mx-auto mb-6 shadow-glow animate-pulse-glow">1</div>
+            <h3 class="text-2xl font-bold mb-3 text-white">Fill Details</h3>
             <p class="text-gray-400 leading-relaxed">
               Enter your business information, client details, and invoice items using our intuitive step-by-step form.
             </p>
           </div>
-          <div class="glass-card p-8 rounded-2xl text-center hover-lift scroll-reveal">
-            <div class="w-20 h-20 rounded-full bg-gradient-to-br from-fuchsia-500 to-pink-600 flex items-center justify-center text-white font-black text-3xl mx-auto mb-6 shadow-glow-pink">2</div>
-            <h3 class="text-2xl font-bold mb-3">Generate PDF</h3>
+
+          <!-- Step 2 -->
+          <div class="card-hover text-center scroll-reveal" style="animation-delay: 0.2s">
+            <div class="w-20 h-20 rounded-full bg-gradient-to-br from-secondary-500 to-pink-600 flex items-center justify-center text-white font-black text-3xl mx-auto mb-6 shadow-glow-pink animate-pulse-glow">2</div>
+            <h3 class="text-2xl font-bold mb-3 text-white">Generate PDF</h3>
             <p class="text-gray-400 leading-relaxed">
               Click generate and watch your professional invoice appear instantly as a beautiful, downloadable PDF.
             </p>
           </div>
-          <div class="glass-card p-8 rounded-2xl text-center hover-lift scroll-reveal">
-            <div class="w-20 h-20 rounded-full bg-gradient-to-br from-rose-500 to-orange-600 flex items-center justify-center text-white font-black text-3xl mx-auto mb-6 shadow-glow">3</div>
-            <h3 class="text-2xl font-bold mb-3">Send & Get Paid</h3>
+
+          <!-- Step 3 -->
+          <div class="card-hover text-center scroll-reveal" style="animation-delay: 0.3s">
+            <div class="w-20 h-20 rounded-full bg-gradient-to-br from-orange-500 to-red-600 flex items-center justify-center text-white font-black text-3xl mx-auto mb-6 shadow-glow animate-pulse-glow">3</div>
+            <h3 class="text-2xl font-bold mb-3 text-white">Send & Get Paid</h3>
             <p class="text-gray-400 leading-relaxed">
               Send your invoice via email or WhatsApp and get paid faster with professional and instant delivery.
             </p>
@@ -341,27 +333,102 @@
       </div>
     </section>
 
-    <!-- Final CTA -->
-    <section class="py-24 px-6 scroll-reveal">
-      <div class="max-w-4xl mx-auto">
-        <div class="glass-card p-16 rounded-3xl text-center relative overflow-hidden">
-          <div class="absolute inset-0 bg-gradient-to-br from-violet-600/20 to-fuchsia-600/20"></div>
-          <div class="relative z-10">
-            <h2 class="text-5xl font-black mb-6">
-              <span class="gradient-text">Ready to Transform Your Invoicing?</span>
-            </h2>
-            <p class="text-xl text-gray-300 max-w-2xl mx-auto mb-8">
-              Join thousands of businesses who have streamlined their invoicing process and improved cash flow with Smart Invoice.
+    <!-- Testimonials Section -->
+    <section id="testimonials" class="section scroll-reveal">
+      <div class="container-custom">
+        <!-- Section Header -->
+        <div class="text-center mb-16">
+          <div class="inline-block px-4 py-2 glass-subtle rounded-full mb-4">
+            <span class="text-sm font-semibold text-secondary-400 uppercase tracking-wider">Testimonials</span>
+          </div>
+          <h2 class="text-4xl lg:text-6xl font-black mb-4">
+            <span class="gradient-text">Loved by Businesses</span>
+          </h2>
+          <p class="text-lg text-gray-400 max-w-2xl mx-auto">
+            See what our customers say about their experience
+          </p>
+        </div>
+
+        <!-- Testimonials Grid -->
+        <div class="grid md:grid-cols-3 gap-6">
+          <!-- Testimonial 1 -->
+          <div class="card-hover scroll-reveal" style="animation-delay: 0.1s">
+            <div class="flex gap-1 mb-4">
+              <span class="text-yellow-400 text-xl">⭐⭐⭐⭐⭐</span>
+            </div>
+            <p class="text-gray-300 mb-6 leading-relaxed">
+              "Smart Invoice transformed how we bill our clients. We've reduced billing time by 80% and get paid 3x faster. Absolutely game-changing!"
             </p>
-            <div class="flex flex-col sm:flex-row gap-4 justify-center">
-              <a href="{% url 'signup' %}" class="btn btn-primary btn-lg ripple-effect hover-glow">
+            <div class="flex items-center gap-3">
+              <div class="w-12 h-12 rounded-full bg-gradient-to-br from-primary-500 to-purple-600 flex items-center justify-center text-white font-bold shadow-glow">JD</div>
+              <div>
+                <div class="font-semibold text-white">James Davidson</div>
+                <div class="text-sm text-gray-400">CEO, TechStart Inc.</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Testimonial 2 -->
+          <div class="card-hover scroll-reveal" style="animation-delay: 0.2s">
+            <div class="flex gap-1 mb-4">
+              <span class="text-yellow-400 text-xl">⭐⭐⭐⭐⭐</span>
+            </div>
+            <p class="text-gray-300 mb-6 leading-relaxed">
+              "As a freelance designer, this platform has made my invoicing so smooth. Professional invoices in seconds, and my clients love it too!"
+            </p>
+            <div class="flex items-center gap-3">
+              <div class="w-12 h-12 rounded-full bg-gradient-to-br from-secondary-500 to-pink-600 flex items-center justify-center text-white font-bold shadow-glow-pink">SM</div>
+              <div>
+                <div class="font-semibold text-white">Sarah Martinez</div>
+                <div class="text-sm text-gray-400">Freelance Designer</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Testimonial 3 -->
+          <div class="card-hover scroll-reveal" style="animation-delay: 0.3s">
+            <div class="flex gap-1 mb-4">
+              <span class="text-yellow-400 text-xl">⭐⭐⭐⭐⭐</span>
+            </div>
+            <p class="text-gray-300 mb-6 leading-relaxed">
+              "The WhatsApp integration is brilliant! I can send invoices directly to clients' phones and they can pay me instantly. Love it!"
+            </p>
+            <div class="flex items-center gap-3">
+              <div class="w-12 h-12 rounded-full bg-gradient-to-br from-orange-500 to-red-600 flex items-center justify-center text-white font-bold shadow-glow">AP</div>
+              <div>
+                <div class="font-semibold text-white">Ahmed Patel</div>
+                <div class="text-sm text-gray-400">Founder, Digital Solutions</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Final CTA Section -->
+    <section class="section-lg scroll-reveal">
+      <div class="container-custom">
+        <div class="glass-card p-12 lg:p-20 text-center relative overflow-hidden hover-glow">
+          <!-- Background Gradient -->
+          <div class="absolute inset-0 bg-gradient-to-br from-primary-600/20 via-secondary-600/20 to-blue-600/20 animate-gradient-xy"></div>
+          
+          <!-- Content -->
+          <div class="relative z-10">
+            <h2 class="text-4xl lg:text-6xl font-black mb-6">
+              <span class="gradient-text-animated">Ready to Transform Your Invoicing?</span>
+            </h2>
+            <p class="text-xl text-gray-300 max-w-3xl mx-auto mb-8 leading-relaxed">
+              Join thousands of businesses who have streamlined their invoicing process and improved cash flow with Smart Invoice. Start creating professional invoices today.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center mb-6">
+              <a href="{% url 'signup' %}" class="btn-primary btn-xl ripple-effect shadow-glow-xl hover:shadow-glow-xl hover:scale-110">
                 ✨ Start Creating Invoices Free
               </a>
-              <a href="{% url 'invoice_list' %}" class="btn btn-outline btn-lg hover-lift">
+              <a href="{% url 'invoice_list' %}" class="btn-outline btn-xl hover-lift">
                 📊 View Dashboard
               </a>
             </div>
-            <p class="text-sm text-gray-500 mt-6">
+            <p class="text-sm text-gray-500">
               No credit card required • Free forever • Cancel anytime
             </p>
           </div>
@@ -372,29 +439,34 @@
 
   <!-- Footer -->
   <footer class="relative z-10 border-t border-white/10 mt-20">
-    <div class="max-w-7xl mx-auto px-6 py-16">
+    <div class="container-custom py-16">
       <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
+        <!-- Brand -->
         <div>
           <div class="flex items-center gap-3 mb-4">
             <div class="w-10 h-10 rounded-xl bg-gradient-primary flex items-center justify-center text-2xl shadow-glow">📄</div>
-            <span class="text-xl font-bold">Smart Invoice</span>
+            <span class="text-xl font-bold text-white">Smart Invoice</span>
           </div>
           <p class="text-sm text-gray-400 leading-relaxed mb-4">
             The most advanced invoicing platform for modern businesses. Create professional invoices, get paid faster, and grow your business.
           </p>
           <p class="text-xs text-gray-500">Built with ❤️ by Jeffery Onome Emuodafevware</p>
         </div>
+
+        <!-- Quick Links -->
         <div>
-          <h3 class="font-semibold mb-4">Quick Links</h3>
+          <h3 class="font-semibold text-white mb-4">Quick Links</h3>
           <ul class="space-y-2">
             <li><a href="#features" class="text-sm text-gray-400 hover:text-white transition-colors">Features</a></li>
+            <li><a href="#testimonials" class="text-sm text-gray-400 hover:text-white transition-colors">Testimonials</a></li>
             <li><a href="{% url 'faq' %}" class="text-sm text-gray-400 hover:text-white transition-colors">FAQ</a></li>
             <li><a href="{% url 'support' %}" class="text-sm text-gray-400 hover:text-white transition-colors">Support</a></li>
-            <li><a href="{% url 'invoice_list' %}" class="text-sm text-gray-400 hover:text-white transition-colors">Dashboard</a></li>
           </ul>
         </div>
+
+        <!-- Product -->
         <div>
-          <h3 class="font-semibold mb-4">Product</h3>
+          <h3 class="font-semibold text-white mb-4">Product</h3>
           <ul class="space-y-2">
             <li><a href="{% url 'signup' %}" class="text-sm text-gray-400 hover:text-white transition-colors">Create Invoice</a></li>
             <li><a href="{% url 'invoice_list' %}" class="text-sm text-gray-400 hover:text-white transition-colors">My Invoices</a></li>
@@ -402,22 +474,28 @@
             <li><span class="text-sm text-gray-500">API Access (Coming Soon)</span></li>
           </ul>
         </div>
+
+        <!-- Trust Indicators -->
         <div>
-          <h3 class="font-semibold mb-4">Company</h3>
+          <h3 class="font-semibold text-white mb-4">Trust & Security</h3>
           <ul class="space-y-2">
-            <li><span class="flex items-center gap-2 text-sm text-gray-400"><span class="text-green-400">⚡</span> Enterprise-Grade Security</span></li>
-            <li><span class="flex items-center gap-2 text-sm text-gray-400"><span class="text-violet-400">🌐</span> 99.9% Uptime</span></li>
-            <li><span class="flex items-center gap-2 text-sm text-gray-400"><span class="text-fuchsia-400">✅</span> GDPR Compliant</span></li>
+            <li><span class="flex items-center gap-2 text-sm text-gray-400"><span class="text-success-400">✅</span> Enterprise-Grade Security</span></li>
+            <li><span class="flex items-center gap-2 text-sm text-gray-400"><span class="text-primary-400">🌐</span> 99.9% Uptime</span></li>
+            <li><span class="flex items-center gap-2 text-sm text-gray-400"><span class="text-secondary-400">🔒</span> GDPR Compliant</span></li>
+            <li><span class="flex items-center gap-2 text-sm text-gray-400"><span class="text-blue-400">💳</span> Secure Payments</span></li>
           </ul>
         </div>
       </div>
-      <div class="pt-8 border-t border-white/5 flex flex-col sm:flex-row justify-between items-center gap-4 text-sm text-gray-500">
+
+      <!-- Footer Bottom -->
+      <div class="pt-8 border-t border-white/10 flex flex-col sm:flex-row justify-between items-center gap-4 text-sm text-gray-500">
         <p>&copy; 2025 Smart Invoice. All rights reserved.</p>
-        <p>Powered by Django & Security</p>
+        <p>Powered by Django • PostgreSQL • Paystack</p>
       </div>
     </div>
   </footer>
 
+  <!-- JavaScript -->
   <script>
     // Progress Bar
     window.addEventListener('scroll', () => {
@@ -486,6 +564,44 @@
         }
       });
     });
+
+    // Add ripple effect dynamically
+    document.querySelectorAll('.ripple-effect').forEach(button => {
+      button.addEventListener('click', function(e) {
+        const rect = this.getBoundingClientRect();
+        const ripple = document.createElement('span');
+        const size = Math.max(rect.width, rect.height);
+        const x = e.clientX - rect.left - size / 2;
+        const y = e.clientY - rect.top - size / 2;
+        
+        ripple.style.width = ripple.style.height = size + 'px';
+        ripple.style.left = x + 'px';
+        ripple.style.top = y + 'px';
+        ripple.classList.add('ripple');
+        
+        this.appendChild(ripple);
+        
+        setTimeout(() => ripple.remove(), 600);
+      });
+    });
   </script>
+
+  <style>
+    .ripple {
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.6);
+      transform: scale(0);
+      animation: ripple 0.6s ease-out;
+      pointer-events: none;
+    }
+
+    @keyframes ripple {
+      to {
+        transform: scale(4);
+        opacity: 0;
+      }
+    }
+  </style>
 </body>
 </html>
