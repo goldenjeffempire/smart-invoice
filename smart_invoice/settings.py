@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'whitenoise',
+    'dotenv',
     'invoices',
     'crispy_forms',
     'widget_tweaks',
