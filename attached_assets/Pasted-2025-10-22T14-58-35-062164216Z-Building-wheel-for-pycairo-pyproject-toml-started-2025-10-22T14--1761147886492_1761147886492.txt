@@ -1,0 +1,771 @@
+2025-10-22T14:58:35.062164216Z   Building wheel for pycairo (pyproject.toml): started
+2025-10-22T14:58:35.095917652Z   Building wheel for pycairo (pyproject.toml): finished with status 'done'
+2025-10-22T14:58:35.097069058Z   Created wheel for pycairo: filename=pycairo-1.28.0-cp313-cp313-linux_x86_64.whl size=127329 sha256=47be512bbeb80930a3676d1cb006dc3bc81c3d5b0b59ceda47d44da9c2ad3dc8
+2025-10-22T14:58:35.097242458Z   Stored in directory: /opt/render/.cache/wheels/18/6d/97/29ac8b19b40caca7aa0fa0fff7cf4e43dec78c23ee31273d76
+2025-10-22T14:58:35.099127395Z Successfully built pycairo
+2025-10-22T14:58:35.213434536Z Installing collected packages: webencodings, python-bidi, asn1crypto, arabic-reshaper, whitenoise, wheel, urllib3, uritools, tzlocal, typing-extensions, tinycss2, sqlparse, six, setuptools, PyYAML, python-dotenv, pypdf, PyJWT, pycparser, pycairo, psycopg2-binary, propcache, pillow, packaging, oscrypto, multidict, lxml, idna, frozenlist, freetype-py, django-widget-tweaks, charset-normalizer, certifi, attrs, asgiref, aiohappyeyeballs, yarl, rlPyCairo, requests, reportlab, python-dateutil, html5lib, gunicorn, Django, cssselect2, cffi, aiosignal, svglib, django-crispy-forms, dj-database-url, cryptography, aiohttp, pyhanko-certvalidator, aiohttp-retry, twilio, pyHanko, xhtml2pdf
+2025-10-22T14:58:51.425362844Z 
+2025-10-22T14:58:51.431457942Z Successfully installed Django-5.2.7 PyJWT-2.10.1 PyYAML-6.0.3 aiohappyeyeballs-2.6.1 aiohttp-3.13.1 aiohttp-retry-2.9.1 aiosignal-1.4.0 arabic-reshaper-3.0.0 asgiref-3.10.0 asn1crypto-1.5.1 attrs-25.4.0 certifi-2025.10.5 cffi-2.0.0 charset-normalizer-3.4.4 cryptography-46.0.3 cssselect2-0.8.0 dj-database-url-2.2.0 django-crispy-forms-2.4 django-widget-tweaks-1.5.0 freetype-py-2.5.1 frozenlist-1.8.0 gunicorn-23.0.0 html5lib-1.1 idna-3.11 lxml-6.0.2 multidict-6.7.0 oscrypto-1.3.0 packaging-25.0 pillow-12.0.0 propcache-0.4.1 psycopg2-binary-2.9.10 pyHanko-0.31.0 pycairo-1.28.0 pycparser-2.23 pyhanko-certvalidator-0.29.0 pypdf-6.1.2 python-bidi-0.6.6 python-dateutil-2.9.0 python-dotenv-1.1.1 reportlab-4.4.4 requests-2.32.5 rlPyCairo-0.4.0 setuptools-80.9.0 six-1.17.0 sqlparse-0.5.3 svglib-1.6.0 tinycss2-1.4.0 twilio-9.8.4 typing-extensions-4.15.0 tzlocal-5.3.1 uritools-5.0.0 urllib3-2.5.0 webencodings-0.5.1 wheel-0.45.1 whitenoise-6.11.0 xhtml2pdf-0.2.17 yarl-1.22.0
+2025-10-22T14:58:51.57270901Z 
+2025-10-22T14:58:51.572731042Z [notice] A new release of pip is available: 25.1.1 -> 25.2
+2025-10-22T14:58:51.572736522Z [notice] To update, run: pip install --upgrade pip
+2025-10-22T14:58:53.230121333Z Operations to perform:
+2025-10-22T14:58:53.230145415Z   Apply all migrations: admin, auth, contenttypes, invoices, sessions
+2025-10-22T14:58:53.230152785Z Running migrations:
+2025-10-22T14:58:53.230158595Z   No migrations to apply.
+2025-10-22T14:58:53.753644619Z Found another file with the destination path 'dashboard-preview.png'. It will be ignored since only the first encountered file is collected. If this is not what you want, make sure every static file has a unique path.
+2025-10-22T14:58:53.753666781Z Found another file with the destination path 'invoice-preview.png'. It will be ignored since only the first encountered file is collected. If this is not what you want, make sure every static file has a unique path.
+2025-10-22T14:58:53.753671651Z Found another file with the destination path 'css/input.css'. It will be ignored since only the first encountered file is collected. If this is not what you want, make sure every static file has a unique path.
+2025-10-22T14:58:53.753675971Z Found another file with the destination path 'css/output.css'. It will be ignored since only the first encountered file is collected. If this is not what you want, make sure every static file has a unique path.
+2025-10-22T14:58:53.753680141Z 
+2025-10-22T14:58:53.753684682Z 131 static files copied to '/opt/render/project/src/staticfiles'.
+2025-10-22T14:59:07.720936538Z ==> Uploading build...
+2025-10-22T14:59:30.655626678Z ==> Uploaded in 15.0s. Compression took 7.9s
+2025-10-22T14:59:30.763203285Z ==> Build successful 🎉
+2025-10-22T14:59:33.191328226Z ==> Deploying...
+2025-10-22T15:00:11.839232426Z ==> Running 'gunicorn smart_invoice.wsgi:application'
+2025-10-22T15:00:16.339624708Z [2025-10-22 15:00:16 +0000] [56] [INFO] Starting gunicorn 23.0.0
+2025-10-22T15:00:16.340098997Z [2025-10-22 15:00:16 +0000] [56] [INFO] Listening at: http://0.0.0.0:10000 (56)
+2025-10-22T15:00:16.340627516Z [2025-10-22 15:00:16 +0000] [56] [INFO] Using worker: sync
+2025-10-22T15:00:16.34468449Z [2025-10-22 15:00:16 +0000] [57] [INFO] Booting worker with pid: 57
+2025-10-22T15:00:16.649335287Z 127.0.0.1 - - [22/Oct/2025:15:00:16 +0000] "HEAD / HTTP/1.1" 301 0 "-" "Go-http-client/1.1"
+2025-10-22T15:00:23.981200575Z ==> Your service is live 🎉
+2025-10-22T15:00:24.012508253Z ==> 
+2025-10-22T15:00:24.04410201Z ==> ///////////////////////////////////////////////////////////
+2025-10-22T15:00:24.077105337Z ==> 
+2025-10-22T15:00:24.109343794Z ==> Available at your primary URL https://smart-invoice-4l68.onrender.com
+2025-10-22T15:00:24.142940411Z ==> 
+2025-10-22T15:00:24.171465489Z ==> ///////////////////////////////////////////////////////////
+2025-10-22T15:00:36.443798355Z 127.0.0.1 - - [22/Oct/2025:15:00:36 +0000] "GET / HTTP/1.1" 200 36352 "-" "Go-http-client/2.0"
+2025-10-22T15:00:39.183793809Z 127.0.0.1 - - [22/Oct/2025:15:00:39 +0000] "GET / HTTP/1.1" 200 36352 "-" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:144.0) Gecko/20100101 Firefox/144.0"
+2025-10-22T15:00:39.810005882Z 127.0.0.1 - - [22/Oct/2025:15:00:39 +0000] "GET /static/css/output.css HTTP/1.1" 200 0 "https://smart-invoice-4l68.onrender.com/" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:144.0) Gecko/20100101 Firefox/144.0"
+2025-10-22T15:00:39.817227404Z 127.0.0.1 - - [22/Oct/2025:15:00:39 +0000] "GET /static/invoice-preview.png HTTP/1.1" 200 0 "https://smart-invoice-4l68.onrender.com/" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:144.0) Gecko/20100101 Firefox/144.0"
+2025-10-22T15:00:42.144807865Z WARNING 2025-10-22 15:00:42,144 log Not Found: /favicon.ico
+2025-10-22T15:00:42.145163442Z 127.0.0.1 - - [22/Oct/2025:15:00:42 +0000] "GET /favicon.ico HTTP/1.1" 404 179 "https://smart-invoice-4l68.onrender.com/" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:144.0) Gecko/20100101 Firefox/144.0"
+2025-10-22T15:01:29.990796272Z 127.0.0.1 - - [22/Oct/2025:15:01:29 +0000] "GET /signup/ HTTP/1.1" 200 3005 "https://smart-invoice-4l68.onrender.com/" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:144.0) Gecko/20100101 Firefox/144.0"
+2025-10-22T15:01:30.685153841Z WARNING 2025-10-22 15:01:30,684 log Not Found: /favicon.ico
+2025-10-22T15:01:30.685478427Z 127.0.0.1 - - [22/Oct/2025:15:01:30 +0000] "GET /favicon.ico HTTP/1.1" 404 179 "https://smart-invoice-4l68.onrender.com/signup/" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:144.0) Gecko/20100101 Firefox/144.0"
+2025-10-22T15:02:59.565908861Z 127.0.0.1 - - [22/Oct/2025:15:02:59 +0000] "POST /signup/ HTTP/1.1" 302 0 "https://smart-invoice-4l68.onrender.com/signup/" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:144.0) Gecko/20100101 Firefox/144.0"
+2025-10-22T15:03:00.038345583Z 127.0.0.1 - - [22/Oct/2025:15:03:00 +0000] "GET /invoices/ HTTP/1.1" 200 20278 "https://smart-invoice-4l68.onrender.com/signup/" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:144.0) Gecko/20100101 Firefox/144.0"
+2025-10-22T15:03:00.439933792Z 127.0.0.1 - - [22/Oct/2025:15:03:00 +0000] "GET /static/css/output.css HTTP/1.1" 304 0 "https://smart-invoice-4l68.onrender.com/invoices/" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:144.0) Gecko/20100101 Firefox/144.0"
+2025-10-22T15:03:36.903300625Z 127.0.0.1 - - [22/Oct/2025:15:03:36 +0000] "GET / HTTP/1.1" 200 36352 "-" "WhatsApp/2.23.20.0"
+2025-10-22T15:04:19.379201169Z 127.0.0.1 - - [22/Oct/2025:15:04:19 +0000] "GET / HTTP/1.1" 200 36352 "-" "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Mobile Safari/537.36"
+2025-10-22T15:04:24.416206085Z 127.0.0.1 - - [22/Oct/2025:15:04:24 +0000] "GET /static/css/output.css HTTP/1.1" 200 0 "https://smart-invoice-4l68.onrender.com/" "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Mobile Safari/537.36"
+2025-10-22T15:04:24.417510938Z 127.0.0.1 - - [22/Oct/2025:15:04:24 +0000] "GET /static/invoice-preview.png HTTP/1.1" 200 0 "https://smart-invoice-4l68.onrender.com/" "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Mobile Safari/537.36"
+2025-10-22T15:04:37.028399373Z 127.0.0.1 - - [22/Oct/2025:15:04:37 +0000] "GET / HTTP/1.1" 200 36352 "-" "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Mobile Safari/537.36 (compatible; Google-Read-Aloud; +https://support.google.com/webmasters/answer/1061943)"
+2025-10-22T15:04:37.668703881Z 127.0.0.1 - - [22/Oct/2025:15:04:37 +0000] "GET / HTTP/1.1" 200 36352 "-" "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Mobile Safari/537.36 (compatible; Google-Read-Aloud; +https://support.google.com/webmasters/answer/1061943)"
+2025-10-22T15:04:37.768042814Z 127.0.0.1 - - [22/Oct/2025:15:04:37 +0000] "GET / HTTP/1.1" 200 36352 "-" "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Mobile Safari/537.36 (compatible; Google-Read-Aloud; +https://support.google.com/webmasters/answer/1061943)"
+2025-10-22T15:04:37.889132305Z 127.0.0.1 - - [22/Oct/2025:15:04:37 +0000] "GET /static/css/output.css HTTP/1.1" 200 0 "https://smart-invoice-4l68.onrender.com/" "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Mobile Safari/537.36 (compatible; Google-Read-Aloud; +https://support.google.com/webmasters/answer/1061943)"
+2025-10-22T15:04:38.043268749Z 127.0.0.1 - - [22/Oct/2025:15:04:38 +0000] "GET /static/css/output.css HTTP/1.1" 200 0 "https://smart-invoice-4l68.onrender.com/" "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Mobile Safari/537.36 (compatible; Google-Read-Aloud; +https://support.google.com/webmasters/answer/1061943)"
+2025-10-22T15:04:40.380705658Z 127.0.0.1 - - [22/Oct/2025:15:04:40 +0000] "GET / HTTP/1.1" 200 36403 "https://smart-invoice-4l68.onrender.com/invoices/" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:144.0) Gecko/20100101 Firefox/144.0"
+2025-10-22T15:04:41.404243563Z 127.0.0.1 - - [22/Oct/2025:15:04:41 +0000] "GET /static/css/output.css HTTP/1.1" 304 0 "https://smart-invoice-4l68.onrender.com/" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:144.0) Gecko/20100101 Firefox/144.0"
+2025-10-22T15:04:41.404950686Z 127.0.0.1 - - [22/Oct/2025:15:04:41 +0000] "GET /static/invoice-preview.png HTTP/1.1" 304 0 "https://smart-invoice-4l68.onrender.com/" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:144.0) Gecko/20100101 Firefox/144.0"
+2025-10-22T15:04:46.6240246Z 127.0.0.1 - - [22/Oct/2025:15:04:46 +0000] "GET /invoices/ HTTP/1.1" 200 19644 "https://smart-invoice-4l68.onrender.com/" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:144.0) Gecko/20100101 Firefox/144.0"
+2025-10-22T15:05:01.238913403Z 127.0.0.1 - - [22/Oct/2025:15:05:01 +0000] "GET /invoice/create/ HTTP/1.1" 302 0 "https://smart-invoice-4l68.onrender.com/" "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Mobile Safari/537.36"
+2025-10-22T15:05:01.940587013Z 127.0.0.1 - - [22/Oct/2025:15:05:01 +0000] "GET /login/?next=/invoice/create/ HTTP/1.1" 200 2656 "https://smart-invoice-4l68.onrender.com/" "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Mobile Safari/537.36"
+2025-10-22T15:05:03.384308379Z WARNING 2025-10-22 15:05:03,384 log Not Found: /favicon.ico
+2025-10-22T15:05:03.384839539Z 127.0.0.1 - - [22/Oct/2025:15:05:03 +0000] "GET /favicon.ico HTTP/1.1" 404 179 "https://smart-invoice-4l68.onrender.com/login/?next=/invoice/create/" "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Mobile Safari/537.36"
+2025-10-22T15:05:05.235571486Z 127.0.0.1 - - [22/Oct/2025:15:05:05 +0000] "GET /invoice/create/ HTTP/1.1" 302 0 "https://www.google.com/" "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Mobile Safari/537.36"
+2025-10-22T15:05:05.902716565Z 127.0.0.1 - - [22/Oct/2025:15:05:05 +0000] "GET /login/?next=/invoice/create/ HTTP/1.1" 200 2656 "-" "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Mobile Safari/537.36"
+2025-10-22T15:05:06.584071704Z 127.0.0.1 - - [22/Oct/2025:15:05:06 +0000] "GET /static/css/output.css HTTP/1.1" 200 0 "https://smart-invoice-4l68.onrender.com/login/?next=/invoice/create/" "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Mobile Safari/537.36"
+2025-10-22T15:05:10.330428779Z 127.0.0.1 - - [22/Oct/2025:15:05:10 +0000] "GET /invoices/ HTTP/1.1" 200 19644 "https://smart-invoice-4l68.onrender.com/" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:144.0) Gecko/20100101 Firefox/144.0"
+2025-10-22T15:05:25.932951667Z ==> Detected service running on port 10000
+2025-10-22T15:05:26.316258552Z ==> Docs on specifying a port: https://render.com/docs/web-services#port-binding
+2025-10-22T15:05:39.267895132Z 127.0.0.1 - - [22/Oct/2025:15:05:39 +0000] "GET /signup/ HTTP/1.1" 200 3005 "https://smart-invoice-4l68.onrender.com/login/?next=/invoice/create/" "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Mobile Safari/537.36"
+2025-10-22T15:05:39.983952426Z 127.0.0.1 - - [22/Oct/2025:15:05:39 +0000] "GET /static/css/output.css HTTP/1.1" 304 0 "https://smart-invoice-4l68.onrender.com/signup/" "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Mobile Safari/537.36"
+2025-10-22T15:05:42.204278684Z 127.0.0.1 - - [22/Oct/2025:15:05:42 +0000] "GET /signup/ HTTP/1.1" 200 3005 "https://www.google.com/" "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Mobile Safari/537.36"
+2025-10-22T15:05:43.09300929Z 127.0.0.1 - - [22/Oct/2025:15:05:43 +0000] "GET /static/css/output.css HTTP/1.1" 200 0 "https://smart-invoice-4l68.onrender.com/signup/" "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Mobile Safari/537.36"
+2025-10-22T15:06:08.760612236Z 127.0.0.1 - - [22/Oct/2025:15:06:08 +0000] "GET /invoice/create/ HTTP/1.1" 200 30502 "https://smart-invoice-4l68.onrender.com/invoices/" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:144.0) Gecko/20100101 Firefox/144.0"
+2025-10-22T15:06:09.811507475Z 127.0.0.1 - - [22/Oct/2025:15:06:09 +0000] "GET /static/css/output.css HTTP/1.1" 304 0 "https://smart-invoice-4l68.onrender.com/invoice/create/" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:144.0) Gecko/20100101 Firefox/144.0"
+2025-10-22T15:06:40.120328764Z 127.0.0.1 - - [22/Oct/2025:15:06:40 +0000] "POST /signup/ HTTP/1.1" 200 3208 "https://smart-invoice-4l68.onrender.com/signup/" "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Mobile Safari/537.36"
+2025-10-22T15:06:40.769608741Z 127.0.0.1 - - [22/Oct/2025:15:06:40 +0000] "GET /static/css/output.css HTTP/1.1" 304 0 "https://smart-invoice-4l68.onrender.com/signup/" "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Mobile Safari/537.36"
+2025-10-22T15:07:35.574049336Z 127.0.0.1 - - [22/Oct/2025:15:07:35 +0000] "GET /signup/ HTTP/1.1" 200 3005 "https://smart-invoice-4l68.onrender.com/login/?next=/invoice/create/" "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Mobile Safari/537.36"
+2025-10-22T15:07:37.020165087Z 127.0.0.1 - - [22/Oct/2025:15:07:37 +0000] "GET /login/?next=/invoice/create/ HTTP/1.1" 200 2656 "https://smart-invoice-4l68.onrender.com/" "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Mobile Safari/537.36"
+2025-10-22T15:07:38.399192913Z 127.0.0.1 - - [22/Oct/2025:15:07:38 +0000] "GET / HTTP/1.1" 200 36352 "-" "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Mobile Safari/537.36"
+2025-10-22T15:07:45.255369322Z 127.0.0.1 - - [22/Oct/2025:15:07:45 +0000] "GET / HTTP/1.1" 200 36352 "https://www.google.com/" "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Mobile Safari/537.36"
+2025-10-22T15:07:46.476319772Z 127.0.0.1 - - [22/Oct/2025:15:07:46 +0000] "GET /static/invoice-preview.png HTTP/1.1" 200 0 "https://smart-invoice-4l68.onrender.com/" "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Mobile Safari/537.36"
+2025-10-22T15:07:46.929356666Z 127.0.0.1 - - [22/Oct/2025:15:07:46 +0000] "GET /static/css/output.css HTTP/1.1" 200 0 "https://smart-invoice-4l68.onrender.com/" "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Mobile Safari/537.36"
+2025-10-22T15:07:59.573890829Z 127.0.0.1 - - [22/Oct/2025:15:07:59 +0000] "GET / HTTP/1.1" 200 36352 "-" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+2025-10-22T15:08:00.265848687Z 127.0.0.1 - - [22/Oct/2025:15:08:00 +0000] "GET /static/css/output.css HTTP/1.1" 200 0 "https://smart-invoice-4l68.onrender.com/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+2025-10-22T15:08:00.283868816Z 127.0.0.1 - - [22/Oct/2025:15:08:00 +0000] "GET /static/invoice-preview.png HTTP/1.1" 200 0 "https://smart-invoice-4l68.onrender.com/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+2025-10-22T15:08:01.802820749Z WARNING 2025-10-22 15:08:01,802 log Not Found: /favicon.ico
+2025-10-22T15:08:01.803799687Z 127.0.0.1 - - [22/Oct/2025:15:08:01 +0000] "GET /favicon.ico HTTP/1.1" 404 179 "https://smart-invoice-4l68.onrender.com/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+2025-10-22T15:08:41.552243137Z 127.0.0.1 - - [22/Oct/2025:15:08:41 +0000] "GET /invoices/ HTTP/1.1" 302 0 "-" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:144.0) Gecko/20100101 Firefox/144.0"
+2025-10-22T15:10:35.087677937Z 127.0.0.1 - - [22/Oct/2025:15:10:35 +0000] "GET /signup/ HTTP/1.1" 200 3005 "https://smart-invoice-4l68.onrender.com/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+2025-10-22T15:10:35.872278863Z 127.0.0.1 - - [22/Oct/2025:15:10:35 +0000] "GET /static/css/output.css HTTP/1.1" 304 0 "https://smart-invoice-4l68.onrender.com/signup/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+2025-10-22T15:10:48.092256308Z 127.0.0.1 - - [22/Oct/2025:15:10:48 +0000] "GET /login/ HTTP/1.1" 200 2656 "https://smart-invoice-4l68.onrender.com/signup/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+2025-10-22T15:10:53.62411868Z 127.0.0.1 - - [22/Oct/2025:15:10:53 +0000] "GET /login/ HTTP/1.1" 200 2656 "https://www.google.com/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36"
+2025-10-22T15:10:54.271249114Z 127.0.0.1 - - [22/Oct/2025:15:10:54 +0000] "GET /static/css/output.css HTTP/1.1" 200 0 "https://smart-invoice-4l68.onrender.com/login/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36"
+2025-10-22T15:11:24.542279156Z 127.0.0.1 - - [22/Oct/2025:15:11:24 +0000] "POST /login/ HTTP/1.1" 200 2688 "https://smart-invoice-4l68.onrender.com/login/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+2025-10-22T15:11:42.263101325Z 127.0.0.1 - - [22/Oct/2025:15:11:42 +0000] "POST /login/ HTTP/1.1" 302 0 "https://smart-invoice-4l68.onrender.com/login/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+2025-10-22T15:11:42.659601501Z 127.0.0.1 - - [22/Oct/2025:15:11:42 +0000] "GET /invoices/ HTTP/1.1" 200 20743 "https://smart-invoice-4l68.onrender.com/login/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+2025-10-22T15:11:43.042002059Z 127.0.0.1 - - [22/Oct/2025:15:11:43 +0000] "GET /static/css/output.css HTTP/1.1" 304 0 "https://smart-invoice-4l68.onrender.com/invoices/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+2025-10-22T15:11:46.433467818Z 127.0.0.1 - - [22/Oct/2025:15:11:46 +0000] "GET /invoices/ HTTP/1.1" 302 0 "https://www.google.com/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+2025-10-22T15:11:47.755444937Z 127.0.0.1 - - [22/Oct/2025:15:11:47 +0000] "GET /login/?next=/invoices/ HTTP/1.1" 200 2656 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+2025-10-22T15:11:48.575578255Z 127.0.0.1 - - [22/Oct/2025:15:11:48 +0000] "GET /static/css/output.css HTTP/1.1" 200 0 "https://smart-invoice-4l68.onrender.com/login/?next=/invoices/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+2025-10-22T15:12:16.34545657Z 127.0.0.1 - - [22/Oct/2025:15:12:16 +0000] "GET /invoice/create/ HTTP/1.1" 200 30502 "https://smart-invoice-4l68.onrender.com/invoices/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+2025-10-22T15:16:51.664571964Z 127.0.0.1 - - [22/Oct/2025:15:16:51 +0000] "POST /invoice/create/ HTTP/1.1" 302 0 "https://smart-invoice-4l68.onrender.com/invoice/create/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+2025-10-22T15:16:52.023791953Z 127.0.0.1 - - [22/Oct/2025:15:16:52 +0000] "GET /invoice/1/ HTTP/1.1" 200 22493 "https://smart-invoice-4l68.onrender.com/invoice/create/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+2025-10-22T15:16:52.43587831Z 127.0.0.1 - - [22/Oct/2025:15:16:52 +0000] "GET /static/css/output.css HTTP/1.1" 304 0 "https://smart-invoice-4l68.onrender.com/invoice/1/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+2025-10-22T15:16:57.854817484Z 127.0.0.1 - - [22/Oct/2025:15:16:57 +0000] "GET /invoice/1/ HTTP/1.1" 302 0 "https://www.google.com/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36"
+2025-10-22T15:16:58.567067799Z 127.0.0.1 - - [22/Oct/2025:15:16:58 +0000] "GET /login/?next=/invoice/1/ HTTP/1.1" 200 2656 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36"
+2025-10-22T15:16:59.289078354Z 127.0.0.1 - - [22/Oct/2025:15:16:59 +0000] "GET /static/css/output.css HTTP/1.1" 200 0 "https://smart-invoice-4l68.onrender.com/login/?next=/invoice/1/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36"
+2025-10-22T15:18:16.572052975Z [2025-10-22 15:18:16 +0000] [56] [CRITICAL] WORKER TIMEOUT (pid:57)
+2025-10-22T15:18:16.59311977Z [2025-10-22 15:18:16 +0000] [57] [ERROR] Error handling request /invoice/1/send-email/
+2025-10-22T15:18:16.593164121Z 127.0.0.1 - - [22/Oct/2025:15:18:16 +0000] "POST /invoice/1/send-email/ HTTP/1.1" 500 0 "-" "-"
+2025-10-22T15:18:16.593204542Z Traceback (most recent call last):
+2025-10-22T15:18:16.593210171Z   File "/opt/render/project/src/.venv/lib/python3.13/site-packages/gunicorn/workers/sync.py", line 134, in handle
+2025-10-22T15:18:16.593216492Z     self.handle_request(listener, req, client, addr)
+2025-10-22T15:18:16.593220972Z     ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-10-22T15:18:16.593228682Z   File "/opt/render/project/src/.venv/lib/python3.13/site-packages/gunicorn/workers/sync.py", line 177, in handle_request
+2025-10-22T15:18:16.593232752Z     respiter = self.wsgi(environ, resp.start_response)
+2025-10-22T15:18:16.593236672Z   File "/opt/render/project/src/.venv/lib/python3.13/site-packages/django/core/handlers/wsgi.py", line 124, in __call__
+2025-10-22T15:18:16.593240722Z     response = self.get_response(request)
+2025-10-22T15:18:16.593244512Z   File "/opt/render/project/src/.venv/lib/python3.13/site-packages/django/core/handlers/base.py", line 140, in get_response
+2025-10-22T15:18:16.593282013Z     response = self._middleware_chain(request)
+2025-10-22T15:18:16.593285193Z   File "/opt/render/project/src/.venv/lib/python3.13/site-packages/django/core/handlers/exception.py", line 55, in inner
+2025-10-22T15:18:16.593287453Z     response = get_response(request)
+2025-10-22T15:18:16.593289833Z   File "/opt/render/project/src/.venv/lib/python3.13/site-packages/django/utils/deprecation.py", line 120, in __call__
+2025-10-22T15:18:16.593292143Z     response = response or self.get_response(request)
+2025-10-22T15:18:16.593294633Z                            ~~~~~~~~~~~~~~~~~^^^^^^^^^
+2025-10-22T15:18:16.593297053Z   File "/opt/render/project/src/.venv/lib/python3.13/site-packages/django/core/handlers/exception.py", line 55, in inner
+2025-10-22T15:18:16.593299313Z     response = get_response(request)
+2025-10-22T15:18:16.593301533Z   File "/opt/render/project/src/.venv/lib/python3.13/site-packages/whitenoise/middleware.py", line 123, in __call__
+2025-10-22T15:18:16.593304173Z     return self.get_response(request)
+2025-10-22T15:18:16.593306793Z            ~~~~~~~~~~~~~~~~~^^^^^^^^^
+2025-10-22T15:18:16.593309063Z   File "/opt/render/project/src/.venv/lib/python3.13/site-packages/django/core/handlers/exception.py", line 55, in inner
+2025-10-22T15:18:16.593311573Z     response = get_response(request)
+2025-10-22T15:18:16.593313804Z   File "/opt/render/project/src/.venv/lib/python3.13/site-packages/django/utils/deprecation.py", line 120, in __call__
+2025-10-22T15:18:16.593316093Z     response = response or self.get_response(request)
+2025-10-22T15:18:16.593318373Z                            ~~~~~~~~~~~~~~~~~^^^^^^^^^
+2025-10-22T15:18:16.593320604Z   File "/opt/render/project/src/.venv/lib/python3.13/site-packages/django/core/handlers/exception.py", line 55, in inner
+2025-10-22T15:18:16.593322844Z     response = get_response(request)
+2025-10-22T15:18:16.593325194Z   File "/opt/render/project/src/.venv/lib/python3.13/site-packages/django/utils/deprecation.py", line 120, in __call__
+2025-10-22T15:18:16.593327424Z     response = response or self.get_response(request)
+2025-10-22T15:18:16.593329724Z                            ~~~~~~~~~~~~~~~~~^^^^^^^^^
+2025-10-22T15:18:16.593332004Z   File "/opt/render/project/src/.venv/lib/python3.13/site-packages/django/core/handlers/exception.py", line 55, in inner
+2025-10-22T15:18:16.593334234Z     response = get_response(request)
+2025-10-22T15:18:16.593336574Z   File "/opt/render/project/src/.venv/lib/python3.13/site-packages/django/utils/deprecation.py", line 120, in __call__
+2025-10-22T15:18:16.593339284Z     response = response or self.get_response(request)
+2025-10-22T15:18:16.593341554Z                            ~~~~~~~~~~~~~~~~~^^^^^^^^^
+2025-10-22T15:18:16.593343814Z   File "/opt/render/project/src/.venv/lib/python3.13/site-packages/django/core/handlers/exception.py", line 55, in inner
+2025-10-22T15:18:16.593363454Z     response = get_response(request)
+2025-10-22T15:18:16.593366224Z   File "/opt/render/project/src/.venv/lib/python3.13/site-packages/django/utils/deprecation.py", line 120, in __call__
+2025-10-22T15:18:16.593368725Z     response = response or self.get_response(request)
+2025-10-22T15:18:16.593370934Z                            ~~~~~~~~~~~~~~~~~^^^^^^^^^
+2025-10-22T15:18:16.593373365Z   File "/opt/render/project/src/.venv/lib/python3.13/site-packages/django/core/handlers/exception.py", line 55, in inner
+2025-10-22T15:18:16.593375805Z     response = get_response(request)
+2025-10-22T15:18:16.593378205Z   File "/opt/render/project/src/.venv/lib/python3.13/site-packages/django/utils/deprecation.py", line 120, in __call__
+2025-10-22T15:18:16.593380535Z     response = response or self.get_response(request)
+2025-10-22T15:18:16.593388685Z                            ~~~~~~~~~~~~~~~~~^^^^^^^^^
+2025-10-22T15:18:16.593391155Z   File "/opt/render/project/src/.venv/lib/python3.13/site-packages/django/core/handlers/exception.py", line 55, in inner
+2025-10-22T15:18:16.593393365Z     response = get_response(request)
+2025-10-22T15:18:16.593395735Z   File "/opt/render/project/src/.venv/lib/python3.13/site-packages/django/utils/deprecation.py", line 120, in __call__
+2025-10-22T15:18:16.593398005Z     response = response or self.get_response(request)
+2025-10-22T15:18:16.593400245Z                            ~~~~~~~~~~~~~~~~~^^^^^^^^^
+2025-10-22T15:18:16.593402645Z   File "/opt/render/project/src/.venv/lib/python3.13/site-packages/django/core/handlers/exception.py", line 55, in inner
+2025-10-22T15:18:16.593405215Z     response = get_response(request)
+2025-10-22T15:18:16.593415885Z   File "/opt/render/project/src/.venv/lib/python3.13/site-packages/django/core/handlers/base.py", line 197, in _get_response
+2025-10-22T15:18:16.593419175Z     response = wrapped_callback(request, *callback_args, **callback_kwargs)
+2025-10-22T15:18:16.593421795Z   File "/opt/render/project/src/invoices/views.py", line 257, in send_invoice_email
+2025-10-22T15:18:16.593424326Z     email.send(fail_silently=False)
+2025-10-22T15:18:16.593426535Z     ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+2025-10-22T15:18:16.593428935Z   File "/opt/render/project/src/.venv/lib/python3.13/site-packages/django/core/mail/message.py", line 307, in send
+2025-10-22T15:18:16.593449676Z     return self.get_connection(fail_silently).send_messages([self])
+2025-10-22T15:18:16.593452106Z            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^
+2025-10-22T15:18:16.593454876Z   File "/opt/render/project/src/.venv/lib/python3.13/site-packages/django/core/mail/backends/smtp.py", line 128, in send_messages
+2025-10-22T15:18:16.593457506Z     new_conn_created = self.open()
+2025-10-22T15:18:16.593459896Z   File "/opt/render/project/src/.venv/lib/python3.13/site-packages/django/core/mail/backends/smtp.py", line 86, in open
+2025-10-22T15:18:16.593462236Z     self.connection = self.connection_class(
+2025-10-22T15:18:16.593464586Z                       ~~~~~~~~~~~~~~~~~~~~~^
+2025-10-22T15:18:16.593466996Z         self.host, self.port, **connection_params
+2025-10-22T15:18:16.593469376Z         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-10-22T15:18:16.593471666Z     )
+2025-10-22T15:18:16.593473966Z     ^
+2025-10-22T15:18:16.593476827Z   File "/opt/render/project/python/Python-3.13.4/lib/python3.13/smtplib.py", line 255, in __init__
+2025-10-22T15:18:16.593479196Z     (code, msg) = self.connect(host, port)
+2025-10-22T15:18:16.593481467Z                   ~~~~~~~~~~~~^^^^^^^^^^^^
+2025-10-22T15:18:16.593483847Z   File "/opt/render/project/python/Python-3.13.4/lib/python3.13/smtplib.py", line 341, in connect
+2025-10-22T15:18:16.593486156Z     self.sock = self._get_socket(host, port, self.timeout)
+2025-10-22T15:18:16.593488347Z                 ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-10-22T15:18:16.593490927Z   File "/opt/render/project/python/Python-3.13.4/lib/python3.13/smtplib.py", line 312, in _get_socket
+2025-10-22T15:18:16.593493347Z     return socket.create_connection((host, port), timeout,
+2025-10-22T15:18:16.593495517Z            ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+2025-10-22T15:18:16.593497957Z                                     self.source_address)
+2025-10-22T15:18:16.593500187Z                                     ^^^^^^^^^^^^^^^^^^^^
+2025-10-22T15:18:16.593502357Z   File "/opt/render/project/python/Python-3.13.4/lib/python3.13/socket.py", line 849, in create_connection
+2025-10-22T15:18:16.593505157Z     sock.connect(sa)
+2025-10-22T15:18:16.593512407Z     ~~~~~~~~~~~~^^^^
+2025-10-22T15:18:16.593532628Z   File "/opt/render/project/src/.venv/lib/python3.13/site-packages/gunicorn/workers/base.py", line 204, in handle_abort
+2025-10-22T15:18:16.593535317Z     sys.exit(1)
+2025-10-22T15:18:16.593537577Z     ~~~~~~~~^^^
+2025-10-22T15:18:16.593539797Z SystemExit: 1
+2025-10-22T15:18:16.593542077Z [2025-10-22 15:18:16 +0000] [57] [INFO] Worker exiting (pid: 57)
+2025-10-22T15:18:17.649108546Z [2025-10-22 15:18:17 +0000] [56] [ERROR] Worker (pid:57) was sent SIGKILL! Perhaps out of memory?
+2025-10-22T15:18:17.740575619Z [2025-10-22 15:18:17 +0000] [58] [INFO] Booting worker with pid: 58
+2025-10-22T15:18:22.347963007Z 127.0.0.1 - - [22/Oct/2025:15:18:22 +0000] "GET /invoice/1/send-email/ HTTP/1.1" 302 0 "https://www.google.com/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36"
+2025-10-22T15:18:22.838263945Z 127.0.0.1 - - [22/Oct/2025:15:18:22 +0000] "GET /invoice/1/pdf/ HTTP/1.1" 200 2104 "https://smart-invoice-4l68.onrender.com/invoice/1/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+2025-10-22T15:18:22.947153807Z 127.0.0.1 - - [22/Oct/2025:15:18:22 +0000] "GET /invoice/1/pdf/ HTTP/1.1" 200 2104 "https://www.google.com/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+2025-10-22T15:18:22.952335792Z 127.0.0.1 - - [22/Oct/2025:15:18:22 +0000] "POST /invoice/1/send-whatsapp/ HTTP/1.1" 302 0 "https://smart-invoice-4l68.onrender.com/invoice/1/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+2025-10-22T15:18:23.040186779Z 127.0.0.1 - - [22/Oct/2025:15:18:23 +0000] "GET /invoice/1/send-whatsapp/ HTTP/1.1" 302 0 "https://www.google.com/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+2025-10-22T15:18:23.911910765Z INFO 2025-10-22 15:18:23,911 payment_service Payment initialized for invoice INV-B84E3CA7: INV-B84E3CA7-20251022151823
+2025-10-22T15:18:23.914519692Z 127.0.0.1 - - [22/Oct/2025:15:18:23 +0000] "GET /invoice/1/pay/ HTTP/1.1" 302 0 "https://smart-invoice-4l68.onrender.com/invoice/1/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+2025-10-22T15:18:24.533649038Z ERROR 2025-10-22 15:18:24,533 payment_service Paystack initialization failed for invoice INV-B84E3CA7: Duplicate Transaction Reference
+2025-10-22T15:18:24.536013031Z 127.0.0.1 - - [22/Oct/2025:15:18:24 +0000] "GET /invoice/1/pay/ HTTP/1.1" 302 0 "https://smart-invoice-4l68.onrender.com/invoice/1/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+2025-10-22T15:18:24.55512875Z ERROR 2025-10-22 15:18:24,543 log Internal Server Error: /invoice/1/pay/
+2025-10-22T15:18:24.555145171Z Traceback (most recent call last):
+2025-10-22T15:18:24.555149931Z   File "/opt/render/project/src/.venv/lib/python3.13/site-packages/django/db/models/fields/__init__.py", line 2128, in get_prep_value
+2025-10-22T15:18:24.555154421Z     return int(value)
+2025-10-22T15:18:24.555159531Z TypeError: int() argument must be a string, a bytes-like object or a real number, not 'SimpleLazyObject'
+2025-10-22T15:18:24.555163641Z 
+2025-10-22T15:18:24.555167391Z The above exception was the direct cause of the following exception:
+2025-10-22T15:18:24.555170911Z 
+2025-10-22T15:18:24.555174541Z Traceback (most recent call last):
+2025-10-22T15:18:24.555179411Z   File "/opt/render/project/src/.venv/lib/python3.13/site-packages/django/core/handlers/exception.py", line 55, in inner
+2025-10-22T15:18:24.555194052Z     response = get_response(request)
+2025-10-22T15:18:24.555196582Z   File "/opt/render/project/src/.venv/lib/python3.13/site-packages/django/core/handlers/base.py", line 197, in _get_response
+2025-10-22T15:18:24.555198932Z     response = wrapped_callback(request, *callback_args, **callback_kwargs)
+2025-10-22T15:18:24.555201502Z   File "/opt/render/project/src/invoices/views.py", line 440, in initialize_paystack_payment
+2025-10-22T15:18:24.555203612Z     invoice = get_object_or_404(Invoice, pk=pk, user=request.user)
+2025-10-22T15:18:24.555205762Z   File "/opt/render/project/src/.venv/lib/python3.13/site-packages/django/shortcuts.py", line 90, in get_object_or_404
+2025-10-22T15:18:24.555207892Z     return queryset.get(*args, **kwargs)
+2025-10-22T15:18:24.555210492Z            ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+2025-10-22T15:18:24.555212742Z   File "/opt/render/project/src/.venv/lib/python3.13/site-packages/django/db/models/query.py", line 619, in get
+2025-10-22T15:18:24.555214982Z     clone = self._chain() if self.query.combinator else self.filter(*args, **kwargs)
+2025-10-22T15:18:24.555217272Z                                                         ~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+2025-10-22T15:18:24.555219462Z   File "/opt/render/project/src/.venv/lib/python3.13/site-packages/django/db/models/query.py", line 1493, in filter
+2025-10-22T15:18:24.555222152Z     return self._filter_or_exclude(False, args, kwargs)
+2025-10-22T15:18:24.555224232Z            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+2025-10-22T15:18:24.555226472Z   File "/opt/render/project/src/.venv/lib/python3.13/site-packages/django/db/models/query.py", line 1511, in _filter_or_exclude
+2025-10-22T15:18:24.555228722Z     clone._filter_or_exclude_inplace(negate, args, kwargs)
+2025-10-22T15:18:24.555230783Z     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+2025-10-22T15:18:24.555233032Z   File "/opt/render/project/src/.venv/lib/python3.13/site-packages/django/db/models/query.py", line 1518, in _filter_or_exclude_inplace
+2025-10-22T15:18:24.555235132Z     self._query.add_q(Q(*args, **kwargs))
+2025-10-22T15:18:24.555237223Z     ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+2025-10-22T15:18:24.555239723Z   File "/opt/render/project/src/.venv/lib/python3.13/site-packages/django/db/models/sql/query.py", line 1646, in add_q
+2025-10-22T15:18:24.555242093Z     clause, _ = self._add_q(q_object, can_reuse)
+2025-10-22T15:18:24.555244293Z                 ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+2025-10-22T15:18:24.555246373Z   File "/opt/render/project/src/.venv/lib/python3.13/site-packages/django/db/models/sql/query.py", line 1678, in _add_q
+2025-10-22T15:18:24.555249083Z     child_clause, needed_inner = self.build_filter(
+2025-10-22T15:18:24.555251083Z                                  ~~~~~~~~~~~~~~~~~^
+2025-10-22T15:18:24.555253253Z         child,
+2025-10-22T15:18:24.555268843Z         ^^^^^^
+2025-10-22T15:18:24.555271653Z     ...<7 lines>...
+2025-10-22T15:18:24.555274023Z         update_join_types=update_join_types,
+2025-10-22T15:18:24.555276233Z         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-10-22T15:18:24.555278453Z     )
+2025-10-22T15:18:24.555280603Z     ^
+2025-10-22T15:18:24.555282933Z   File "/opt/render/project/src/.venv/lib/python3.13/site-packages/django/db/models/sql/query.py", line 1588, in build_filter
+2025-10-22T15:18:24.555285024Z     condition = self.build_lookup(lookups, col, value)
+2025-10-22T15:18:24.555287104Z   File "/opt/render/project/src/.venv/lib/python3.13/site-packages/django/db/models/sql/query.py", line 1415, in build_lookup
+2025-10-22T15:18:24.555289184Z     lookup = lookup_class(lhs, rhs)
+2025-10-22T15:18:24.555291413Z   File "/opt/render/project/src/.venv/lib/python3.13/site-packages/django/db/models/lookups.py", line 38, in __init__
+2025-10-22T15:18:24.555298464Z     self.rhs = self.get_prep_lookup()
+2025-10-22T15:18:24.555301684Z                ~~~~~~~~~~~~~~~~~~~~^^
+2025-10-22T15:18:24.555304044Z   File "/opt/render/project/src/.venv/lib/python3.13/site-packages/django/db/models/fields/related_lookups.py", line 112, in get_prep_lookup
+2025-10-22T15:18:24.555306194Z     self.rhs = target_field.get_prep_value(self.rhs)
+2025-10-22T15:18:24.555308224Z                ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+2025-10-22T15:18:24.555310414Z   File "/opt/render/project/src/.venv/lib/python3.13/site-packages/django/db/models/fields/__init__.py", line 2130, in get_prep_value
+2025-10-22T15:18:24.555312564Z     raise e.__class__(
+2025-10-22T15:18:24.555314744Z         "Field '%s' expected a number but got %r." % (self.name, value),
+2025-10-22T15:18:24.555316804Z     ) from e
+2025-10-22T15:18:24.555318994Z TypeError: Field 'id' expected a number but got <SimpleLazyObject: <django.contrib.auth.models.AnonymousUser object at 0x715c17d56ba0>>.
+2025-10-22T15:18:24.555546068Z 127.0.0.1 - - [22/Oct/2025:15:18:24 +0000] "GET /invoice/1/pay/ HTTP/1.1" 500 145 "https://www.google.com/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+2025-10-22T15:18:24.556934404Z 127.0.0.1 - - [22/Oct/2025:15:18:24 +0000] "GET /invoice/1/ HTTP/1.1" 302 0 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36"
+2025-10-22T15:18:24.558180577Z 127.0.0.1 - - [22/Oct/2025:15:18:24 +0000] "GET /invoice/1/ HTTP/1.1" 302 0 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+2025-10-22T15:18:25.030874253Z 127.0.0.1 - - [22/Oct/2025:15:18:25 +0000] "GET /invoice/1/ HTTP/1.1" 200 22493 "https://smart-invoice-4l68.onrender.com/invoice/1/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+2025-10-22T15:18:25.227120343Z 127.0.0.1 - - [22/Oct/2025:15:18:25 +0000] "GET /login/?next=/invoice/1/ HTTP/1.1" 200 2656 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+2025-10-22T15:18:25.252453516Z 127.0.0.1 - - [22/Oct/2025:15:18:25 +0000] "GET /login/?next=/invoice/1/ HTTP/1.1" 200 2656 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36"
+2025-10-22T15:18:25.4303482Z 127.0.0.1 - - [22/Oct/2025:15:18:25 +0000] "GET /static/css/output.css HTTP/1.1" 304 0 "https://smart-invoice-4l68.onrender.com/invoice/1/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+2025-10-22T15:18:25.852077275Z 127.0.0.1 - - [22/Oct/2025:15:18:25 +0000] "GET /static/css/output.css HTTP/1.1" 200 0 "https://smart-invoice-4l68.onrender.com/login/?next=/invoice/1/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+2025-10-22T15:18:25.90427876Z 127.0.0.1 - - [22/Oct/2025:15:18:25 +0000] "GET /static/css/output.css HTTP/1.1" 200 0 "https://smart-invoice-4l68.onrender.com/login/?next=/invoice/1/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36"
+2025-10-22T15:18:31.5301672Z 127.0.0.1 - - [22/Oct/2025:15:18:31 +0000] "POST /invoice/1/status/ HTTP/1.1" 302 0 "https://smart-invoice-4l68.onrender.com/invoice/1/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+2025-10-22T15:18:31.950838595Z 127.0.0.1 - - [22/Oct/2025:15:18:31 +0000] "GET /invoice/1/ HTTP/1.1" 200 22704 "https://smart-invoice-4l68.onrender.com/invoice/1/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+2025-10-22T15:18:36.949223347Z 127.0.0.1 - - [22/Oct/2025:15:18:36 +0000] "GET /invoice/1/status/ HTTP/1.1" 302 0 "https://www.google.com/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+2025-10-22T15:18:37.912490158Z 127.0.0.1 - - [22/Oct/2025:15:18:37 +0000] "GET /invoices/ HTTP/1.1" 302 0 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+2025-10-22T15:19:08.785492937Z [2025-10-22 15:19:08 +0000] [56] [CRITICAL] WORKER TIMEOUT (pid:58)
+2025-10-22T15:19:08.791071089Z [2025-10-22 15:19:08 +0000] [58] [ERROR] Error handling request /invoice/1/send-email/
+2025-10-22T15:19:08.791092229Z Traceback (most recent call last):
+2025-10-22T15:19:08.791096619Z   File "/opt/render/project/src/.venv/lib/python3.13/site-packages/gunicorn/workers/sync.py", line 134, in handle
+2025-10-22T15:19:08.791100519Z     self.handle_request(listener, req, client, addr)
+2025-10-22T15:19:08.791105599Z     ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-10-22T15:19:08.79111047Z   File "/opt/render/project/src/.venv/lib/python3.13/site-packages/gunicorn/workers/sync.py", line 177, in handle_request
+2025-10-22T15:19:08.791115839Z     respiter = self.wsgi(environ, resp.start_response)
+2025-10-22T15:19:08.79112048Z   File "/opt/render/project/src/.venv/lib/python3.13/site-packages/django/core/handlers/wsgi.py", line 124, in __call__
+2025-10-22T15:19:08.79112497Z     response = self.get_response(request)
+2025-10-22T15:19:08.79112938Z   File "/opt/render/project/src/.venv/lib/python3.13/site-packages/django/core/handlers/base.py", line 140, in get_response
+2025-10-22T15:19:08.79113391Z     response = self._middleware_chain(request)
+2025-10-22T15:19:08.79113719Z   File "/opt/render/project/src/.venv/lib/python3.13/site-packages/django/core/handlers/exception.py", line 55, in inner
+2025-10-22T15:19:08.79114005Z     response = get_response(request)
+2025-10-22T15:19:08.79114296Z   File "/opt/render/project/src/.venv/lib/python3.13/site-packages/django/utils/deprecation.py", line 120, in __call__
+2025-10-22T15:19:08.79114587Z     response = response or self.get_response(request)
+2025-10-22T15:19:08.791149Z                            ~~~~~~~~~~~~~~~~~^^^^^^^^^
+2025-10-22T15:19:08.79115182Z   File "/opt/render/project/src/.venv/lib/python3.13/site-packages/django/core/handlers/exception.py", line 55, in inner
+2025-10-22T15:19:08.7911547Z     response = get_response(request)
+2025-10-22T15:19:08.79115752Z   File "/opt/render/project/src/.venv/lib/python3.13/site-packages/whitenoise/middleware.py", line 123, in __call__
+2025-10-22T15:19:08.7911603Z     return self.get_response(request)
+2025-10-22T15:19:08.791163431Z            ~~~~~~~~~~~~~~~~~^^^^^^^^^
+2025-10-22T15:19:08.79116706Z   File "/opt/render/project/src/.venv/lib/python3.13/site-packages/django/core/handlers/exception.py", line 55, in inner
+2025-10-22T15:19:08.791171751Z     response = get_response(request)
+2025-10-22T15:19:08.791176641Z   File "/opt/render/project/src/.venv/lib/python3.13/site-packages/django/utils/deprecation.py", line 120, in __call__
+2025-10-22T15:19:08.791181441Z     response = response or self.get_response(request)
+2025-10-22T15:19:08.791185811Z                            ~~~~~~~~~~~~~~~~~^^^^^^^^^
+2025-10-22T15:19:08.791189931Z   File "/opt/render/project/src/.venv/lib/python3.13/site-packages/django/core/handlers/exception.py", line 55, in inner
+2025-10-22T15:19:08.791192771Z     response = get_response(request)
+2025-10-22T15:19:08.791195651Z   File "/opt/render/project/src/.venv/lib/python3.13/site-packages/django/utils/deprecation.py", line 120, in __call__
+2025-10-22T15:19:08.791198501Z     response = response or self.get_response(request)
+2025-10-22T15:19:08.791210251Z                            ~~~~~~~~~~~~~~~~~^^^^^^^^^
+2025-10-22T15:19:08.791212081Z   File "/opt/render/project/src/.venv/lib/python3.13/site-packages/django/core/handlers/exception.py", line 55, in inner
+2025-10-22T15:19:08.791213831Z     response = get_response(request)
+2025-10-22T15:19:08.791218132Z   File "/opt/render/project/src/.venv/lib/python3.13/site-packages/django/utils/deprecation.py", line 120, in __call__
+2025-10-22T15:19:08.791219952Z     response = response or self.get_response(request)
+2025-10-22T15:19:08.791221672Z                            ~~~~~~~~~~~~~~~~~^^^^^^^^^
+2025-10-22T15:19:08.791223512Z   File "/opt/render/project/src/.venv/lib/python3.13/site-packages/django/core/handlers/exception.py", line 55, in inner
+2025-10-22T15:19:08.791225181Z     response = get_response(request)
+2025-10-22T15:19:08.791226872Z   File "/opt/render/project/src/.venv/lib/python3.13/site-packages/django/utils/deprecation.py", line 120, in __call__
+2025-10-22T15:19:08.791229072Z     response = response or self.get_response(request)
+2025-10-22T15:19:08.791231882Z                            ~~~~~~~~~~~~~~~~~^^^^^^^^^
+2025-10-22T15:19:08.791234682Z   File "/opt/render/project/src/.venv/lib/python3.13/site-packages/django/core/handlers/exception.py", line 55, in inner
+2025-10-22T15:19:08.791237282Z     response = get_response(request)
+2025-10-22T15:19:08.791240062Z   File "/opt/render/project/src/.venv/lib/python3.13/site-packages/django/utils/deprecation.py", line 120, in __call__
+2025-10-22T15:19:08.791242752Z     response = response or self.get_response(request)
+2025-10-22T15:19:08.791245472Z                            ~~~~~~~~~~~~~~~~~^^^^^^^^^
+2025-10-22T15:19:08.791248412Z   File "/opt/render/project/src/.venv/lib/python3.13/site-packages/django/core/handlers/exception.py", line 55, in inner
+2025-10-22T15:19:08.791251142Z     response = get_response(request)
+2025-10-22T15:19:08.791254142Z   File "/opt/render/project/src/.venv/lib/python3.13/site-packages/django/utils/deprecation.py", line 120, in __call__
+2025-10-22T15:19:08.791257102Z     response = response or self.get_response(request)
+2025-10-22T15:19:08.791260102Z                            ~~~~~~~~~~~~~~~~~^^^^^^^^^
+2025-10-22T15:19:08.791262812Z   File "/opt/render/project/src/.venv/lib/python3.13/site-packages/django/core/handlers/exception.py", line 55, in inner
+2025-10-22T15:19:08.791265502Z     response = get_response(request)
+2025-10-22T15:19:08.791270322Z 127.0.0.1 - - [22/Oct/2025:15:19:08 +0000] "POST /invoice/1/send-email/ HTTP/1.1" 500 0 "-" "-"
+2025-10-22T15:19:08.791274382Z   File "/opt/render/project/src/.venv/lib/python3.13/site-packages/django/core/handlers/base.py", line 197, in _get_response
+2025-10-22T15:19:08.791278953Z     response = wrapped_callback(request, *callback_args, **callback_kwargs)
+2025-10-22T15:19:08.791280813Z   File "/opt/render/project/src/invoices/views.py", line 257, in send_invoice_email
+2025-10-22T15:19:08.791282533Z     email.send(fail_silently=False)
+2025-10-22T15:19:08.791284273Z     ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+2025-10-22T15:19:08.791285963Z   File "/opt/render/project/src/.venv/lib/python3.13/site-packages/django/core/mail/message.py", line 307, in send
+2025-10-22T15:19:08.791287733Z     return self.get_connection(fail_silently).send_messages([self])
+2025-10-22T15:19:08.791289403Z            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^
+2025-10-22T15:19:08.791291623Z   File "/opt/render/project/src/.venv/lib/python3.13/site-packages/django/core/mail/backends/smtp.py", line 128, in send_messages
+2025-10-22T15:19:08.791293323Z     new_conn_created = self.open()
+2025-10-22T15:19:08.791295113Z   File "/opt/render/project/src/.venv/lib/python3.13/site-packages/django/core/mail/backends/smtp.py", line 86, in open
+2025-10-22T15:19:08.791301303Z     self.connection = self.connection_class(
+2025-10-22T15:19:08.791303103Z                       ~~~~~~~~~~~~~~~~~~~~~^
+2025-10-22T15:19:08.791304793Z         self.host, self.port, **connection_params
+2025-10-22T15:19:08.791306543Z         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-10-22T15:19:08.791308253Z     )
+2025-10-22T15:19:08.791310003Z     ^
+2025-10-22T15:19:08.791312723Z   File "/opt/render/project/python/Python-3.13.4/lib/python3.13/smtplib.py", line 255, in __init__
+2025-10-22T15:19:08.791316063Z     (code, msg) = self.connect(host, port)
+2025-10-22T15:19:08.791318943Z                   ~~~~~~~~~~~~^^^^^^^^^^^^
+2025-10-22T15:19:08.791321793Z   File "/opt/render/project/python/Python-3.13.4/lib/python3.13/smtplib.py", line 341, in connect
+2025-10-22T15:19:08.791324733Z     self.sock = self._get_socket(host, port, self.timeout)
+2025-10-22T15:19:08.791327574Z                 ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-10-22T15:19:08.791330414Z   File "/opt/render/project/python/Python-3.13.4/lib/python3.13/smtplib.py", line 312, in _get_socket
+2025-10-22T15:19:08.791333223Z     return socket.create_connection((host, port), timeout,
+2025-10-22T15:19:08.791335783Z            ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+2025-10-22T15:19:08.791338664Z                                     self.source_address)
+2025-10-22T15:19:08.791341734Z                                     ^^^^^^^^^^^^^^^^^^^^
+2025-10-22T15:19:08.791344894Z   File "/opt/render/project/python/Python-3.13.4/lib/python3.13/socket.py", line 849, in create_connection
+2025-10-22T15:19:08.791348424Z     sock.connect(sa)
+2025-10-22T15:19:08.791351244Z     ~~~~~~~~~~~~^^^^
+2025-10-22T15:19:08.791354024Z   File "/opt/render/project/src/.venv/lib/python3.13/site-packages/gunicorn/workers/base.py", line 204, in handle_abort
+2025-10-22T15:19:08.791356604Z     sys.exit(1)
+2025-10-22T15:19:08.791359314Z     ~~~~~~~~^^^
+2025-10-22T15:19:08.791362144Z SystemExit: 1
+2025-10-22T15:19:08.7916789Z [2025-10-22 15:19:08 +0000] [58] [INFO] Worker exiting (pid: 58)
+2025-10-22T15:19:09.848571784Z [2025-10-22 15:19:09 +0000] [56] [ERROR] Worker (pid:58) was sent SIGKILL! Perhaps out of memory?
+2025-10-22T15:19:09.939412966Z [2025-10-22 15:19:09 +0000] [59] [INFO] Booting worker with pid: 59
+2025-10-22T15:19:14.344762398Z 127.0.0.1 - - [22/Oct/2025:15:19:14 +0000] "GET /login/?next=/invoices/ HTTP/1.1" 200 2656 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+2025-10-22T15:19:15.208245705Z INFO 2025-10-22 15:19:15,208 payment_service Payment initialized for invoice INV-B84E3CA7: INV-B84E3CA7-20251022151914
+2025-10-22T15:19:15.210585168Z 127.0.0.1 - - [22/Oct/2025:15:19:15 +0000] "GET /invoice/1/pay/ HTTP/1.1" 302 0 "https://smart-invoice-4l68.onrender.com/invoice/1/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+2025-10-22T15:19:15.873129518Z INFO 2025-10-22 15:19:15,872 payment_service Payment initialized for invoice INV-B84E3CA7: INV-B84E3CA7-20251022151915
+2025-10-22T15:19:15.875071394Z 127.0.0.1 - - [22/Oct/2025:15:19:15 +0000] "GET /invoice/1/pay/ HTTP/1.1" 302 0 "https://smart-invoice-4l68.onrender.com/invoice/1/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+2025-10-22T15:19:16.544054252Z 127.0.0.1 - - [22/Oct/2025:15:19:16 +0000] "GET /invoice/1/pay/ HTTP/1.1" 302 0 "https://smart-invoice-4l68.onrender.com/invoice/1/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+2025-10-22T15:19:16.544090493Z ERROR 2025-10-22 15:19:16,539 payment_service Paystack initialization failed for invoice INV-B84E3CA7: Duplicate Transaction Reference
+2025-10-22T15:19:17.258488493Z INFO 2025-10-22 15:19:17,257 payment_service Payment initialized for invoice INV-B84E3CA7: INV-B84E3CA7-20251022151916
+2025-10-22T15:19:17.260094822Z 127.0.0.1 - - [22/Oct/2025:15:19:17 +0000] "GET /invoice/1/pay/ HTTP/1.1" 302 0 "https://smart-invoice-4l68.onrender.com/invoice/1/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+2025-10-22T15:19:17.93668546Z INFO 2025-10-22 15:19:17,936 payment_service Payment initialized for invoice INV-B84E3CA7: INV-B84E3CA7-20251022151917
+2025-10-22T15:19:17.939013372Z 127.0.0.1 - - [22/Oct/2025:15:19:17 +0000] "GET /invoice/1/pay/ HTTP/1.1" 302 0 "https://smart-invoice-4l68.onrender.com/invoice/1/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+2025-10-22T15:19:18.549030012Z ERROR 2025-10-22 15:19:18,548 payment_service Paystack initialization failed for invoice INV-B84E3CA7: Duplicate Transaction Reference
+2025-10-22T15:19:18.551304004Z 127.0.0.1 - - [22/Oct/2025:15:19:18 +0000] "GET /invoice/1/pay/ HTTP/1.1" 302 0 "https://smart-invoice-4l68.onrender.com/invoice/1/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+2025-10-22T15:19:19.202233822Z INFO 2025-10-22 15:19:19,202 payment_service Payment initialized for invoice INV-B84E3CA7: INV-B84E3CA7-20251022151918
+2025-10-22T15:19:19.204275109Z 127.0.0.1 - - [22/Oct/2025:15:19:19 +0000] "GET /invoice/1/pay/ HTTP/1.1" 302 0 "https://smart-invoice-4l68.onrender.com/invoice/1/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+2025-10-22T15:19:19.763243695Z INFO 2025-10-22 15:19:19,763 payment_service Payment initialized for invoice INV-B84E3CA7: INV-B84E3CA7-20251022151919
+2025-10-22T15:19:19.765809162Z 127.0.0.1 - - [22/Oct/2025:15:19:19 +0000] "GET /invoice/1/pay/ HTTP/1.1" 302 0 "https://smart-invoice-4l68.onrender.com/invoice/1/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+2025-10-22T15:19:20.360157555Z ERROR 2025-10-22 15:19:20,359 payment_service Paystack initialization failed for invoice INV-B84E3CA7: Duplicate Transaction Reference
+2025-10-22T15:19:20.362651311Z 127.0.0.1 - - [22/Oct/2025:15:19:20 +0000] "GET /invoice/1/pay/ HTTP/1.1" 302 0 "https://smart-invoice-4l68.onrender.com/invoice/1/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+2025-10-22T15:19:20.959389638Z INFO 2025-10-22 15:19:20,959 payment_service Payment initialized for invoice INV-B84E3CA7: INV-B84E3CA7-20251022151920
+2025-10-22T15:19:20.962124188Z 127.0.0.1 - - [22/Oct/2025:15:19:20 +0000] "GET /invoice/1/whatsapp-pay/ HTTP/1.1" 302 0 "https://smart-invoice-4l68.onrender.com/invoice/1/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+2025-10-22T15:19:20.963701557Z 127.0.0.1 - - [22/Oct/2025:15:19:20 +0000] "GET /static/css/output.css HTTP/1.1" 200 0 "https://smart-invoice-4l68.onrender.com/login/?next=/invoices/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+2025-10-22T15:19:21.040323979Z ERROR 2025-10-22 15:19:20,966 log Internal Server Error: /invoice/1/whatsapp-pay/
+2025-10-22T15:19:21.040357309Z Traceback (most recent call last):
+2025-10-22T15:19:21.040361699Z   File "/opt/render/project/src/.venv/lib/python3.13/site-packages/django/db/models/fields/__init__.py", line 2128, in get_prep_value
+2025-10-22T15:19:21.040365199Z     return int(value)
+2025-10-22T15:19:21.040369129Z TypeError: int() argument must be a string, a bytes-like object or a real number, not 'SimpleLazyObject'
+2025-10-22T15:19:21.04038593Z 
+2025-10-22T15:19:21.04038976Z The above exception was the direct cause of the following exception:
+2025-10-22T15:19:21.04039233Z 
+2025-10-22T15:19:21.04039522Z Traceback (most recent call last):
+2025-10-22T15:19:21.04039896Z   File "/opt/render/project/src/.venv/lib/python3.13/site-packages/django/core/handlers/exception.py", line 55, in inner
+2025-10-22T15:19:21.04040151Z     response = get_response(request)
+2025-10-22T15:19:21.04040408Z   File "/opt/render/project/src/.venv/lib/python3.13/site-packages/django/core/handlers/base.py", line 197, in _get_response
+2025-10-22T15:19:21.04040678Z     response = wrapped_callback(request, *callback_args, **callback_kwargs)
+2025-10-22T15:19:21.04040944Z   File "/opt/render/project/src/invoices/views.py", line 490, in send_whatsapp_payment_link
+2025-10-22T15:19:21.04041549Z     invoice = get_object_or_404(Invoice, pk=pk, user=request.user)
+2025-10-22T15:19:21.04041793Z   File "/opt/render/project/src/.venv/lib/python3.13/site-packages/django/shortcuts.py", line 90, in get_object_or_404
+2025-10-22T15:19:21.04042053Z     return queryset.get(*args, **kwargs)
+2025-10-22T15:19:21.04042329Z            ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+2025-10-22T15:19:21.04042597Z   File "/opt/render/project/src/.venv/lib/python3.13/site-packages/django/db/models/query.py", line 619, in get
+2025-10-22T15:19:21.040428941Z     clone = self._chain() if self.query.combinator else self.filter(*args, **kwargs)
+2025-10-22T15:19:21.040431561Z                                                         ~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+2025-10-22T15:19:21.040434071Z   File "/opt/render/project/src/.venv/lib/python3.13/site-packages/django/db/models/query.py", line 1493, in filter
+2025-10-22T15:19:21.040438031Z     return self._filter_or_exclude(False, args, kwargs)
+2025-10-22T15:19:21.040440851Z            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+2025-10-22T15:19:21.040443191Z   File "/opt/render/project/src/.venv/lib/python3.13/site-packages/django/db/models/query.py", line 1511, in _filter_or_exclude
+2025-10-22T15:19:21.040445471Z     clone._filter_or_exclude_inplace(negate, args, kwargs)
+2025-10-22T15:19:21.040447601Z     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+2025-10-22T15:19:21.040449931Z   File "/opt/render/project/src/.venv/lib/python3.13/site-packages/django/db/models/query.py", line 1518, in _filter_or_exclude_inplace
+2025-10-22T15:19:21.040452261Z     self._query.add_q(Q(*args, **kwargs))
+2025-10-22T15:19:21.040454421Z     ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+2025-10-22T15:19:21.040456771Z   File "/opt/render/project/src/.venv/lib/python3.13/site-packages/django/db/models/sql/query.py", line 1646, in add_q
+2025-10-22T15:19:21.040459051Z     clause, _ = self._add_q(q_object, can_reuse)
+2025-10-22T15:19:21.040461311Z                 ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+2025-10-22T15:19:21.040463581Z   File "/opt/render/project/src/.venv/lib/python3.13/site-packages/django/db/models/sql/query.py", line 1678, in _add_q
+2025-10-22T15:19:21.040465801Z     child_clause, needed_inner = self.build_filter(
+2025-10-22T15:19:21.040468011Z                                  ~~~~~~~~~~~~~~~~~^
+2025-10-22T15:19:21.040470371Z         child,
+2025-10-22T15:19:21.040472591Z         ^^^^^^
+2025-10-22T15:19:21.040474941Z     ...<7 lines>...
+2025-10-22T15:19:21.040477261Z         update_join_types=update_join_types,
+2025-10-22T15:19:21.040479582Z         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-10-22T15:19:21.040482231Z     )
+2025-10-22T15:19:21.040484471Z     ^
+2025-10-22T15:19:21.040486651Z   File "/opt/render/project/src/.venv/lib/python3.13/site-packages/django/db/models/sql/query.py", line 1588, in build_filter
+2025-10-22T15:19:21.040495882Z     condition = self.build_lookup(lookups, col, value)
+2025-10-22T15:19:21.040498922Z   File "/opt/render/project/src/.venv/lib/python3.13/site-packages/django/db/models/sql/query.py", line 1415, in build_lookup
+2025-10-22T15:19:21.040501772Z     lookup = lookup_class(lhs, rhs)
+2025-10-22T15:19:21.040504682Z   File "/opt/render/project/src/.venv/lib/python3.13/site-packages/django/db/models/lookups.py", line 38, in __init__
+2025-10-22T15:19:21.040507442Z     self.rhs = self.get_prep_lookup()
+2025-10-22T15:19:21.040509972Z                ~~~~~~~~~~~~~~~~~~~~^^
+2025-10-22T15:19:21.040512762Z   File "/opt/render/project/src/.venv/lib/python3.13/site-packages/django/db/models/fields/related_lookups.py", line 112, in get_prep_lookup
+2025-10-22T15:19:21.040515532Z     self.rhs = target_field.get_prep_value(self.rhs)
+2025-10-22T15:19:21.040518052Z                ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+2025-10-22T15:19:21.040520402Z   File "/opt/render/project/src/.venv/lib/python3.13/site-packages/django/db/models/fields/__init__.py", line 2130, in get_prep_value
+2025-10-22T15:19:21.040522652Z     raise e.__class__(
+2025-10-22T15:19:21.040524952Z         "Field '%s' expected a number but got %r." % (self.name, value),
+2025-10-22T15:19:21.040527752Z     ) from e
+2025-10-22T15:19:21.040530432Z TypeError: Field 'id' expected a number but got <SimpleLazyObject: <django.contrib.auth.models.AnonymousUser object at 0x715c17bb7110>>.
+2025-10-22T15:19:21.040898649Z 127.0.0.1 - - [22/Oct/2025:15:19:21 +0000] "GET /invoice/1/whatsapp-pay/ HTTP/1.1" 500 145 "https://www.google.com/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+2025-10-22T15:20:06.145024633Z 127.0.0.1 - - [22/Oct/2025:15:20:06 +0000] "POST /invoice/1/send-whatsapp/ HTTP/1.1" 302 0 "https://smart-invoice-4l68.onrender.com/invoice/1/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+2025-10-22T15:20:06.666464464Z 127.0.0.1 - - [22/Oct/2025:15:20:06 +0000] "GET /invoice/1/ HTTP/1.1" 200 22525 "https://smart-invoice-4l68.onrender.com/invoice/1/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+2025-10-22T15:20:07.049736576Z 127.0.0.1 - - [22/Oct/2025:15:20:07 +0000] "GET /static/css/output.css HTTP/1.1" 304 0 "https://smart-invoice-4l68.onrender.com/invoice/1/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+2025-10-22T15:20:20.747728381Z 127.0.0.1 - - [22/Oct/2025:15:20:20 +0000] "GET /invoice/1/edit/ HTTP/1.1" 200 30852 "https://smart-invoice-4l68.onrender.com/invoice/1/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+2025-10-22T15:21:01.057328219Z 127.0.0.1 - - [22/Oct/2025:15:21:01 +0000] "POST /invoice/1/edit/ HTTP/1.1" 302 0 "https://smart-invoice-4l68.onrender.com/invoice/1/edit/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+2025-10-22T15:21:01.522274597Z 127.0.0.1 - - [22/Oct/2025:15:21:01 +0000] "GET /invoice/1/ HTTP/1.1" 200 22502 "https://smart-invoice-4l68.onrender.com/invoice/1/edit/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+2025-10-22T15:21:35.017486627Z [2025-10-22 15:21:35 +0000] [56] [CRITICAL] WORKER TIMEOUT (pid:59)
+2025-10-22T15:21:35.022458278Z [2025-10-22 15:21:35 +0000] [59] [ERROR] Error handling request /invoice/1/send-email/
+2025-10-22T15:21:35.022484668Z Traceback (most recent call last):
+2025-10-22T15:21:35.022488938Z   File "/opt/render/project/src/.venv/lib/python3.13/site-packages/gunicorn/workers/sync.py", line 134, in handle
+2025-10-22T15:21:35.022493478Z     self.handle_request(listener, req, client, addr)
+2025-10-22T15:21:35.022505869Z     ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-10-22T15:21:35.022507769Z   File "/opt/render/project/src/.venv/lib/python3.13/site-packages/gunicorn/workers/sync.py", line 177, in handle_request
+2025-10-22T15:21:35.022509509Z     respiter = self.wsgi(environ, resp.start_response)
+2025-10-22T15:21:35.022511319Z   File "/opt/render/project/src/.venv/lib/python3.13/site-packages/django/core/handlers/wsgi.py", line 124, in __call__
+2025-10-22T15:21:35.022512989Z     response = self.get_response(request)
+2025-10-22T15:21:35.022514719Z   File "/opt/render/project/src/.venv/lib/python3.13/site-packages/django/core/handlers/base.py", line 140, in get_response
+2025-10-22T15:21:35.022516499Z     response = self._middleware_chain(request)
+2025-10-22T15:21:35.022518269Z   File "/opt/render/project/src/.venv/lib/python3.13/site-packages/django/core/handlers/exception.py", line 55, in inner
+2025-10-22T15:21:35.022520759Z     response = get_response(request)
+2025-10-22T15:21:35.022523509Z   File "/opt/render/project/src/.venv/lib/python3.13/site-packages/django/utils/deprecation.py", line 120, in __call__
+2025-10-22T15:21:35.022526819Z     response = response or self.get_response(request)
+2025-10-22T15:21:35.022529839Z                            ~~~~~~~~~~~~~~~~~^^^^^^^^^
+2025-10-22T15:21:35.022532839Z   File "/opt/render/project/src/.venv/lib/python3.13/site-packages/django/core/handlers/exception.py", line 55, in inner
+2025-10-22T15:21:35.022535709Z     response = get_response(request)
+2025-10-22T15:21:35.022541609Z   File "/opt/render/project/src/.venv/lib/python3.13/site-packages/whitenoise/middleware.py", line 123, in __call__
+2025-10-22T15:21:35.022544669Z     return self.get_response(request)
+2025-10-22T15:21:35.022547479Z            ~~~~~~~~~~~~~~~~~^^^^^^^^^
+2025-10-22T15:21:35.022550129Z   File "/opt/render/project/src/.venv/lib/python3.13/site-packages/django/core/handlers/exception.py", line 55, in inner
+2025-10-22T15:21:35.02255286Z     response = get_response(request)
+2025-10-22T15:21:35.022555989Z   File "/opt/render/project/src/.venv/lib/python3.13/site-packages/django/utils/deprecation.py", line 120, in __call__
+2025-10-22T15:21:35.02255774Z     response = response or self.get_response(request)
+2025-10-22T15:21:35.02255948Z                            ~~~~~~~~~~~~~~~~~^^^^^^^^^
+2025-10-22T15:21:35.02256119Z   File "/opt/render/project/src/.venv/lib/python3.13/site-packages/django/core/handlers/exception.py", line 55, in inner
+2025-10-22T15:21:35.02256288Z     response = get_response(request)
+2025-10-22T15:21:35.02256462Z   File "/opt/render/project/src/.venv/lib/python3.13/site-packages/django/utils/deprecation.py", line 120, in __call__
+2025-10-22T15:21:35.02256637Z     response = response or self.get_response(request)
+2025-10-22T15:21:35.02256803Z                            ~~~~~~~~~~~~~~~~~^^^^^^^^^
+2025-10-22T15:21:35.02256967Z   File "/opt/render/project/src/.venv/lib/python3.13/site-packages/django/core/handlers/exception.py", line 55, in inner
+2025-10-22T15:21:35.02257138Z     response = get_response(request)
+2025-10-22T15:21:35.02257528Z   File "/opt/render/project/src/.venv/lib/python3.13/site-packages/django/utils/deprecation.py", line 120, in __call__
+2025-10-22T15:21:35.022577Z     response = response or self.get_response(request)
+2025-10-22T15:21:35.02257879Z                            ~~~~~~~~~~~~~~~~~^^^^^^^^^
+2025-10-22T15:21:35.02258047Z   File "/opt/render/project/src/.venv/lib/python3.13/site-packages/django/core/handlers/exception.py", line 55, in inner
+2025-10-22T15:21:35.02258221Z     response = get_response(request)
+2025-10-22T15:21:35.02258384Z   File "/opt/render/project/src/.venv/lib/python3.13/site-packages/django/utils/deprecation.py", line 120, in __call__
+2025-10-22T15:21:35.02259338Z     response = response or self.get_response(request)
+2025-10-22T15:21:35.0225951Z                            ~~~~~~~~~~~~~~~~~^^^^^^^^^
+2025-10-22T15:21:35.02259714Z   File "/opt/render/project/src/.venv/lib/python3.13/site-packages/django/core/handlers/exception.py", line 55, in inner
+2025-10-22T15:21:35.02259887Z     response = get_response(request)
+2025-10-22T15:21:35.02260063Z   File "/opt/render/project/src/.venv/lib/python3.13/site-packages/django/utils/deprecation.py", line 120, in __call__
+2025-10-22T15:21:35.02260234Z     response = response or self.get_response(request)
+2025-10-22T15:21:35.02260405Z                            ~~~~~~~~~~~~~~~~~^^^^^^^^^
+2025-10-22T15:21:35.022605761Z   File "/opt/render/project/src/.venv/lib/python3.13/site-packages/django/core/handlers/exception.py", line 55, in inner
+2025-10-22T15:21:35.022607521Z     response = get_response(request)
+2025-10-22T15:21:35.022609201Z   File "/opt/render/project/src/.venv/lib/python3.13/site-packages/django/utils/deprecation.py", line 120, in __call__
+2025-10-22T15:21:35.02261197Z     response = response or self.get_response(request)
+2025-10-22T15:21:35.022614771Z                            ~~~~~~~~~~~~~~~~~^^^^^^^^^
+2025-10-22T15:21:35.022617561Z   File "/opt/render/project/src/.venv/lib/python3.13/site-packages/django/core/handlers/exception.py", line 55, in inner
+2025-10-22T15:21:35.022620221Z     response = get_response(request)
+2025-10-22T15:21:35.022636521Z   File "/opt/render/project/src/.venv/lib/python3.13/site-packages/django/core/handlers/base.py", line 197, in _get_response
+2025-10-22T15:21:35.022640691Z     response = wrapped_callback(request, *callback_args, **callback_kwargs)
+2025-10-22T15:21:35.022643991Z   File "/opt/render/project/src/invoices/views.py", line 257, in send_invoice_email
+2025-10-22T15:21:35.022646371Z     email.send(fail_silently=False)
+2025-10-22T15:21:35.022648131Z     ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+2025-10-22T15:21:35.022649841Z   File "/opt/render/project/src/.venv/lib/python3.13/site-packages/django/core/mail/message.py", line 307, in send
+2025-10-22T15:21:35.022651561Z     return self.get_connection(fail_silently).send_messages([self])
+2025-10-22T15:21:35.022652741Z 127.0.0.1 - - [22/Oct/2025:15:21:35 +0000] "POST /invoice/1/send-email/ HTTP/1.1" 500 0 "-" "-"
+2025-10-22T15:21:35.022653251Z            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^
+2025-10-22T15:21:35.022655541Z   File "/opt/render/project/src/.venv/lib/python3.13/site-packages/django/core/mail/backends/smtp.py", line 128, in send_messages
+2025-10-22T15:21:35.022667511Z     new_conn_created = self.open()
+2025-10-22T15:21:35.022671332Z   File "/opt/render/project/src/.venv/lib/python3.13/site-packages/django/core/mail/backends/smtp.py", line 86, in open
+2025-10-22T15:21:35.022673922Z     self.connection = self.connection_class(
+2025-10-22T15:21:35.022676682Z                       ~~~~~~~~~~~~~~~~~~~~~^
+2025-10-22T15:21:35.022680252Z         self.host, self.port, **connection_params
+2025-10-22T15:21:35.022686252Z         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-10-22T15:21:35.022689132Z     )
+2025-10-22T15:21:35.022691802Z     ^
+2025-10-22T15:21:35.022695152Z   File "/opt/render/project/python/Python-3.13.4/lib/python3.13/smtplib.py", line 255, in __init__
+2025-10-22T15:21:35.022698312Z     (code, msg) = self.connect(host, port)
+2025-10-22T15:21:35.022701562Z                   ~~~~~~~~~~~~^^^^^^^^^^^^
+2025-10-22T15:21:35.022704612Z   File "/opt/render/project/python/Python-3.13.4/lib/python3.13/smtplib.py", line 341, in connect
+2025-10-22T15:21:35.022707682Z     self.sock = self._get_socket(host, port, self.timeout)
+2025-10-22T15:21:35.022718583Z                 ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-10-22T15:21:35.022721243Z   File "/opt/render/project/python/Python-3.13.4/lib/python3.13/smtplib.py", line 312, in _get_socket
+2025-10-22T15:21:35.022723913Z     return socket.create_connection((host, port), timeout,
+2025-10-22T15:21:35.022726603Z            ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+2025-10-22T15:21:35.022729323Z                                     self.source_address)
+2025-10-22T15:21:35.022731953Z                                     ^^^^^^^^^^^^^^^^^^^^
+2025-10-22T15:21:35.022734633Z   File "/opt/render/project/python/Python-3.13.4/lib/python3.13/socket.py", line 849, in create_connection
+2025-10-22T15:21:35.022738003Z     sock.connect(sa)
+2025-10-22T15:21:35.022740433Z     ~~~~~~~~~~~~^^^^
+2025-10-22T15:21:35.022742953Z   File "/opt/render/project/src/.venv/lib/python3.13/site-packages/gunicorn/workers/base.py", line 204, in handle_abort
+2025-10-22T15:21:35.022745613Z     sys.exit(1)
+2025-10-22T15:21:35.022748213Z     ~~~~~~~~^^^
+2025-10-22T15:21:35.022751293Z SystemExit: 1
+2025-10-22T15:21:35.023166161Z [2025-10-22 15:21:35 +0000] [59] [INFO] Worker exiting (pid: 59)
+2025-10-22T15:21:36.049776777Z [2025-10-22 15:21:36 +0000] [56] [ERROR] Worker (pid:59) was sent SIGKILL! Perhaps out of memory?
+2025-10-22T15:21:36.139159263Z [2025-10-22 15:21:36 +0000] [60] [INFO] Booting worker with pid: 60
+2025-10-22T15:24:33.351510889Z 127.0.0.1 - - [22/Oct/2025:15:24:33 +0000] "GET / HTTP/1.1" 200 36352 "-" "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Mobile Safari/537.36"
+2025-10-22T15:24:34.247203965Z 127.0.0.1 - - [22/Oct/2025:15:24:34 +0000] "GET /static/css/output.css HTTP/1.1" 200 0 "https://smart-invoice-4l68.onrender.com/" "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Mobile Safari/537.36"
+2025-10-22T15:24:34.534925065Z 127.0.0.1 - - [22/Oct/2025:15:24:34 +0000] "GET /static/invoice-preview.png HTTP/1.1" 200 0 "https://smart-invoice-4l68.onrender.com/" "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Mobile Safari/537.36"
+2025-10-22T15:24:36.073951438Z WARNING 2025-10-22 15:24:36,073 log Not Found: /favicon.ico
+2025-10-22T15:24:36.074371516Z 127.0.0.1 - - [22/Oct/2025:15:24:36 +0000] "GET /favicon.ico HTTP/1.1" 404 179 "https://smart-invoice-4l68.onrender.com/" "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Mobile Safari/537.36"
+2025-10-22T15:21:35.022526819Z     response = response or self.get_response(request)
+2025-10-22T15:21:35.022529839Z                            ~~~~~~~~~~~~~~~~~^^^^^^^^^
+2025-10-22T15:21:35.022532839Z   File "/opt/render/project/src/.venv/lib/python3.13/site-packages/django/core/handlers/exception.py", line 55, in inner
+2025-10-22T15:21:35.022535709Z     response = get_response(request)
+2025-10-22T15:21:35.022541609Z   File "/opt/render/project/src/.venv/lib/python3.13/site-packages/whitenoise/middleware.py", line 123, in __call__
+2025-10-22T15:21:35.022544669Z     return self.get_response(request)
+2025-10-22T15:21:35.022547479Z            ~~~~~~~~~~~~~~~~~^^^^^^^^^
+2025-10-22T15:21:35.022550129Z   File "/opt/render/project/src/.venv/lib/python3.13/site-packages/django/core/handlers/exception.py", line 55, in inner
+2025-10-22T15:21:35.02255286Z     response = get_response(request)
+2025-10-22T15:21:35.022555989Z   File "/opt/render/project/src/.venv/lib/python3.13/site-packages/django/utils/deprecation.py", line 120, in __call__
+2025-10-22T15:21:35.02255774Z     response = response or self.get_response(request)
+2025-10-22T15:21:35.02255948Z                            ~~~~~~~~~~~~~~~~~^^^^^^^^^
+2025-10-22T15:21:35.02256119Z   File "/opt/render/project/src/.venv/lib/python3.13/site-packages/django/core/handlers/exception.py", line 55, in inner
+2025-10-22T15:21:35.02256288Z     response = get_response(request)
+2025-10-22T15:21:35.02256462Z   File "/opt/render/project/src/.venv/lib/python3.13/site-packages/django/utils/deprecation.py", line 120, in __call__
+2025-10-22T15:21:35.02256637Z     response = response or self.get_response(request)
+2025-10-22T15:21:35.02256803Z                            ~~~~~~~~~~~~~~~~~^^^^^^^^^
+2025-10-22T15:21:35.02256967Z   File "/opt/render/project/src/.venv/lib/python3.13/site-packages/django/core/handlers/exception.py", line 55, in inner
+2025-10-22T15:21:35.02257138Z     response = get_response(request)
+2025-10-22T15:21:35.02257528Z   File "/opt/render/project/src/.venv/lib/python3.13/site-packages/django/utils/deprecation.py", line 120, in __call__
+2025-10-22T15:21:35.022577Z     response = response or self.get_response(request)
+2025-10-22T15:21:35.02257879Z                            ~~~~~~~~~~~~~~~~~^^^^^^^^^
+2025-10-22T15:21:35.02258047Z   File "/opt/render/project/src/.venv/lib/python3.13/site-packages/django/core/handlers/exception.py", line 55, in inner
+2025-10-22T15:21:35.02258221Z     response = get_response(request)
+2025-10-22T15:21:35.02258384Z   File "/opt/render/project/src/.venv/lib/python3.13/site-packages/django/utils/deprecation.py", line 120, in __call__
+2025-10-22T15:21:35.02259338Z     response = response or self.get_response(request)
+2025-10-22T15:21:35.0225951Z                            ~~~~~~~~~~~~~~~~~^^^^^^^^^
+2025-10-22T15:21:35.02259714Z   File "/opt/render/project/src/.venv/lib/python3.13/site-packages/django/core/handlers/exception.py", line 55, in inner
+2025-10-22T15:21:35.02259887Z     response = get_response(request)
+2025-10-22T15:21:35.02260063Z   File "/opt/render/project/src/.venv/lib/python3.13/site-packages/django/utils/deprecation.py", line 120, in __call__
+2025-10-22T15:21:35.02260234Z     response = response or self.get_response(request)
+2025-10-22T15:21:35.02260405Z                            ~~~~~~~~~~~~~~~~~^^^^^^^^^
+2025-10-22T15:21:35.022605761Z   File "/opt/render/project/src/.venv/lib/python3.13/site-packages/django/core/handlers/exception.py", line 55, in inner
+2025-10-22T15:21:35.022607521Z     response = get_response(request)
+2025-10-22T15:21:35.022609201Z   File "/opt/render/project/src/.venv/lib/python3.13/site-packages/django/utils/deprecation.py", line 120, in __call__
+2025-10-22T15:21:35.02261197Z     response = response or self.get_response(request)
+2025-10-22T15:21:35.022614771Z                            ~~~~~~~~~~~~~~~~~^^^^^^^^^
+2025-10-22T15:21:35.022617561Z   File "/opt/render/project/src/.venv/lib/python3.13/site-packages/django/core/handlers/exception.py", line 55, in inner
+2025-10-22T15:21:35.022620221Z     response = get_response(request)
+2025-10-22T15:21:35.022636521Z   File "/opt/render/project/src/.venv/lib/python3.13/site-packages/django/core/handlers/base.py", line 197, in _get_response
+2025-10-22T15:21:35.022640691Z     response = wrapped_callback(request, *callback_args, **callback_kwargs)
+2025-10-22T15:21:35.022643991Z   File "/opt/render/project/src/invoices/views.py", line 257, in send_invoice_email
+2025-10-22T15:21:35.022646371Z     email.send(fail_silently=False)
+2025-10-22T15:21:35.022648131Z     ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+2025-10-22T15:21:35.022649841Z   File "/opt/render/project/src/.venv/lib/python3.13/site-packages/django/core/mail/message.py", line 307, in send
+2025-10-22T15:21:35.022651561Z     return self.get_connection(fail_silently).send_messages([self])
+2025-10-22T15:21:35.022652741Z 127.0.0.1 - - [22/Oct/2025:15:21:35 +0000] "POST /invoice/1/send-email/ HTTP/1.1" 500 0 "-" "-"
+2025-10-22T15:21:35.022653251Z            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^
+2025-10-22T15:21:35.022655541Z   File "/opt/render/project/src/.venv/lib/python3.13/site-packages/django/core/mail/backends/smtp.py", line 128, in send_messages
+2025-10-22T15:21:35.022667511Z     new_conn_created = self.open()
+2025-10-22T15:21:35.022671332Z   File "/opt/render/project/src/.venv/lib/python3.13/site-packages/django/core/mail/backends/smtp.py", line 86, in open
+2025-10-22T15:21:35.022673922Z     self.connection = self.connection_class(
+2025-10-22T15:21:35.022676682Z                       ~~~~~~~~~~~~~~~~~~~~~^
+2025-10-22T15:21:35.022680252Z         self.host, self.port, **connection_params
+2025-10-22T15:21:35.022686252Z         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-10-22T15:21:35.022689132Z     )
+2025-10-22T15:21:35.022691802Z     ^
+2025-10-22T15:21:35.022695152Z   File "/opt/render/project/python/Python-3.13.4/lib/python3.13/smtplib.py", line 255, in __init__
+2025-10-22T15:21:35.022698312Z     (code, msg) = self.connect(host, port)
+2025-10-22T15:21:35.022701562Z                   ~~~~~~~~~~~~^^^^^^^^^^^^
+2025-10-22T15:21:35.022704612Z   File "/opt/render/project/python/Python-3.13.4/lib/python3.13/smtplib.py", line 341, in connect
+2025-10-22T15:21:35.022707682Z     self.sock = self._get_socket(host, port, self.timeout)
+2025-10-22T15:21:35.022718583Z                 ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-10-22T15:21:35.022721243Z   File "/opt/render/project/python/Python-3.13.4/lib/python3.13/smtplib.py", line 312, in _get_socket
+2025-10-22T15:21:35.022723913Z     return socket.create_connection((host, port), timeout,
+2025-10-22T15:21:35.022726603Z            ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+2025-10-22T15:21:35.022729323Z                                     self.source_address)
+2025-10-22T15:21:35.022731953Z                                     ^^^^^^^^^^^^^^^^^^^^
+2025-10-22T15:21:35.022734633Z   File "/opt/render/project/python/Python-3.13.4/lib/python3.13/socket.py", line 849, in create_connection
+2025-10-22T15:21:35.022738003Z     sock.connect(sa)
+2025-10-22T15:21:35.022740433Z     ~~~~~~~~~~~~^^^^
+2025-10-22T15:21:35.022742953Z   File "/opt/render/project/src/.venv/lib/python3.13/site-packages/gunicorn/workers/base.py", line 204, in handle_abort
+2025-10-22T15:21:35.022745613Z     sys.exit(1)
+2025-10-22T15:21:35.022748213Z     ~~~~~~~~^^^
+2025-10-22T15:21:35.022751293Z SystemExit: 1
+2025-10-22T15:21:35.023166161Z [2025-10-22 15:21:35 +0000] [59] [INFO] Worker exiting (pid: 59)
+2025-10-22T15:21:36.049776777Z [2025-10-22 15:21:36 +0000] [56] [ERROR] Worker (pid:59) was sent SIGKILL! Perhaps out of memory?
+2025-10-22T15:21:36.139159263Z [2025-10-22 15:21:36 +0000] [60] [INFO] Booting worker with pid: 60
+2025-10-22T15:24:33.351510889Z 127.0.0.1 - - [22/Oct/2025:15:24:33 +0000] "GET / HTTP/1.1" 200 36352 "-" "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Mobile Safari/537.36"
+2025-10-22T15:24:34.247203965Z 127.0.0.1 - - [22/Oct/2025:15:24:34 +0000] "GET /static/css/output.css HTTP/1.1" 200 0 "https://smart-invoice-4l68.onrender.com/" "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Mobile Safari/537.36"
+2025-10-22T15:24:34.534925065Z 127.0.0.1 - - [22/Oct/2025:15:24:34 +0000] "GET /static/invoice-preview.png HTTP/1.1" 200 0 "https://smart-invoice-4l68.onrender.com/" "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Mobile Safari/537.36"
+2025-10-22T15:24:36.073951438Z WARNING 2025-10-22 15:24:36,073 log Not Found: /favicon.ico
+2025-10-22T15:24:36.074371516Z 127.0.0.1 - - [22/Oct/2025:15:24:36 +0000] "GET /favicon.ico HTTP/1.1" 404 179 "https://smart-invoice-4l68.onrender.com/" "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Mobile Safari/537.36"
+2025-10-22T15:31:20.408838113Z 127.0.0.1 - - [22/Oct/2025:15:31:20 +0000] "GET / HTTP/1.1" 200 36352 "-" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+2025-10-22T15:31:20.803178079Z 127.0.0.1 - - [22/Oct/2025:15:31:20 +0000] "GET /static/css/output.css HTTP/1.1" 304 0 "https://smart-invoice-4l68.onrender.com/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+2025-10-22T15:31:21.092499275Z 127.0.0.1 - - [22/Oct/2025:15:31:21 +0000] "GET /static/invoice-preview.png HTTP/1.1" 304 0 "https://smart-invoice-4l68.onrender.com/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+2025-10-22T15:34:36.558669523Z 127.0.0.1 - - [22/Oct/2025:15:34:36 +0000] "GET / HTTP/1.1" 200 36352 "-" "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Mobile Safari/537.36"
+2025-10-22T15:34:38.039822921Z 127.0.0.1 - - [22/Oct/2025:15:34:38 +0000] "GET /static/css/output.css HTTP/1.1" 304 0 "https://smart-invoice-4l68.onrender.com/" "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Mobile Safari/537.36"
+2025-10-22T15:34:38.369326827Z 127.0.0.1 - - [22/Oct/2025:15:34:38 +0000] "GET /static/invoice-preview.png HTTP/1.1" 304 0 "https://smart-invoice-4l68.onrender.com/" "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Mobile Safari/537.36"
+2025-10-22T15:34:40.102798934Z WARNING 2025-10-22 15:34:40,102 log Not Found: /favicon.ico
+2025-10-22T15:34:40.10315161Z 127.0.0.1 - - [22/Oct/2025:15:34:40 +0000] "GET /favicon.ico HTTP/1.1" 404 179 "https://smart-invoice-4l68.onrender.com/" "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Mobile Safari/537.36"
+2025-10-22T15:34:50.520347902Z 127.0.0.1 - - [22/Oct/2025:15:34:50 +0000] "GET / HTTP/1.1" 200 36352 "-" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+2025-10-22T15:34:51.162622612Z 127.0.0.1 - - [22/Oct/2025:15:34:51 +0000] "GET /static/invoice-preview.png HTTP/1.1" 304 0 "https://smart-invoice-4l68.onrender.com/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+2025-10-22T15:34:51.186024515Z 127.0.0.1 - - [22/Oct/2025:15:34:51 +0000] "GET /static/css/output.css HTTP/1.1" 304 0 "https://smart-invoice-4l68.onrender.com/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+2025-10-22T15:36:26.182688462Z 127.0.0.1 - - [22/Oct/2025:15:36:26 +0000] "GET /invoice/create/ HTTP/1.1" 302 0 "https://smart-invoice-4l68.onrender.com/" "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Mobile Safari/537.36"
+2025-10-22T15:36:27.059732477Z 127.0.0.1 - - [22/Oct/2025:15:36:27 +0000] "GET /login/?next=/invoice/create/ HTTP/1.1" 200 2656 "https://smart-invoice-4l68.onrender.com/" "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Mobile Safari/537.36"
+2025-10-22T15:36:27.688467555Z 127.0.0.1 - - [22/Oct/2025:15:36:27 +0000] "GET /static/css/output.css HTTP/1.1" 304 0 "https://smart-invoice-4l68.onrender.com/login/?next=/invoice/create/" "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Mobile Safari/537.36"
+2025-10-22T15:36:34.120595585Z 127.0.0.1 - - [22/Oct/2025:15:36:34 +0000] "GET /signup/ HTTP/1.1" 200 3005 "https://smart-invoice-4l68.onrender.com/login/?next=/invoice/create/" "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Mobile Safari/537.36"
+2025-10-22T15:37:36.301288477Z 127.0.0.1 - - [22/Oct/2025:15:37:36 +0000] "POST /signup/ HTTP/1.1" 200 3213 "https://smart-invoice-4l68.onrender.com/signup/" "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Mobile Safari/537.36"
+2025-10-22T15:37:37.338176511Z 127.0.0.1 - - [22/Oct/2025:15:37:37 +0000] "GET /static/css/output.css HTTP/1.1" 304 0 "https://smart-invoice-4l68.onrender.com/signup/" "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Mobile Safari/537.36"
+2025-10-22T15:37:59.065396985Z 127.0.0.1 - - [22/Oct/2025:15:37:59 +0000] "GET /login/ HTTP/1.1" 200 2656 "https://smart-invoice-4l68.onrender.com/signup/" "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Mobile Safari/537.36"
+2025-10-22T15:38:04.342843586Z 127.0.0.1 - - [22/Oct/2025:15:38:04 +0000] "GET /signup/ HTTP/1.1" 200 3005 "https://smart-invoice-4l68.onrender.com/login/" "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Mobile Safari/537.36"
+2025-10-22T15:39:03.136747044Z 127.0.0.1 - - [22/Oct/2025:15:39:03 +0000] "GET /signup/ HTTP/1.1" 200 3005 "https://smart-invoice-4l68.onrender.com/login/" "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Mobile Safari/537.36"
+2025-10-22T15:39:03.794043264Z 127.0.0.1 - - [22/Oct/2025:15:39:03 +0000] "GET /static/css/output.css HTTP/1.1" 304 0 "https://smart-invoice-4l68.onrender.com/signup/" "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Mobile Safari/537.36"
+2025-10-22T15:39:28.402728339Z 127.0.0.1 - - [22/Oct/2025:15:39:28 +0000] "POST /signup/ HTTP/1.1" 302 0 "https://smart-invoice-4l68.onrender.com/signup/" "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Mobile Safari/537.36"
+2025-10-22T15:39:28.407535206Z 127.0.0.1 - - [22/Oct/2025:15:39:28 +0000] "POST /signup/ HTTP/1.1" 200 3143 "https://smart-invoice-4l68.onrender.com/signup/" "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Mobile Safari/537.36"
+2025-10-22T15:39:38.498395767Z 127.0.0.1 - - [22/Oct/2025:15:39:38 +0000] "GET /signup/ HTTP/1.1" 200 3005 "https://smart-invoice-4l68.onrender.com/login/" "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Mobile Safari/537.36"
+2025-10-22T15:39:41.454231492Z 127.0.0.1 - - [22/Oct/2025:15:39:41 +0000] "GET /login/ HTTP/1.1" 200 2656 "https://smart-invoice-4l68.onrender.com/signup/" "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Mobile Safari/537.36"
+2025-10-22T15:21:35.02256967Z   File "/opt/render/project/src/.venv/lib/python3.13/site-packages/django/core/handlers/exception.py", line 55, in inner
+2025-10-22T15:21:35.02257138Z     response = get_response(request)
+2025-10-22T15:21:35.02257528Z   File "/opt/render/project/src/.venv/lib/python3.13/site-packages/django/utils/deprecation.py", line 120, in __call__
+2025-10-22T15:21:35.022577Z     response = response or self.get_response(request)
+2025-10-22T15:21:35.02257879Z                            ~~~~~~~~~~~~~~~~~^^^^^^^^^
+2025-10-22T15:21:35.02258047Z   File "/opt/render/project/src/.venv/lib/python3.13/site-packages/django/core/handlers/exception.py", line 55, in inner
+2025-10-22T15:21:35.02258221Z     response = get_response(request)
+2025-10-22T15:21:35.02258384Z   File "/opt/render/project/src/.venv/lib/python3.13/site-packages/django/utils/deprecation.py", line 120, in __call__
+2025-10-22T15:21:35.02259338Z     response = response or self.get_response(request)
+2025-10-22T15:21:35.0225951Z                            ~~~~~~~~~~~~~~~~~^^^^^^^^^
+2025-10-22T15:21:35.02259714Z   File "/opt/render/project/src/.venv/lib/python3.13/site-packages/django/core/handlers/exception.py", line 55, in inner
+2025-10-22T15:21:35.02259887Z     response = get_response(request)
+2025-10-22T15:21:35.02260063Z   File "/opt/render/project/src/.venv/lib/python3.13/site-packages/django/utils/deprecation.py", line 120, in __call__
+2025-10-22T15:21:35.02260234Z     response = response or self.get_response(request)
+2025-10-22T15:21:35.02260405Z                            ~~~~~~~~~~~~~~~~~^^^^^^^^^
+2025-10-22T15:21:35.022605761Z   File "/opt/render/project/src/.venv/lib/python3.13/site-packages/django/core/handlers/exception.py", line 55, in inner
+2025-10-22T15:21:35.022607521Z     response = get_response(request)
+2025-10-22T15:21:35.022609201Z   File "/opt/render/project/src/.venv/lib/python3.13/site-packages/django/utils/deprecation.py", line 120, in __call__
+2025-10-22T15:21:35.02261197Z     response = response or self.get_response(request)
+2025-10-22T15:21:35.022614771Z                            ~~~~~~~~~~~~~~~~~^^^^^^^^^
+2025-10-22T15:21:35.022617561Z   File "/opt/render/project/src/.venv/lib/python3.13/site-packages/django/core/handlers/exception.py", line 55, in inner
+2025-10-22T15:21:35.022620221Z     response = get_response(request)
+2025-10-22T15:21:35.022636521Z   File "/opt/render/project/src/.venv/lib/python3.13/site-packages/django/core/handlers/base.py", line 197, in _get_response
+2025-10-22T15:21:35.022640691Z     response = wrapped_callback(request, *callback_args, **callback_kwargs)
+2025-10-22T15:21:35.022643991Z   File "/opt/render/project/src/invoices/views.py", line 257, in send_invoice_email
+2025-10-22T15:21:35.022646371Z     email.send(fail_silently=False)
+2025-10-22T15:21:35.022648131Z     ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+2025-10-22T15:21:35.022649841Z   File "/opt/render/project/src/.venv/lib/python3.13/site-packages/django/core/mail/message.py", line 307, in send
+2025-10-22T15:21:35.022651561Z     return self.get_connection(fail_silently).send_messages([self])
+2025-10-22T15:21:35.022652741Z 127.0.0.1 - - [22/Oct/2025:15:21:35 +0000] "POST /invoice/1/send-email/ HTTP/1.1" 500 0 "-" "-"
+2025-10-22T15:21:35.022653251Z            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^
+2025-10-22T15:21:35.022655541Z   File "/opt/render/project/src/.venv/lib/python3.13/site-packages/django/core/mail/backends/smtp.py", line 128, in send_messages
+2025-10-22T15:21:35.022667511Z     new_conn_created = self.open()
+2025-10-22T15:21:35.022671332Z   File "/opt/render/project/src/.venv/lib/python3.13/site-packages/django/core/mail/backends/smtp.py", line 86, in open
+2025-10-22T15:21:35.022673922Z     self.connection = self.connection_class(
+2025-10-22T15:21:35.022676682Z                       ~~~~~~~~~~~~~~~~~~~~~^
+2025-10-22T15:21:35.022680252Z         self.host, self.port, **connection_params
+2025-10-22T15:21:35.022686252Z         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-10-22T15:21:35.022689132Z     )
+2025-10-22T15:21:35.022691802Z     ^
+2025-10-22T15:21:35.022695152Z   File "/opt/render/project/python/Python-3.13.4/lib/python3.13/smtplib.py", line 255, in __init__
+2025-10-22T15:21:35.022698312Z     (code, msg) = self.connect(host, port)
+2025-10-22T15:21:35.022701562Z                   ~~~~~~~~~~~~^^^^^^^^^^^^
+2025-10-22T15:21:35.022704612Z   File "/opt/render/project/python/Python-3.13.4/lib/python3.13/smtplib.py", line 341, in connect
+2025-10-22T15:21:35.022707682Z     self.sock = self._get_socket(host, port, self.timeout)
+2025-10-22T15:21:35.022718583Z                 ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-10-22T15:21:35.022721243Z   File "/opt/render/project/python/Python-3.13.4/lib/python3.13/smtplib.py", line 312, in _get_socket
+2025-10-22T15:21:35.022723913Z     return socket.create_connection((host, port), timeout,
+2025-10-22T15:21:35.022726603Z            ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+2025-10-22T15:21:35.022729323Z                                     self.source_address)
+2025-10-22T15:21:35.022731953Z                                     ^^^^^^^^^^^^^^^^^^^^
+2025-10-22T15:21:35.022734633Z   File "/opt/render/project/python/Python-3.13.4/lib/python3.13/socket.py", line 849, in create_connection
+2025-10-22T15:21:35.022738003Z     sock.connect(sa)
+2025-10-22T15:21:35.022740433Z     ~~~~~~~~~~~~^^^^
+2025-10-22T15:21:35.022742953Z   File "/opt/render/project/src/.venv/lib/python3.13/site-packages/gunicorn/workers/base.py", line 204, in handle_abort
+2025-10-22T15:21:35.022745613Z     sys.exit(1)
+2025-10-22T15:21:35.022748213Z     ~~~~~~~~^^^
+2025-10-22T15:21:35.022751293Z SystemExit: 1
+2025-10-22T15:21:35.023166161Z [2025-10-22 15:21:35 +0000] [59] [INFO] Worker exiting (pid: 59)
+2025-10-22T15:21:36.049776777Z [2025-10-22 15:21:36 +0000] [56] [ERROR] Worker (pid:59) was sent SIGKILL! Perhaps out of memory?
+2025-10-22T15:21:36.139159263Z [2025-10-22 15:21:36 +0000] [60] [INFO] Booting worker with pid: 60
+2025-10-22T15:24:33.351510889Z 127.0.0.1 - - [22/Oct/2025:15:24:33 +0000] "GET / HTTP/1.1" 200 36352 "-" "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Mobile Safari/537.36"
+2025-10-22T15:24:34.247203965Z 127.0.0.1 - - [22/Oct/2025:15:24:34 +0000] "GET /static/css/output.css HTTP/1.1" 200 0 "https://smart-invoice-4l68.onrender.com/" "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Mobile Safari/537.36"
+2025-10-22T15:24:34.534925065Z 127.0.0.1 - - [22/Oct/2025:15:24:34 +0000] "GET /static/invoice-preview.png HTTP/1.1" 200 0 "https://smart-invoice-4l68.onrender.com/" "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Mobile Safari/537.36"
+2025-10-22T15:24:36.073951438Z WARNING 2025-10-22 15:24:36,073 log Not Found: /favicon.ico
+2025-10-22T15:24:36.074371516Z 127.0.0.1 - - [22/Oct/2025:15:24:36 +0000] "GET /favicon.ico HTTP/1.1" 404 179 "https://smart-invoice-4l68.onrender.com/" "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Mobile Safari/537.36"
+2025-10-22T15:31:20.408838113Z 127.0.0.1 - - [22/Oct/2025:15:31:20 +0000] "GET / HTTP/1.1" 200 36352 "-" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+2025-10-22T15:31:20.803178079Z 127.0.0.1 - - [22/Oct/2025:15:31:20 +0000] "GET /static/css/output.css HTTP/1.1" 304 0 "https://smart-invoice-4l68.onrender.com/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+2025-10-22T15:31:21.092499275Z 127.0.0.1 - - [22/Oct/2025:15:31:21 +0000] "GET /static/invoice-preview.png HTTP/1.1" 304 0 "https://smart-invoice-4l68.onrender.com/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+2025-10-22T15:34:36.558669523Z 127.0.0.1 - - [22/Oct/2025:15:34:36 +0000] "GET / HTTP/1.1" 200 36352 "-" "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Mobile Safari/537.36"
+2025-10-22T15:34:38.039822921Z 127.0.0.1 - - [22/Oct/2025:15:34:38 +0000] "GET /static/css/output.css HTTP/1.1" 304 0 "https://smart-invoice-4l68.onrender.com/" "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Mobile Safari/537.36"
+2025-10-22T15:34:38.369326827Z 127.0.0.1 - - [22/Oct/2025:15:34:38 +0000] "GET /static/invoice-preview.png HTTP/1.1" 304 0 "https://smart-invoice-4l68.onrender.com/" "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Mobile Safari/537.36"
+2025-10-22T15:34:40.102798934Z WARNING 2025-10-22 15:34:40,102 log Not Found: /favicon.ico
+2025-10-22T15:34:40.10315161Z 127.0.0.1 - - [22/Oct/2025:15:34:40 +0000] "GET /favicon.ico HTTP/1.1" 404 179 "https://smart-invoice-4l68.onrender.com/" "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Mobile Safari/537.36"
+2025-10-22T15:34:50.520347902Z 127.0.0.1 - - [22/Oct/2025:15:34:50 +0000] "GET / HTTP/1.1" 200 36352 "-" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+2025-10-22T15:34:51.162622612Z 127.0.0.1 - - [22/Oct/2025:15:34:51 +0000] "GET /static/invoice-preview.png HTTP/1.1" 304 0 "https://smart-invoice-4l68.onrender.com/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+2025-10-22T15:34:51.186024515Z 127.0.0.1 - - [22/Oct/2025:15:34:51 +0000] "GET /static/css/output.css HTTP/1.1" 304 0 "https://smart-invoice-4l68.onrender.com/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+2025-10-22T15:36:26.182688462Z 127.0.0.1 - - [22/Oct/2025:15:36:26 +0000] "GET /invoice/create/ HTTP/1.1" 302 0 "https://smart-invoice-4l68.onrender.com/" "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Mobile Safari/537.36"
+2025-10-22T15:36:27.059732477Z 127.0.0.1 - - [22/Oct/2025:15:36:27 +0000] "GET /login/?next=/invoice/create/ HTTP/1.1" 200 2656 "https://smart-invoice-4l68.onrender.com/" "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Mobile Safari/537.36"
+2025-10-22T15:36:27.688467555Z 127.0.0.1 - - [22/Oct/2025:15:36:27 +0000] "GET /static/css/output.css HTTP/1.1" 304 0 "https://smart-invoice-4l68.onrender.com/login/?next=/invoice/create/" "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Mobile Safari/537.36"
+2025-10-22T15:36:34.120595585Z 127.0.0.1 - - [22/Oct/2025:15:36:34 +0000] "GET /signup/ HTTP/1.1" 200 3005 "https://smart-invoice-4l68.onrender.com/login/?next=/invoice/create/" "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Mobile Safari/537.36"
+2025-10-22T15:37:36.301288477Z 127.0.0.1 - - [22/Oct/2025:15:37:36 +0000] "POST /signup/ HTTP/1.1" 200 3213 "https://smart-invoice-4l68.onrender.com/signup/" "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Mobile Safari/537.36"
+2025-10-22T15:37:37.338176511Z 127.0.0.1 - - [22/Oct/2025:15:37:37 +0000] "GET /static/css/output.css HTTP/1.1" 304 0 "https://smart-invoice-4l68.onrender.com/signup/" "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Mobile Safari/537.36"
+2025-10-22T15:37:59.065396985Z 127.0.0.1 - - [22/Oct/2025:15:37:59 +0000] "GET /login/ HTTP/1.1" 200 2656 "https://smart-invoice-4l68.onrender.com/signup/" "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Mobile Safari/537.36"
+2025-10-22T15:38:04.342843586Z 127.0.0.1 - - [22/Oct/2025:15:38:04 +0000] "GET /signup/ HTTP/1.1" 200 3005 "https://smart-invoice-4l68.onrender.com/login/" "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Mobile Safari/537.36"
+2025-10-22T15:39:03.136747044Z 127.0.0.1 - - [22/Oct/2025:15:39:03 +0000] "GET /signup/ HTTP/1.1" 200 3005 "https://smart-invoice-4l68.onrender.com/login/" "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Mobile Safari/537.36"
+2025-10-22T15:39:03.794043264Z 127.0.0.1 - - [22/Oct/2025:15:39:03 +0000] "GET /static/css/output.css HTTP/1.1" 304 0 "https://smart-invoice-4l68.onrender.com/signup/" "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Mobile Safari/537.36"
+2025-10-22T15:39:28.402728339Z 127.0.0.1 - - [22/Oct/2025:15:39:28 +0000] "POST /signup/ HTTP/1.1" 302 0 "https://smart-invoice-4l68.onrender.com/signup/" "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Mobile Safari/537.36"
+2025-10-22T15:39:28.407535206Z 127.0.0.1 - - [22/Oct/2025:15:39:28 +0000] "POST /signup/ HTTP/1.1" 200 3143 "https://smart-invoice-4l68.onrender.com/signup/" "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Mobile Safari/537.36"
+2025-10-22T15:39:38.498395767Z 127.0.0.1 - - [22/Oct/2025:15:39:38 +0000] "GET /signup/ HTTP/1.1" 200 3005 "https://smart-invoice-4l68.onrender.com/login/" "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Mobile Safari/537.36"
+2025-10-22T15:39:41.454231492Z 127.0.0.1 - - [22/Oct/2025:15:39:41 +0000] "GET /login/ HTTP/1.1" 200 2656 "https://smart-invoice-4l68.onrender.com/signup/" "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Mobile Safari/537.36"
+2025-10-22T15:39:49.045648213Z 127.0.0.1 - - [22/Oct/2025:15:39:49 +0000] "POST /login/ HTTP/1.1" 302 0 "https://smart-invoice-4l68.onrender.com/login/" "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Mobile Safari/537.36"
+2025-10-22T15:39:53.970253179Z 127.0.0.1 - - [22/Oct/2025:15:39:53 +0000] "POST /login/ HTTP/1.1" 302 0 "https://smart-invoice-4l68.onrender.com/login/" "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Mobile Safari/537.36"
+2025-10-22T15:39:54.53869935Z 127.0.0.1 - - [22/Oct/2025:15:39:54 +0000] "GET /invoices/ HTTP/1.1" 200 21304 "https://smart-invoice-4l68.onrender.com/login/" "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Mobile Safari/537.36"
+2025-10-22T15:40:00.700044451Z 127.0.0.1 - - [22/Oct/2025:15:40:00 +0000] "GET /invoices/ HTTP/1.1" 302 0 "-" "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Mobile Safari/537.36 (compatible; Google-Read-Aloud; +https://support.google.com/webmasters/answer/1061943)"
+2025-10-22T15:40:01.173213746Z 127.0.0.1 - - [22/Oct/2025:15:40:01 +0000] "GET /login/?next=/invoices/ HTTP/1.1" 200 2656 "-" "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Mobile Safari/537.36 (compatible; Google-Read-Aloud; +https://support.google.com/webmasters/answer/1061943)"
+2025-10-22T15:40:19.641261028Z 127.0.0.1 - - [22/Oct/2025:15:40:19 +0000] "GET /invoice/create/ HTTP/1.1" 200 30502 "https://smart-invoice-4l68.onrender.com/invoices/" "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Mobile Safari/537.36"
+2025-10-22T15:40:20.181356446Z 127.0.0.1 - - [22/Oct/2025:15:40:20 +0000] "GET /static/css/output.css HTTP/1.1" 304 0 "https://smart-invoice-4l68.onrender.com/invoice/create/" "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Mobile Safari/537.36"
+2025-10-22T15:40:24.653248134Z 127.0.0.1 - - [22/Oct/2025:15:40:24 +0000] "GET /invoice/create/ HTTP/1.1" 302 0 "-" "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Mobile Safari/537.36 (compatible; Google-Read-Aloud; +https://support.google.com/webmasters/answer/1061943)"
+2025-10-22T15:40:24.841090209Z 127.0.0.1 - - [22/Oct/2025:15:40:24 +0000] "GET /login/?next=/invoice/create/ HTTP/1.1" 200 2656 "-" "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Mobile Safari/537.36 (compatible; Google-Read-Aloud; +https://support.google.com/webmasters/answer/1061943)"
