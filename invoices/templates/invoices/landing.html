@@ -368,12 +368,12 @@
             Features
             <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-violet-500 to-fuchsia-500 group-hover:w-full transition-all duration-300"></span>
           </a>
-          <a href="#testimonials" class="text-sm font-medium text-gray-300 hover:text-white transition relative group">
-            Testimonials
+          <a href="{% url 'faq' %}" class="text-sm font-medium text-gray-300 hover:text-white transition relative group">
+            FAQ
             <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-violet-500 to-fuchsia-500 group-hover:w-full transition-all duration-300"></span>
           </a>
-          <a href="#how-it-works" class="text-sm font-medium text-gray-300 hover:text-white transition relative group">
-            How It Works
+          <a href="{% url 'support' %}" class="text-sm font-medium text-gray-300 hover:text-white transition relative group">
+            Support
             <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-violet-500 to-fuchsia-500 group-hover:w-full transition-all duration-300"></span>
           </a>
           <a href="{% url 'invoice_list' %}" class="text-sm font-medium text-gray-300 hover:text-white transition relative group">
@@ -400,8 +400,8 @@
     </button>
     <div class="flex flex-col gap-6 mt-12">
       <a href="#features" class="text-white hover:text-violet-400 transition">Features</a>
-      <a href="#testimonials" class="text-white hover:text-violet-400 transition">Testimonials</a>
-      <a href="#how-it-works" class="text-white hover:text-violet-400 transition">How It Works</a>
+      <a href="{% url 'faq' %}" class="text-white hover:text-violet-400 transition">FAQ</a>
+      <a href="{% url 'support' %}" class="text-white hover:text-violet-400 transition">Support</a>
       <a href="{% url 'invoice_list' %}" class="text-white hover:text-violet-400 transition">Dashboard</a>
       <a href="{% url 'create_invoice' %}" class="btn btn-primary px-6 py-3 rounded-lg text-center">Get Started Free</a>
     </div>
@@ -721,7 +721,7 @@
             The most advanced invoicing platform for modern businesses. Create professional invoices, get paid faster, and grow your business.
           </p>
           <p class="text-sm text-gray-500">
-            Built with ❤️ by <span class="font-semibold text-violet-400">Jeffery Onome Emuodafevware</span>
+            Built by <a href="https://onome-portfolio-ten.vercel.app" target="_blank" rel="noopener noreferrer" class="font-semibold text-violet-400 hover:text-violet-300 transition underline decoration-dotted">Jeffery Onome</a> — <a href="https://onome-portfolio-ten.vercel.app" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-violet-400 transition">onome-portfolio-ten.vercel.app</a>
           </p>
         </div>
         
@@ -729,8 +729,8 @@
           <h3 class="font-bold mb-4">Quick Links</h3>
           <ul class="space-y-2 text-gray-400">
             <li><a href="#features" class="hover:text-violet-400 transition">Features</a></li>
-            <li><a href="#testimonials" class="hover:text-violet-400 transition">Testimonials</a></li>
-            <li><a href="#how-it-works" class="hover:text-violet-400 transition">How It Works</a></li>
+            <li><a href="{% url 'faq' %}" class="hover:text-violet-400 transition">FAQ</a></li>
+            <li><a href="{% url 'support' %}" class="hover:text-violet-400 transition">Support</a></li>
             <li><a href="{% url 'invoice_list' %}" class="hover:text-violet-400 transition">Dashboard</a></li>
           </ul>
         </div>
