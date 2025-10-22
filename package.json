@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build:css": "@tailwindcss/cli -i invoices/static/css/input.css -o invoices/static/css/output.css --minify",
-    "watch:css": "@tailwindcss/cli -i invoices/static/css/input.css -o invoices/static/css/output.css --watch",
+    "build:css": "npx @tailwindcss/cli -i invoices/static/css/input.css -o invoices/static/css/output.css --minify",
+    "watch:css": "npx @tailwindcss/cli -i invoices/static/css/input.css -o invoices/static/css/output.css --watch",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
