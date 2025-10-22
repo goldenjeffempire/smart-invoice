@@ -40,3 +40,5 @@ wheel==0.45.1
 xhtml2pdf==0.2.17
 python-dotenv==1.1.1
 whitenoise==6.11.0
+python-dotenv==1.1.1
+whitenoise==6.11.0
