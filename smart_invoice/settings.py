@@ -14,7 +14,6 @@ from pathlib import Path
 import os
 from django.core.management.utils import get_random_secret_key
 from dotenv import load_dotenv
-import dj_database_url
 
 # Load environment variables from .env
 load_dotenv()
@@ -87,13 +86,21 @@ WSGI_APPLICATION = 'smart_invoice.wsgi.application'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
 # Use PostgreSQL on Render (DATABASE_URL env var), fallback to SQLite for local dev
-DATABASES = {
-    'default': dj_database_url.config(
-        default=f'sqlite:///{BASE_DIR / "db.sqlite3"}',
-        conn_max_age=600,
-        conn_health_checks=True,
-    )
-}
+if os.environ.get('DATABASE_URL'):
+    import dj_database_url
+    DATABASES = {
+        'default': dj_database_url.config(
+            conn_max_age=600,
+            conn_health_checks=True,
+        )
+    }
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
+    }
 
 
 # Password validation
@@ -174,3 +181,8 @@ CSRF_TRUSTED_ORIGINS = [
     'https://*.repl.co',
 ]
 
+
+# Authentication settings
+LOGIN_URL = 'login'
+LOGIN_REDIRECT_URL = 'invoice_list'
+LOGOUT_REDIRECT_URL = 'landing'

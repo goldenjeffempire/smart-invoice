@@ -1,10 +1,10 @@
-modules = ["c-clang14", "nodejs-20", "web", "python-3.11"]
+modules = ["c-clang14", "nodejs-20", "web", "python-3.11", "postgresql-16"]
 [agent]
 expertMode = true
 
 [nix]
 channel = "stable-25_05"
-packages = ["cacert", "cairo", "cargo", "freetype", "glibcLocales", "lcms2", "libffi", "libiconv", "libimagequant", "libjpeg", "libtiff", "libwebp", "libxcrypt", "openjpeg", "openssl", "pgadmin4", "pkg-config", "rustc", "tcl", "tk", "xcodebuild", "zlib"]
+packages = ["cacert", "cairo", "cargo", "freetype", "glibcLocales", "lcms2", "libffi", "libiconv", "libimagequant", "libjpeg", "libtiff", "libwebp", "libxcrypt", "openjpeg", "openssl", "pgadmin4", "pkg-config", "rustc", "tcl", "tk", "xcodebuild", "zlib", "postgresql"]
 
 [workflows]
 runButton = "Project"
@@ -37,10 +37,6 @@ externalPort = 80
 [[ports]]
 localPort = 37137
 externalPort = 3000
-
-[[ports]]
-localPort = 41523
-externalPort = 3001
 
 [deployment]
 deploymentTarget = "autoscale"
