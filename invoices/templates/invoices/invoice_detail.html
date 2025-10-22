@@ -1,179 +1,536 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>{{ invoice.invoice_id }} — Smart Invoice</title>
+  <title>Invoice {{ invoice.invoice_id }} — Smart Invoice</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  
   <style>
+    :root {
+      color-scheme: dark;
+    }
+
     body {
       background: linear-gradient(135deg, #0a0118 0%, #1a0a2e 50%, #0a0118 100%);
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      font-family: 'Inter', sans-serif;
+      color: #f3f4f6;
+      min-height: 100vh;
     }
+
+    /* Background Effects */
+    .bg-orb {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(80px);
+      opacity: 0.3;
+      animation: float 20s infinite ease-in-out;
+      pointer-events: none;
+    }
+    
+    .orb-1 { width: 500px; height: 500px; background: radial-gradient(circle, rgba(147, 51, 234, 0.6), transparent); top: -10%; left: -10%; }
+    .orb-2 { width: 400px; height: 400px; background: radial-gradient(circle, rgba(236, 72, 153, 0.6), transparent); bottom: -10%; right: -10%; animation-delay: 5s; }
+    
+    @keyframes float {
+      0%,100%{ transform: translate(0,0); }
+      50%{ transform: translate(20px,-20px); }
+    }
+
     .glass {
-      background: rgba(255, 255, 255, 0.08);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.15);
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
     }
-    .btn-animate {
-      transition: all 0.3s ease;
-      transform: scale(1);
-    }
-    .btn-animate:hover {
-      transform: scale(1.05) translateY(-2px);
-      box-shadow: 0 10px 25px rgba(139, 92, 246, 0.4);
-    }
+
     .gradient-text {
       background: linear-gradient(135deg, #a855f7, #ec4899);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
+      background-size: 200% 200%;
+      animation: gradient-shift 3s ease infinite;
+    }
+    
+    @keyframes gradient-shift {
+      0%, 100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #8b5cf6, #ec4899);
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 15px 35px rgba(236, 72, 153, 0.5);
+    }
+
+    .btn-primary::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+      transition: left 0.5s;
+    }
+
+    .btn-primary:hover::before {
+      left: 100%;
+    }
+
+    .action-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .action-card::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: linear-gradient(45deg, transparent, rgba(255,255,255,0.05), transparent);
+      transform: rotate(45deg);
+      transition: all 0.6s ease;
+    }
+    
+    .action-card:hover::before {
+      left: 100%;
+    }
+    
+    .action-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(168, 85, 247, 0.3);
+      box-shadow: 0 12px 40px rgba(168, 85, 247, 0.2);
+    }
+
+    .status-badge {
+      padding: 0.5rem 1rem;
+      border-radius: 9999px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .status-draft {
+      background: linear-gradient(135deg, rgba(156, 163, 175, 0.2), rgba(156, 163, 175, 0.1));
+      color: #d1d5db;
+      border: 1px solid rgba(156, 163, 175, 0.3);
+    }
+
+    .status-sent {
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.2), rgba(59, 130, 246, 0.1));
+      color: #93c5fd;
+      border: 1px solid rgba(59, 130, 246, 0.3);
+    }
+
+    .status-paid {
+      background: linear-gradient(135deg, rgba(34, 197, 94, 0.2), rgba(34, 197, 94, 0.1));
+      color: #86efac;
+      border: 1px solid rgba(34, 197, 94, 0.3);
+    }
+
+    .status-overdue {
+      background: linear-gradient(135deg, rgba(239, 68, 68, 0.2), rgba(239, 68, 68, 0.1));
+      color: #fca5a5;
+      border: 1px solid rgba(239, 68, 68, 0.3);
+      animation: pulse-red 2s infinite;
+    }
+    
+    @keyframes pulse-red {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4); }
+      50% { box-shadow: 0 0 0 8px rgba(239, 68, 68, 0); }
+    }
+
+    .fade-in {
+      opacity: 0;
+      animation: fadeIn 0.6s ease forwards;
+    }
+
+    @keyframes fadeIn {
+      to {
+        opacity: 1;
+      }
+    }
+
+    .slide-up {
+      opacity: 0;
+      transform: translateY(20px);
+      animation: slideUp 0.6s ease forwards;
+    }
+
+    @keyframes slideUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .input-field {
+      background: rgba(0, 0, 0, 0.3);
+      border: 2px solid rgba(255, 255, 255, 0.1);
+      transition: all 0.3s ease;
+      color: white;
+    }
+
+    .input-field:focus {
+      border-color: rgba(168, 85, 247, 0.6);
+      box-shadow: 0 0 0 3px rgba(168, 85, 247, 0.1);
+      outline: none;
+    }
+
+    .success-animation {
+      animation: success-bounce 0.6s ease;
+    }
+    
+    @keyframes success-bounce {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
     }
   </style>
 </head>
 
-<body class="text-gray-100 min-h-screen flex flex-col items-center py-12 px-4">
+<body>
+  <!-- Background Orbs -->
+  <div class="bg-orb orb-1"></div>
+  <div class="bg-orb orb-2"></div>
 
-  <!-- Header -->
-  <header class="mb-10 text-center">
-    <h1 class="text-4xl md:text-5xl font-bold mb-2 gradient-text">Invoice {{ invoice.invoice_id }}</h1>
-    <p class="text-gray-400">Issued to <span class="font-semibold text-white">{{ invoice.client_name }}</span></p>
-  </header>
-
-  <!-- Main Card -->
-  <main class="glass rounded-2xl shadow-2xl p-6 md:p-8 w-full max-w-3xl">
-    <!-- Invoice Info -->
-    <div class="bg-gray-900/50 rounded-xl p-6 mb-6 border border-white/10">
-      <h2 class="text-xl font-bold mb-4 text-violet-300">📋 Invoice Details</h2>
-      <div class="grid md:grid-cols-2 gap-4 text-sm">
+  <div class="relative z-10 min-h-screen px-4 py-8">
+    <!-- Header -->
+    <header class="max-w-6xl mx-auto mb-8 fade-in">
+      <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
         <div>
-          <p class="text-gray-400">Business Name</p>
-          <p class="font-semibold text-white">{{ invoice.business_name }}</p>
+          <h1 class="text-4xl md:text-5xl font-black mb-2">
+            <span class="gradient-text">Invoice {{ invoice.invoice_id }}</span>
+          </h1>
+          <p class="text-gray-400">Issued to <span class="font-semibold text-white">{{ invoice.client_name }}</span></p>
         </div>
-        <div>
-          <p class="text-gray-400">Client Name</p>
-          <p class="font-semibold text-white">{{ invoice.client_name }}</p>
-        </div>
-        <div>
-          <p class="text-gray-400">Contact</p>
-          <p class="font-semibold text-white">{{ invoice.client_email_or_whatsapp|default:"Not provided" }}</p>
-        </div>
-        <div>
-          <p class="text-gray-400">Amount</p>
-          <p class="font-semibold text-white text-lg">{{ invoice.currency }} {{ invoice.amount }}</p>
+        <div class="flex items-center gap-3">
+          <span class="status-badge status-{{ invoice.status }}">
+            {% if invoice.status == 'draft' %}📝
+            {% elif invoice.status == 'sent' %}📧
+            {% elif invoice.status == 'paid' %}✅
+            {% elif invoice.status == 'overdue' %}⚠️
+            {% else %}📄{% endif %}
+            {{ invoice.get_status_display }}
+          </span>
         </div>
       </div>
-      {% if invoice.description %}
-      <div class="mt-4">
-        <p class="text-gray-400">Description</p>
-        <p class="text-white">{{ invoice.description }}</p>
+
+      <!-- Quick Actions -->
+      <div class="flex flex-wrap gap-3 slide-up" style="animation-delay: 0.1s">
+        <a href="{% url 'invoice_list' %}" class="px-4 py-2 rounded-lg border-2 border-white/20 hover:border-white/40 hover:bg-white/5 transition flex items-center gap-2">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+          </svg>
+          Dashboard
+        </a>
+        <a href="{% url 'invoice_update' invoice.pk %}" class="px-4 py-2 bg-violet-600 hover:bg-violet-700 rounded-lg transition flex items-center gap-2">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
+          </svg>
+          Edit
+        </a>
+        <a href="{% url 'invoice_pdf' invoice.pk %}" class="btn-primary px-4 py-2 rounded-lg flex items-center gap-2">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M9 19l3 3m0 0l3-3m-3 3V10"></path>
+          </svg>
+          Download PDF
+        </a>
+        <a href="{% url 'create_invoice' %}" class="px-4 py-2 bg-green-600 hover:bg-green-700 rounded-lg transition flex items-center gap-2">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+          </svg>
+          New Invoice
+        </a>
       </div>
-      {% endif %}
-      {% if invoice.notes %}
-      <div class="mt-4">
-        <p class="text-gray-400">Notes</p>
-        <p class="text-white italic">{{ invoice.notes }}</p>
-      </div>
-      {% endif %}
-    </div>
+    </header>
 
-    <!-- Action Buttons -->
-    <div class="mt-8 flex flex-wrap gap-3 justify-center">
-      <a href="{% url 'invoice_pdf' invoice.pk %}" 
-         class="btn-animate px-6 py-3 bg-gradient-to-r from-violet-600 to-fuchsia-600 rounded-xl text-white font-semibold shadow-lg">
-        📄 Download PDF
-      </a>
-
-      <a href="{% url 'create_invoice' %}" 
-         class="btn-animate px-6 py-3 border border-gray-500 rounded-xl hover:bg-gray-800">
-        ➕ Create Another
-      </a>
-
-      <a href="{% url 'landing_page' %}" 
-         class="btn-animate px-6 py-3 border border-gray-500 rounded-xl hover:bg-gray-800">
-        ⬅️ Back to Home
-      </a>
-    </div>
-
-    <!-- Email Sending Section -->
-    <div class="mt-10 bg-gray-900/50 p-6 rounded-xl border border-white/10">
-      <h3 class="text-lg font-bold mb-4 text-green-400">✉️ Send via Email</h3>
-      
-      {% if success %}
-        <div class="bg-green-500/20 border border-green-500/50 text-green-300 p-3 rounded-lg mb-4 text-sm">
-          ✓ {{ success }}
-        </div>
-      {% endif %}
-      {% if error %}
-        <div class="bg-red-500/20 border border-red-500/50 text-red-300 p-3 rounded-lg mb-4 text-sm">
-          ✗ {{ error }}
-        </div>
-      {% endif %}
-
-      <form method="post" action="{% url 'send_invoice_email' invoice.pk %}">
-        {% csrf_token %}
-        <label class="text-sm text-gray-400 mb-2 block">Recipient Email Address</label>
-        <input type="email" name="to_email" 
-               placeholder="client@example.com" 
-               value="{{ invoice.client_email_or_whatsapp|default:'' }}"
-               class="w-full p-3 rounded-lg bg-black/30 border border-white/10 text-sm text-gray-200 focus:outline-none focus:border-violet-500 focus:ring-2 focus:ring-violet-500/50" />
-
-        <button type="submit" 
-                class="mt-4 btn-animate w-full px-5 py-3 bg-green-600 rounded-lg hover:bg-green-500 font-medium shadow-lg">
-          📧 Send Email with PDF Attachment
-        </button>
-      </form>
-    </div>
-
-    <!-- WhatsApp Sending Section -->
-    <div class="mt-6 bg-gray-900/50 p-6 rounded-xl border border-white/10">
-      <h3 class="text-lg font-bold mb-4 text-green-400">💬 Send via WhatsApp</h3>
-      
-      {% if whatsapp_success %}
-        <div class="bg-green-500/20 border border-green-500/50 text-green-300 p-3 rounded-lg mb-4 text-sm">
-          ✓ {{ whatsapp_success }}
-        </div>
-      {% endif %}
-      {% if whatsapp_error %}
-        <div class="bg-yellow-500/20 border border-yellow-500/50 text-yellow-300 p-3 rounded-lg mb-4 text-sm">
-          ⚠️ {{ whatsapp_error }}
-          {% if 'not configured' in whatsapp_error %}
-            <div class="mt-2 text-xs">
-              <p>To enable WhatsApp functionality:</p>
-              <ol class="list-decimal list-inside mt-1 ml-2">
-                <li>Set up a Twilio account</li>
-                <li>Add your TWILIO_ACCOUNT_SID and TWILIO_AUTH_TOKEN as secrets</li>
-                <li>Configure your WhatsApp number in TWILIO_WHATSAPP_NUMBER</li>
-              </ol>
+    <!-- Main Content -->
+    <main class="max-w-6xl mx-auto">
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <!-- Invoice Details -->
+        <div class="lg:col-span-2 space-y-6">
+          <!-- Invoice Information Card -->
+          <div class="glass rounded-2xl p-6 slide-up" style="animation-delay: 0.2s">
+            <h2 class="text-xl font-bold mb-4 flex items-center gap-2">
+              <span>📋</span>
+              Invoice Details
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <div class="text-sm text-gray-400 mb-1">Business Name</div>
+                <div class="font-semibold text-white">{{ invoice.business_name }}</div>
+              </div>
+              <div>
+                <div class="text-sm text-gray-400 mb-1">Client Name</div>
+                <div class="font-semibold text-white">{{ invoice.client_name }}</div>
+              </div>
+              {% if invoice.business_email %}
+              <div>
+                <div class="text-sm text-gray-400 mb-1">Business Email</div>
+                <div class="text-white">{{ invoice.business_email }}</div>
+              </div>
+              {% endif %}
+              {% if invoice.client_email %}
+              <div>
+                <div class="text-sm text-gray-400 mb-1">Client Email</div>
+                <div class="text-white">{{ invoice.client_email }}</div>
+              </div>
+              {% endif %}
+              <div>
+                <div class="text-sm text-gray-400 mb-1">Issue Date</div>
+                <div class="text-white">{{ invoice.issue_date|date:"F d, Y" }}</div>
+              </div>
+              <div>
+                <div class="text-sm text-gray-400 mb-1">Due Date</div>
+                <div class="text-white">
+                  {% if invoice.due_date %}
+                    {{ invoice.due_date|date:"F d, Y" }}
+                  {% else %}
+                    Upon receipt
+                  {% endif %}
+                </div>
+              </div>
             </div>
-          {% endif %}
+
+            {% if invoice.description %}
+            <div class="mt-6 pt-6 border-t border-white/10">
+              <div class="text-sm text-gray-400 mb-2">Description</div>
+              <div class="text-white leading-relaxed">{{ invoice.description }}</div>
+            </div>
+            {% endif %}
+          </div>
+
+          <!-- Financial Breakdown -->
+          <div class="glass rounded-2xl p-6 slide-up" style="animation-delay: 0.3s">
+            <h2 class="text-xl font-bold mb-4 flex items-center gap-2">
+              <span>💰</span>
+              Financial Breakdown
+            </h2>
+            <div class="space-y-4">
+              <div class="flex justify-between items-center pb-3 border-b border-white/10">
+                <span class="text-gray-400">Quantity</span>
+                <span class="font-semibold">{{ invoice.quantity }}</span>
+              </div>
+              <div class="flex justify-between items-center pb-3 border-b border-white/10">
+                <span class="text-gray-400">Unit Price</span>
+                <span class="font-semibold">{{ invoice.currency }} {{ invoice.unit_price }}</span>
+              </div>
+              <div class="flex justify-between items-center pb-3 border-b border-white/10">
+                <span class="text-gray-400">Subtotal</span>
+                <span class="font-semibold">{{ invoice.currency }} {{ invoice.subtotal }}</span>
+              </div>
+              {% if invoice.tax_amount > 0 %}
+              <div class="flex justify-between items-center pb-3 border-b border-white/10">
+                <span class="text-gray-400">Tax ({{ invoice.tax_rate }}%)</span>
+                <span class="font-semibold">{{ invoice.currency }} {{ invoice.tax_amount }}</span>
+              </div>
+              {% endif %}
+              {% if invoice.discount_amount > 0 %}
+              <div class="flex justify-between items-center pb-3 border-b border-white/10">
+                <span class="text-gray-400">Discount</span>
+                <span class="font-semibold text-green-400">-{{ invoice.currency }} {{ invoice.discount_amount }}</span>
+              </div>
+              {% endif %}
+              <div class="flex justify-between items-center pt-2">
+                <span class="text-lg font-bold">Total Amount</span>
+                <span class="text-2xl font-black gradient-text">{{ invoice.currency }} {{ invoice.total_amount }}</span>
+              </div>
+            </div>
+
+            {% if invoice.payment_instructions %}
+            <div class="mt-6 pt-6 border-t border-white/10">
+              <div class="text-sm text-gray-400 mb-2">Payment Instructions</div>
+              <div class="text-white leading-relaxed">{{ invoice.payment_instructions }}</div>
+            </div>
+            {% endif %}
+
+            {% if invoice.notes %}
+            <div class="mt-6 pt-6 border-t border-white/10">
+              <div class="text-sm text-gray-400 mb-2">Additional Notes</div>
+              <div class="text-white leading-relaxed italic">{{ invoice.notes }}</div>
+            </div>
+            {% endif %}
+          </div>
+
+          <!-- Change Status -->
+          <div class="glass rounded-2xl p-6 slide-up" style="animation-delay: 0.4s">
+            <h2 class="text-xl font-bold mb-4 flex items-center gap-2">
+              <span>🔄</span>
+              Update Invoice Status
+            </h2>
+            <form method="post" action="{% url 'invoice_update_status' invoice.pk %}" class="flex flex-wrap gap-3">
+              {% csrf_token %}
+              <select name="status" class="input-field px-4 py-2 rounded-lg flex-1 min-w-[200px]">
+                <option value="draft" {% if invoice.status == 'draft' %}selected{% endif %}>📝 Draft</option>
+                <option value="sent" {% if invoice.status == 'sent' %}selected{% endif %}>📧 Sent</option>
+                <option value="paid" {% if invoice.status == 'paid' %}selected{% endif %}>✅ Paid</option>
+                <option value="overdue" {% if invoice.status == 'overdue' %}selected{% endif %}>⚠️ Overdue</option>
+                <option value="cancelled" {% if invoice.status == 'cancelled' %}selected{% endif %}>❌ Cancelled</option>
+              </select>
+              <button type="submit" class="btn-primary px-6 py-2 rounded-lg">Update Status</button>
+            </form>
+          </div>
         </div>
-      {% endif %}
 
-      <form method="post" action="{% url 'send_invoice_whatsapp' invoice.pk %}">
-        {% csrf_token %}
-        <label class="text-sm text-gray-400 mb-2 block">Recipient WhatsApp Number (with country code)</label>
-        <input type="tel" name="whatsapp_number" 
-               placeholder="+1234567890" 
-               value="{{ invoice.client_email_or_whatsapp|default:'' }}"
-               class="w-full p-3 rounded-lg bg-black/30 border border-white/10 text-sm text-gray-200 focus:outline-none focus:border-green-500 focus:ring-2 focus:ring-green-500/50" />
-        
-        <p class="text-xs text-gray-500 mt-2">💡 Include country code (e.g., +1 for USA, +44 for UK)</p>
+        <!-- Actions Sidebar -->
+        <div class="lg:col-span-1 space-y-6">
+          <!-- Send via Email -->
+          <div class="action-card rounded-2xl p-6 slide-up" style="animation-delay: 0.5s">
+            <h3 class="text-lg font-bold mb-4 flex items-center gap-2">
+              <span>📧</span>
+              Send via Email
+            </h3>
+            
+            {% if messages %}
+              {% for message in messages %}
+                {% if 'email' in message.tags or 'sent' in message|lower %}
+                  <div class="mb-4 p-3 rounded-lg {% if message.tags == 'success' %}bg-green-500/10 border border-green-500/30 text-green-300{% else %}bg-red-500/10 border border-red-500/30 text-red-300{% endif %} text-sm">
+                    {{ message }}
+                  </div>
+                {% endif %}
+              {% endfor %}
+            {% endif %}
 
-        <button type="submit" 
-                class="mt-4 btn-animate w-full px-5 py-3 bg-gradient-to-r from-green-500 to-green-600 rounded-lg hover:from-green-600 hover:to-green-700 font-medium shadow-lg">
-          💬 Send via WhatsApp with PDF
-        </button>
-      </form>
-    </div>
-  </main>
+            <form method="post" action="{% url 'send_invoice_email' invoice.pk %}" class="space-y-4">
+              {% csrf_token %}
+              <div>
+                <label class="text-sm text-gray-400 mb-2 block">Recipient Email</label>
+                <input type="email" name="to_email" 
+                       placeholder="client@example.com" 
+                       value="{{ invoice.client_email|default:'' }}"
+                       class="w-full px-4 py-3 rounded-lg input-field" 
+                       required />
+              </div>
+              <button type="submit" class="w-full btn-primary px-5 py-3 rounded-lg font-semibold flex items-center justify-center gap-2">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                </svg>
+                Send Email with PDF
+              </button>
+            </form>
+          </div>
+
+          <!-- Send via WhatsApp -->
+          <div class="action-card rounded-2xl p-6 slide-up" style="animation-delay: 0.6s">
+            <h3 class="text-lg font-bold mb-4 flex items-center gap-2">
+              <span>💬</span>
+              Send via WhatsApp
+            </h3>
+
+            <form method="post" action="{% url 'send_invoice_whatsapp' invoice.pk %}" class="space-y-4">
+              {% csrf_token %}
+              <div>
+                <label class="text-sm text-gray-400 mb-2 block">WhatsApp Number</label>
+                <input type="tel" name="whatsapp_number" 
+                       placeholder="+1234567890" 
+                       value="{{ invoice.client_phone|default:'' }}"
+                       class="w-full px-4 py-3 rounded-lg input-field" 
+                       required />
+                <p class="text-xs text-gray-500 mt-2">💡 Include country code (e.g., +1 for USA)</p>
+              </div>
+              <button type="submit" class="w-full bg-green-600 hover:bg-green-700 transition px-5 py-3 rounded-lg font-semibold flex items-center justify-center gap-2">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
+                </svg>
+                Send via WhatsApp
+              </button>
+              <p class="text-xs text-gray-500 italic">Requires Twilio configuration</p>
+            </form>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    // Success animation for forms
+    document.querySelectorAll('form').forEach(form => {
+      form.addEventListener('submit', function(e) {
+        const btn = this.querySelector('button[type="submit"]');
+        if (btn) {
+          btn.disabled = true;
+          btn.classList.add('opacity-75');
+          const originalContent = btn.innerHTML;
+          btn.innerHTML = `
+            <svg class="animate-spin w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+            </svg>
+            <span>Sending...</span>
+          `;
+        }
+      });
+    });
+  </script>
 
   <!-- Footer -->
-  <footer class="mt-12 text-gray-400 text-sm text-center px-4 max-w-2xl">
-    <p>Built with ❤️ by <strong class="text-violet-400">Jeffery Onome</strong></p>
-    <p class="text-xs mt-2">Powered by Django, Twilio & Tailwind CSS</p>
+  <footer class="relative z-10 px-6 py-12 border-t border-white/10 mt-20">
+    <div class="max-w-7xl mx-auto">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+        <div>
+          <div class="flex items-center gap-3 mb-4">
+            <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-violet-500 to-fuchsia-500 flex items-center justify-center text-2xl shadow-lg">
+              📄
+            </div>
+            <span class="text-xl font-bold">Smart Invoice</span>
+          </div>
+          <p class="text-gray-400 leading-relaxed max-w-md mb-4">
+            Enterprise-grade invoicing platform for modern businesses. Create, manage, and send professional invoices in seconds.
+          </p>
+          <p class="text-sm text-gray-500">
+            Built with ❤️ by <span class="font-semibold text-violet-400">Jeffery Onome Emuodafevware</span>
+          </p>
+        </div>
+        
+        <div>
+          <h3 class="font-bold mb-4">Quick Links</h3>
+          <ul class="space-y-2 text-gray-400">
+            <li><a href="/" class="hover:text-violet-400 transition">Home</a></li>
+            <li><a href="{% url 'invoice_list' %}" class="hover:text-violet-400 transition">Dashboard</a></li>
+            <li><a href="{% url 'create_invoice' %}" class="hover:text-violet-400 transition">Create Invoice</a></li>
+          </ul>
+        </div>
+        
+        <div>
+          <h3 class="font-bold mb-4">Platform Features</h3>
+          <ul class="space-y-2 text-gray-400">
+            <li>⚡ Instant PDF Export</li>
+            <li>📧 Email & WhatsApp Delivery</li>
+            <li>☁️ Cloud-Based Storage</li>
+            <li>💰 Multi-Currency Support</li>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4">
+        <p class="text-gray-400 text-sm">
+          © 2025 Smart Invoice. All rights reserved. Powered by Django
+        </p>
+        <div class="flex items-center gap-4 text-sm text-gray-400">
+          <span>🌟 Enterprise-Grade</span>
+          <span>•</span>
+          <span>🔒 Secure</span>
+        </div>
+      </div>
+    </div>
   </footer>
-
 </body>
 </html>
