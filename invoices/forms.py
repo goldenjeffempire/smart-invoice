@@ -1,6 +1,6 @@
 # invoices/forms.py
 from django import forms
-from .models import Invoice, SupportInquiry
+from .models import Invoice, SupportInquiry, Client
 from datetime import timedelta
 from django.utils import timezone
 
@@ -130,5 +130,46 @@ class SupportInquiryForm(forms.ModelForm):
                 'placeholder': 'Please describe your inquiry in detail...',
                 'rows': 6,
                 'required': True
+            }),
+        }
+
+
+class ClientForm(forms.ModelForm):
+    class Meta:
+        model = Client
+        fields = [
+            'name', 'email', 'phone', 'address', 
+            'company_name', 'tax_id', 'notes'
+        ]
+        widgets = {
+            'name': forms.TextInput(attrs={
+                'class': 'form-input',
+                'placeholder': 'Client Full Name'
+            }),
+            'email': forms.EmailInput(attrs={
+                'class': 'form-input',
+                'placeholder': 'client@example.com'
+            }),
+            'phone': forms.TextInput(attrs={
+                'class': 'form-input',
+                'placeholder': '+1 (555) 123-4567'
+            }),
+            'address': forms.Textarea(attrs={
+                'class': 'form-input',
+                'rows': 3,
+                'placeholder': '123 Client St, City, Country'
+            }),
+            'company_name': forms.TextInput(attrs={
+                'class': 'form-input',
+                'placeholder': 'Company Name (Optional)'
+            }),
+            'tax_id': forms.TextInput(attrs={
+                'class': 'form-input',
+                'placeholder': 'Tax ID / VAT Number (Optional)'
+            }),
+            'notes': forms.Textarea(attrs={
+                'class': 'form-input',
+                'rows': 3,
+                'placeholder': 'Additional notes about this client...'
             }),
         }

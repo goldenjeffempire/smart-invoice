@@ -1,57 +1,188 @@
-{% load static %}
-<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title>Sign Up — Smart Invoice</title>
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📄</text></svg>">
-  <link rel="stylesheet" href="{% static 'css/output.css' %}">
-  <style>
-    body{background:linear-gradient(135deg,#0a0118 0%,#1a0a2e 50%,#0a0118 100%);font-family:sans-serif;color:#f3f4f6;min-height:100vh;display:flex;align-items:center;justify-content:center}
-    .glass{background:rgba(255,255,255,0.05);backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,0.1);border-radius:1rem;box-shadow:0 8px 32px rgba(0,0,0,0.3)}
-    input{background:rgba(0,0,0,0.3);border:2px solid rgba(255,255,255,0.1);color:#fff;padding:0.75rem;border-radius:0.5rem;width:100%;transition:all 0.3s}
-    input:focus{border-color:rgba(168,85,247,0.6);outline:none;box-shadow:0 0 0 3px rgba(168,85,247,0.1)}
-    .btn{background:linear-gradient(135deg,#8b5cf6,#ec4899);color:#fff;padding:0.75rem;border-radius:0.5rem;width:100%;font-weight:600;border:none;cursor:pointer;transition:all 0.3s}
-    .btn:hover{transform:translateY(-2px);box-shadow:0 15px 35px rgba(236,72,153,0.5)}
-    label{color:#d1d5db;font-size:0.875rem;margin-bottom:0.5rem;display:block}
-    .error{color:#f87171;font-size:0.875rem;margin-top:0.25rem}
-  </style>
-</head>
-<body>
-  <div class="glass" style="max-width:400px;width:100%;padding:2rem;margin:1rem">
-    <h1 style="text-align:center;font-size:1.875rem;font-weight:bold;background:linear-gradient(135deg,#a855f7,#ec4899);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:1.5rem">Create Account</h1>
-    <form method="post">
-      {% csrf_token %}
-      <div style="margin-bottom:1rem">
-        <label for="id_username">Username</label>
-        {{ form.username }}
-        {% if form.username.errors %}
-          <p class="error">{{ form.username.errors|first }}</p>
-        {% endif %}
+{% extends "invoices/auth_base.html" %}
+
+{% block title %}Sign Up - Smart Invoice{% endblock %}
+
+{% block content %}
+<div class="glass-auth rounded-3xl p-8 md:p-10">
+  <div class="text-center mb-8">
+    <a href="{% url 'landing' %}" class="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-r from-primary-600 to-secondary-600 text-3xl mb-4 hover:scale-110 transition-transform duration-300">
+      📄
+    </a>
+    <h1 class="text-3xl font-bold gradient-text mb-2">Create Account</h1>
+    <p class="text-gray-400 text-sm">Start invoicing professionally in minutes</p>
+  </div>
+
+  <div class="feature-badge">
+    <span class="flex h-2 w-2 relative">
+      <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary-400 opacity-75"></span>
+      <span class="relative inline-flex rounded-full h-2 w-2 bg-primary-500"></span>
+    </span>
+    Free 14-day trial • No credit card required
+  </div>
+
+  <form method="post" class="space-y-5" id="signupForm">
+    {% csrf_token %}
+    
+    <div>
+      <label for="id_username" class="form-label">
+        <span class="flex items-center gap-2">
+          👤 Username
+        </span>
+      </label>
+      <input 
+        type="text" 
+        name="username" 
+        id="id_username" 
+        class="form-input" 
+        placeholder="Choose a unique username"
+        value="{{ form.username.value|default:'' }}"
+        required
+        autofocus
+      >
+      {% if form.username.errors %}
+        <div class="form-error">
+          ⚠️ {{ form.username.errors|first }}
+        </div>
+      {% endif %}
+      {% if not form.username.errors %}
+        <p class="text-gray-500 text-xs mt-2">
+          This will be your unique identifier
+        </p>
+      {% endif %}
+    </div>
+
+    <div>
+      <label for="id_email" class="form-label">
+        <span class="flex items-center gap-2">
+          ✉️ Email Address
+        </span>
+      </label>
+      <input 
+        type="email" 
+        name="email" 
+        id="id_email" 
+        class="form-input" 
+        placeholder="your@email.com"
+        value="{{ form.email.value|default:'' }}"
+      >
+      {% if form.email.errors %}
+        <div class="form-error">
+          ⚠️ {{ form.email.errors|first }}
+        </div>
+      {% endif %}
+    </div>
+
+    <div>
+      <label for="id_password1" class="form-label">
+        <span class="flex items-center gap-2">
+          🔒 Password
+        </span>
+      </label>
+      <input 
+        type="password" 
+        name="password1" 
+        id="id_password1" 
+        class="form-input" 
+        placeholder="Create a strong password"
+        required
+      >
+      {% if form.password1.errors %}
+        <div class="form-error">
+          ⚠️ {{ form.password1.errors|first }}
+        </div>
+      {% endif %}
+      <div class="password-strength" id="passwordStrength" style="display: none;">
+        <div class="password-strength-bar" id="passwordStrengthBar"></div>
       </div>
-      <div style="margin-bottom:1rem">
-        <label for="id_password1">Password</label>
-        {{ form.password1 }}
-        {% if form.password1.errors %}
-          <p class="error">{{ form.password1.errors|first }}</p>
-        {% endif %}
+      <p class="text-gray-500 text-xs mt-2">
+        Minimum 8 characters with letters and numbers
+      </p>
+    </div>
+
+    <div>
+      <label for="id_password2" class="form-label">
+        <span class="flex items-center gap-2">
+          ✓ Confirm Password
+        </span>
+      </label>
+      <input 
+        type="password" 
+        name="password2" 
+        id="id_password2" 
+        class="form-input" 
+        placeholder="Re-enter your password"
+        required
+      >
+      {% if form.password2.errors %}
+        <div class="form-error">
+          ⚠️ {{ form.password2.errors|first }}
+        </div>
+      {% endif %}
+    </div>
+
+    {% if form.non_field_errors %}
+      <div class="form-error text-center p-3 bg-red-500/10 border border-red-500/30 rounded-lg">
+        ⚠️ {{ form.non_field_errors|first }}
       </div>
-      <div style="margin-bottom:1.5rem">
-        <label for="id_password2">Confirm Password</label>
-        {{ form.password2 }}
-        {% if form.password2.errors %}
-          <p class="error">{{ form.password2.errors|first }}</p>
-        {% endif %}
-      </div>
-      <button type="submit" class="btn">Sign Up</button>
-    </form>
-    <p style="text-align:center;margin-top:1.5rem;color:#9ca3af">
-      Already have an account? <a href="{% url 'login' %}" style="color:#a855f7;text-decoration:underline">Log In</a>
+    {% endif %}
+
+    <button type="submit" class="btn-primary-auth mt-6">
+      <span class="flex items-center justify-center gap-2">
+        🎉 Create My Account
+      </span>
+    </button>
+  </form>
+
+  <div class="mt-6 pt-6 border-t border-white/10 text-center space-y-3">
+    <p class="text-gray-400 text-sm">
+      Already have an account? 
+      <a href="{% url 'login' %}" class="auth-link">Sign in</a>
     </p>
-    <p style="text-align:center;margin-top:0.75rem">
-      <a href="{% url 'landing' %}" style="color:#9ca3af;font-size:0.875rem">← Back to Home</a>
+    <a href="{% url 'landing' %}" class="text-gray-500 hover:text-gray-300 text-sm inline-flex items-center gap-2 transition-colors">
+      ← Back to home
+    </a>
+  </div>
+
+  <div class="mt-8 text-center">
+    <p class="text-xs text-gray-500">
+      By creating an account, you agree to our Terms of Service and Privacy Policy
     </p>
   </div>
-</body>
-</html>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const password1 = document.getElementById('id_password1');
+  const strengthBar = document.getElementById('passwordStrengthBar');
+  const strengthContainer = document.getElementById('passwordStrength');
+  
+  if (password1 && strengthBar) {
+    password1.addEventListener('input', function() {
+      const password = this.value;
+      
+      if (password.length === 0) {
+        strengthContainer.style.display = 'none';
+        return;
+      }
+      
+      strengthContainer.style.display = 'block';
+      
+      let strength = 0;
+      if (password.length >= 8) strength++;
+      if (/[a-z]/.test(password) && /[A-Z]/.test(password)) strength++;
+      if (/\d/.test(password)) strength++;
+      if (/[^a-zA-Z0-9]/.test(password)) strength++;
+      
+      strengthBar.className = 'password-strength-bar';
+      if (strength <= 1) {
+        strengthBar.classList.add('strength-weak');
+      } else if (strength <= 2) {
+        strengthBar.classList.add('strength-medium');
+      } else {
+        strengthBar.classList.add('strength-strong');
+      }
+    });
+  }
+});
+</script>
+{% endblock %}

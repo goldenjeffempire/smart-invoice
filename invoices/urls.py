@@ -22,6 +22,13 @@ urlpatterns = [
     path('payment/callback/', views.payment_callback, name='payment_callback'),
     path('payment/webhook/', views.paystack_webhook, name='paystack_webhook'),
     
+    # Client Management
+    path('clients/', views.client_list, name='client_list'),
+    path('clients/create/', views.client_create, name='client_create'),
+    path('clients/<int:pk>/', views.client_detail, name='client_detail'),
+    path('clients/<int:pk>/edit/', views.client_update, name='client_update'),
+    path('clients/<int:pk>/delete/', views.client_delete, name='client_delete'),
+    
     # Analytics & Reports
     path('analytics/', views.analytics_dashboard, name='analytics_dashboard'),
     path('export/invoices/', views.export_invoices, name='export_invoices'),

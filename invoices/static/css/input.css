@@ -184,7 +184,7 @@
   }
 
   .glass-input:focus {
-    @apply bg-white/8 border-primary-500/50 shadow-glow;
+    @apply bg-white/[0.08] border-primary-500/50 shadow-glow;
   }
 }
 

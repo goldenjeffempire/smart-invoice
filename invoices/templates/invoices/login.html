@@ -1,50 +1,108 @@
-{% load static %}
-<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title>Log In — Smart Invoice</title>
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📄</text></svg>">
-  <link rel="stylesheet" href="{% static 'css/output.css' %}">
-  <style>
-    body{background:linear-gradient(135deg,#0a0118 0%,#1a0a2e 50%,#0a0118 100%);font-family:sans-serif;color:#f3f4f6;min-height:100vh;display:flex;align-items:center;justify-content:center}
-    .glass{background:rgba(255,255,255,0.05);backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,0.1);border-radius:1rem;box-shadow:0 8px 32px rgba(0,0,0,0.3)}
-    input{background:rgba(0,0,0,0.3);border:2px solid rgba(255,255,255,0.1);color:#fff;padding:0.75rem;border-radius:0.5rem;width:100%;transition:all 0.3s}
-    input:focus{border-color:rgba(168,85,247,0.6);outline:none;box-shadow:0 0 0 3px rgba(168,85,247,0.1)}
-    .btn{background:linear-gradient(135deg,#8b5cf6,#ec4899);color:#fff;padding:0.75rem;border-radius:0.5rem;width:100%;font-weight:600;border:none;cursor:pointer;transition:all 0.3s}
-    .btn:hover{transform:translateY(-2px);box-shadow:0 15px 35px rgba(236,72,153,0.5)}
-    label{color:#d1d5db;font-size:0.875rem;margin-bottom:0.5rem;display:block}
-    .error{color:#f87171;font-size:0.875rem;margin-top:0.25rem}
-  </style>
-</head>
-<body>
-  <div class="glass" style="max-width:400px;width:100%;padding:2rem;margin:1rem">
-    <h1 style="text-align:center;font-size:1.875rem;font-weight:bold;background:linear-gradient(135deg,#a855f7,#ec4899);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:1.5rem">Welcome Back</h1>
-    <form method="post">
-      {% csrf_token %}
-      <div style="margin-bottom:1rem">
-        <label for="id_username">Username</label>
-        {{ form.username }}
-        {% if form.username.errors %}
-          <p class="error">{{ form.username.errors|first }}</p>
-        {% endif %}
-      </div>
-      <div style="margin-bottom:1.5rem">
-        <label for="id_password">Password</label>
-        {{ form.password }}
-        {% if form.password.errors %}
-          <p class="error">{{ form.password.errors|first }}</p>
-        {% endif %}
-      </div>
-      <button type="submit" class="btn">Log In</button>
-    </form>
-    <p style="text-align:center;margin-top:1.5rem;color:#9ca3af">
-      Don't have an account? <a href="{% url 'signup' %}" style="color:#a855f7;text-decoration:underline">Sign Up</a>
-    </p>
-    <p style="text-align:center;margin-top:0.75rem">
-      <a href="{% url 'landing' %}" style="color:#9ca3af;font-size:0.875rem">← Back to Home</a>
-    </p>
+{% extends "invoices/auth_base.html" %}
+
+{% block title %}Login - Smart Invoice{% endblock %}
+
+{% block content %}
+<div class="glass-auth rounded-3xl p-8 md:p-10">
+  <div class="text-center mb-8">
+    <a href="{% url 'landing' %}" class="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-r from-primary-600 to-secondary-600 text-3xl mb-4 hover:scale-110 transition-transform duration-300">
+      📄
+    </a>
+    <h1 class="text-3xl font-bold gradient-text mb-2">Welcome Back</h1>
+    <p class="text-gray-400 text-sm">Sign in to access your invoice dashboard</p>
   </div>
-</body>
-</html>
+
+  {% if messages %}
+    {% for message in messages %}
+      <div class="success-message">
+        ✓ {{ message }}
+      </div>
+    {% endfor %}
+  {% endif %}
+
+  <form method="post" class="space-y-5">
+    {% csrf_token %}
+    
+    <div>
+      <label for="id_username" class="form-label">
+        <span class="flex items-center gap-2">
+          👤 Username
+        </span>
+      </label>
+      <input 
+        type="text" 
+        name="username" 
+        id="id_username" 
+        class="form-input" 
+        placeholder="Enter your username"
+        value="{{ form.username.value|default:'' }}"
+        required
+        autofocus
+      >
+      {% if form.username.errors %}
+        <div class="form-error">
+          ⚠️ {{ form.username.errors|first }}
+        </div>
+      {% endif %}
+    </div>
+
+    <div>
+      <label for="id_password" class="form-label">
+        <span class="flex items-center gap-2">
+          🔒 Password
+        </span>
+      </label>
+      <input 
+        type="password" 
+        name="password" 
+        id="id_password" 
+        class="form-input" 
+        placeholder="Enter your password"
+        required
+      >
+      {% if form.password.errors %}
+        <div class="form-error">
+          ⚠️ {{ form.password.errors|first }}
+        </div>
+      {% endif %}
+    </div>
+
+    {% if form.non_field_errors %}
+      <div class="form-error text-center p-3 bg-red-500/10 border border-red-500/30 rounded-lg">
+        ⚠️ {{ form.non_field_errors|first }}
+      </div>
+    {% endif %}
+
+    <button type="submit" class="btn-primary-auth mt-6">
+      <span class="flex items-center justify-center gap-2">
+        🚀 Sign In to Dashboard
+      </span>
+    </button>
+  </form>
+
+  <div class="mt-6 pt-6 border-t border-white/10 text-center space-y-3">
+    <p class="text-gray-400 text-sm">
+      Don't have an account? 
+      <a href="{% url 'signup' %}" class="auth-link">Create one free</a>
+    </p>
+    <a href="{% url 'landing' %}" class="text-gray-500 hover:text-gray-300 text-sm inline-flex items-center gap-2 transition-colors">
+      ← Back to home
+    </a>
+  </div>
+
+  <div class="mt-8 grid grid-cols-3 gap-3 text-center">
+    <div class="p-3 rounded-xl bg-white/5 hover:bg-white/10 transition-colors">
+      <div class="text-2xl mb-1">⚡</div>
+      <div class="text-xs text-gray-400">Fast</div>
+    </div>
+    <div class="p-3 rounded-xl bg-white/5 hover:bg-white/10 transition-colors">
+      <div class="text-2xl mb-1">🔒</div>
+      <div class="text-xs text-gray-400">Secure</div>
+    </div>
+    <div class="p-3 rounded-xl bg-white/5 hover:bg-white/10 transition-colors">
+      <div class="text-2xl mb-1">✨</div>
+      <div class="text-xs text-gray-400">Easy</div>
+    </div>
+  </div>
+</div>
+{% endblock %}

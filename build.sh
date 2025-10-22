@@ -24,4 +24,8 @@ python manage.py collectstatic --no-input --clear
 echo "Running database migrations..."
 python manage.py migrate --no-input
 
+# Create cache table for production
+echo "Creating cache table..."
+python manage.py createcachetable || echo "Cache table may already exist"
+
 echo "===== Build Process Complete ====="

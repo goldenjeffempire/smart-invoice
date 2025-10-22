@@ -19,8 +19,8 @@ from decimal import Decimal
 import base64
 import re
 
-from .forms import InvoiceForm, SupportInquiryForm
-from .models import Invoice, SupportInquiry
+from .forms import InvoiceForm, SupportInquiryForm, ClientForm
+from .models import Invoice, SupportInquiry, Client
 
 
 # ----------------------------
@@ -182,7 +182,10 @@ def invoice_update_status(request, pk):
         invoice = get_object_or_404(Invoice, pk=pk, user=request.user)
         new_status = request.POST.get('status')
         
-        if new_status in dict(Invoice._meta.get_field('status').choices):
+        # Get valid status choices
+        valid_statuses = [choice[0] for choice in Invoice._meta.get_field('status').choices]
+        
+        if new_status in valid_statuses:
             invoice.status = new_status
             if new_status == 'paid':
                 invoice.paid_date = timezone.now().date()
@@ -692,3 +695,103 @@ def export_clients(request):
     clients = Client.objects.filter(user=request.user).order_by('name')
     
     return ExportService.export_clients_csv(clients)
+
+
+# ========================================
+# CLIENT MANAGEMENT VIEWS
+# ========================================
+
+@login_required
+def client_list(request):
+    """Display all clients with search and filter capabilities."""
+    from .models import Client
+    
+    clients = Client.objects.filter(user=request.user)
+    
+    search_query = request.GET.get('q')
+    if search_query:
+        clients = clients.filter(
+            Q(name__icontains=search_query) |
+            Q(email__icontains=search_query) |
+            Q(company_name__icontains=search_query)
+        )
+    
+    context = {
+        'clients': clients,
+        'total_clients': Client.objects.filter(user=request.user).count(),
+    }
+    return render(request, 'invoices/client_list.html', context)
+
+
+@login_required
+def client_create(request):
+    """Create a new client."""
+    from .forms import ClientForm
+    
+    if request.method == 'POST':
+        form = ClientForm(request.POST)
+        if form.is_valid():
+            client = form.save(commit=False)
+            client.user = request.user
+            client.save()
+            messages.success(request, f'Client "{client.name}" created successfully!')
+            return redirect('client_list')
+    else:
+        form = ClientForm()
+    
+    return render(request, 'invoices/client_form.html', {'form': form})
+
+
+@login_required
+def client_update(request, pk):
+    """Update an existing client."""
+    from .models import Client
+    from .forms import ClientForm
+    
+    client = get_object_or_404(Client, pk=pk, user=request.user)
+    
+    if request.method == 'POST':
+        form = ClientForm(request.POST, instance=client)
+        if form.is_valid():
+            form.save()
+            messages.success(request, f'Client "{client.name}" updated successfully!')
+            return redirect('client_list')
+    else:
+        form = ClientForm(instance=client)
+    
+    return render(request, 'invoices/client_form.html', {'form': form, 'client': client})
+
+
+@login_required
+def client_detail(request, pk):
+    """Display client details with related invoices."""
+    from .models import Client
+    
+    client = get_object_or_404(Client, pk=pk, user=request.user)
+    invoices = Invoice.objects.filter(client=client).order_by('-created_at')
+    
+    context = {
+        'client': client,
+        'invoices': invoices,
+        'total_invoices': invoices.count(),
+        'paid_invoices': invoices.filter(status='paid').count(),
+        'pending_revenue': sum(inv.total_amount for inv in invoices.filter(status='sent')),
+        'total_revenue': sum(inv.total_amount for inv in invoices.filter(status='paid')),
+    }
+    return render(request, 'invoices/client_detail.html', context)
+
+
+@login_required
+def client_delete(request, pk):
+    """Delete a client."""
+    from .models import Client
+    
+    client = get_object_or_404(Client, pk=pk, user=request.user)
+    
+    if request.method == 'POST':
+        client_name = client.name
+        client.delete()
+        messages.success(request, f'Client "{client_name}" deleted successfully!')
+        return redirect('client_list')
+    
+    return render(request, 'invoices/client_confirm_delete.html', {'client': client})
