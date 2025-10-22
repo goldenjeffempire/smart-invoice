@@ -28,11 +28,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', get_random_secret_key())
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ.get('DJANGO_DEBUG', 'False') == 'True'
+DEBUG = os.environ.get('DJANGO_DEBUG', 'True') == 'True'
 
 ALLOWED_HOSTS = os.environ.get(
-    'DJANGO_ALLOWED_HOSTS', '127.0.0.1,localhost,.onrender.com'
+    'DJANGO_ALLOWED_HOSTS', '127.0.0.1,localhost,.onrender.com,.replit.dev,.repl.co'
 ).split(',')
+ALLOWED_HOSTS.append('*')
 
 # Application definition
 
@@ -152,4 +153,16 @@ EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD', '')
 # For local dev fallback (console), override by env DJANGO_DEBUG=True
 if DEBUG:
     EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+# Twilio configuration (for WhatsApp)
+TWILIO_ACCOUNT_SID = os.environ.get('TWILIO_ACCOUNT_SID', '')
+TWILIO_AUTH_TOKEN = os.environ.get('TWILIO_AUTH_TOKEN', '')
+TWILIO_WHATSAPP_NUMBER = os.environ.get('TWILIO_WHATSAPP_NUMBER', '')
+
+# Allow Replit iframe embedding
+X_FRAME_OPTIONS = 'ALLOWALL'
+CSRF_TRUSTED_ORIGINS = [
+    'https://*.replit.dev',
+    'https://*.repl.co',
+]
 
