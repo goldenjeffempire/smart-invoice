@@ -1,6 +1,7 @@
 # invoices/models.py
 from django.db import models
 from django.utils import timezone
+from django.contrib.auth.models import User
 from decimal import Decimal
 import uuid
 
@@ -47,6 +48,7 @@ class SupportInquiry(models.Model):
 
 
 class Invoice(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='invoices', null=True, blank=True)
     invoice_id = models.CharField(max_length=32, unique=True, editable=False)
     created_at = models.DateTimeField(default=timezone.now)
     updated_at = models.DateTimeField(auto_now=True)

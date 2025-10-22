@@ -2,6 +2,12 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
+    # Authentication
+    path('signup/', views.signup_view, name='signup'),
+    path('login/', views.login_view, name='login'),
+    path('logout/', views.logout_view, name='logout'),
+    
+    # Invoices
     path('invoices/', views.invoice_list, name='invoice_list'),
     path('invoice/create/', views.create_invoice, name='create_invoice'),
     path('invoice/<int:pk>/', views.invoice_detail, name='invoice_detail'),
@@ -14,6 +20,8 @@ urlpatterns = [
     path('invoice/<int:pk>/pay/', views.initialize_paystack_payment, name='initialize_payment'),
     path('invoice/<int:pk>/whatsapp-pay/', views.send_whatsapp_payment_link, name='whatsapp_payment_link'),
     path('payment/callback/', views.payment_callback, name='payment_callback'),
+    
+    # Support
     path('faq/', views.faq_page, name='faq'),
     path('support/', views.support_page, name='support'),
 ]

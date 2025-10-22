@@ -8,6 +8,10 @@ from django.core.mail import EmailMessage
 from django.conf import settings
 from django.utils import timezone
 from django.contrib import messages
+from django.contrib.auth import login, logout, authenticate
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django.contrib.auth.models import User
 from django.db.models import Q
 from io import BytesIO
 from xhtml2pdf import pisa
@@ -43,9 +47,10 @@ def landing_page(request):
 # ----------------------------
 # Invoice Dashboard/List
 # ----------------------------
+@login_required
 def invoice_list(request):
     """Display all invoices with filtering and search capabilities."""
-    invoices = Invoice.objects.all()
+    invoices = Invoice.objects.filter(user=request.user)
     
     status_filter = request.GET.get('status')
     if status_filter:
@@ -61,11 +66,11 @@ def invoice_list(request):
     
     context = {
         'invoices': invoices,
-        'total_invoices': Invoice.objects.count(),
-        'draft_count': Invoice.objects.filter(status='draft').count(),
-        'sent_count': Invoice.objects.filter(status='sent').count(),
-        'paid_count': Invoice.objects.filter(status='paid').count(),
-        'overdue_count': Invoice.objects.filter(status='overdue').count(),
+        'total_invoices': Invoice.objects.filter(user=request.user).count(),
+        'draft_count': Invoice.objects.filter(user=request.user, status='draft').count(),
+        'sent_count': Invoice.objects.filter(user=request.user, status='sent').count(),
+        'paid_count': Invoice.objects.filter(user=request.user, status='paid').count(),
+        'overdue_count': Invoice.objects.filter(user=request.user, status='overdue').count(),
     }
     return render(request, 'invoices/invoice_list.html', context)
 
@@ -73,12 +78,15 @@ def invoice_list(request):
 # ----------------------------
 # Invoice Creation
 # ----------------------------
+@login_required
 def create_invoice(request):
     """Create a new invoice with professional fields."""
     if request.method == 'POST':
         form = InvoiceForm(request.POST)
         if form.is_valid():
-            invoice = form.save()
+            invoice = form.save(commit=False)
+            invoice.user = request.user
+            invoice.save()
             messages.success(request, f'Invoice {invoice.invoice_id} created successfully!')
             return redirect('invoice_detail', pk=invoice.pk)
         else:
@@ -92,18 +100,20 @@ def create_invoice(request):
 # ----------------------------
 # Invoice Detail
 # ----------------------------
+@login_required
 def invoice_detail(request, pk):
     """View full invoice details with actions."""
-    invoice = get_object_or_404(Invoice, pk=pk)
+    invoice = get_object_or_404(Invoice, pk=pk, user=request.user)
     return render(request, 'invoices/invoice_detail.html', {'invoice': invoice})
 
 
 # ----------------------------
 # Invoice Update
 # ----------------------------
+@login_required
 def invoice_update(request, pk):
     """Update an existing invoice."""
-    invoice = get_object_or_404(Invoice, pk=pk)
+    invoice = get_object_or_404(Invoice, pk=pk, user=request.user)
     
     if request.method == 'POST':
         form = InvoiceForm(request.POST, instance=invoice)
@@ -534,3 +544,59 @@ def send_whatsapp_payment_link(request, pk):
     except requests.exceptions.RequestException as e:
         messages.error(request, f'Payment system error: {str(e)}')
         return redirect('invoice_detail', pk=pk)
+
+
+# ----------------------------
+# Authentication Views
+# ----------------------------
+def signup_view(request):
+    """User signup/registration view."""
+    if request.user.is_authenticated:
+        return redirect('invoice_list')
+    
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            messages.success(request, f'Welcome {user.username}! Your account has been created.')
+            return redirect('invoice_list')
+        else:
+            for field, errors in form.errors.items():
+                for error in errors:
+                    messages.error(request, f'{error}')
+    else:
+        form = UserCreationForm()
+    
+    return render(request, 'invoices/signup.html', {'form': form})
+
+
+def login_view(request):
+    """User login view."""
+    if request.user.is_authenticated:
+        return redirect('invoice_list')
+    
+    if request.method == 'POST':
+        form = AuthenticationForm(request, data=request.POST)
+        if form.is_valid():
+            username = form.cleaned_data.get('username')
+            password = form.cleaned_data.get('password')
+            user = authenticate(username=username, password=password)
+            if user is not None:
+                login(request, user)
+                messages.success(request, f'Welcome back, {username}!')
+                next_url = request.GET.get('next', 'invoice_list')
+                return redirect(next_url)
+        else:
+            messages.error(request, 'Invalid username or password.')
+    else:
+        form = AuthenticationForm()
+    
+    return render(request, 'invoices/login.html', {'form': form})
+
+
+def logout_view(request):
+    """User logout view."""
+    logout(request)
+    messages.success(request, 'You have been logged out successfully.')
+    return redirect('landing')
