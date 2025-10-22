@@ -6,6 +6,10 @@
   <title>{{ invoice.invoice_id }} — Smart Invoice</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
+    body {
+      background: linear-gradient(135deg, #0a0118 0%, #1a0a2e 50%, #0a0118 100%);
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
     .glass {
       background: rgba(255, 255, 255, 0.08);
       backdrop-filter: blur(10px);
@@ -17,89 +21,158 @@
       transform: scale(1);
     }
     .btn-animate:hover {
-      transform: scale(1.05);
+      transform: scale(1.05) translateY(-2px);
+      box-shadow: 0 10px 25px rgba(139, 92, 246, 0.4);
+    }
+    .gradient-text {
+      background: linear-gradient(135deg, #a855f7, #ec4899);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
     }
   </style>
 </head>
 
-<body class="bg-gradient-to-br from-gray-900 via-violet-900 to-gray-800 text-gray-100 min-h-screen flex flex-col items-center py-12">
+<body class="text-gray-100 min-h-screen flex flex-col items-center py-12 px-4">
 
   <!-- Header -->
   <header class="mb-10 text-center">
-    <h1 class="text-4xl font-bold mb-2">Invoice {{ invoice.invoice_id }}</h1>
+    <h1 class="text-4xl md:text-5xl font-bold mb-2 gradient-text">Invoice {{ invoice.invoice_id }}</h1>
     <p class="text-gray-400">Issued to <span class="font-semibold text-white">{{ invoice.client_name }}</span></p>
   </header>
 
   <!-- Main Card -->
-  <main class="glass rounded-2xl shadow-2xl p-8 w-[90%] md:w-[650px]">
+  <main class="glass rounded-2xl shadow-2xl p-6 md:p-8 w-full max-w-3xl">
     <!-- Invoice Info -->
-    <div class="text-left mb-6">
-      <p><span class="font-semibold">Client Email:</span> {{ invoice.client_email }}</p>
-      <p><span class="font-semibold">Description:</span> {{ invoice.item_description }}</p>
-      <p><span class="font-semibold">Amount:</span> ${{ invoice.amount }}</p>
-      <p><span class="font-semibold">Due Date:</span> {{ invoice.due_date }}</p>
+    <div class="bg-gray-900/50 rounded-xl p-6 mb-6 border border-white/10">
+      <h2 class="text-xl font-bold mb-4 text-violet-300">📋 Invoice Details</h2>
+      <div class="grid md:grid-cols-2 gap-4 text-sm">
+        <div>
+          <p class="text-gray-400">Business Name</p>
+          <p class="font-semibold text-white">{{ invoice.business_name }}</p>
+        </div>
+        <div>
+          <p class="text-gray-400">Client Name</p>
+          <p class="font-semibold text-white">{{ invoice.client_name }}</p>
+        </div>
+        <div>
+          <p class="text-gray-400">Contact</p>
+          <p class="font-semibold text-white">{{ invoice.client_email_or_whatsapp|default:"Not provided" }}</p>
+        </div>
+        <div>
+          <p class="text-gray-400">Amount</p>
+          <p class="font-semibold text-white text-lg">{{ invoice.currency }} {{ invoice.amount }}</p>
+        </div>
+      </div>
+      {% if invoice.description %}
+      <div class="mt-4">
+        <p class="text-gray-400">Description</p>
+        <p class="text-white">{{ invoice.description }}</p>
+      </div>
+      {% endif %}
+      {% if invoice.notes %}
+      <div class="mt-4">
+        <p class="text-gray-400">Notes</p>
+        <p class="text-white italic">{{ invoice.notes }}</p>
+      </div>
+      {% endif %}
     </div>
 
     <!-- Action Buttons -->
-    <div class="mt-8 flex flex-wrap gap-4 justify-center">
+    <div class="mt-8 flex flex-wrap gap-3 justify-center">
       <a href="{% url 'invoice_pdf' invoice.pk %}" 
-         class="btn-animate px-6 py-3 bg-violet-600 rounded-xl text-white font-semibold hover:bg-violet-500 transition shadow-lg">
-        🧾 Download PDF
+         class="btn-animate px-6 py-3 bg-gradient-to-r from-violet-600 to-fuchsia-600 rounded-xl text-white font-semibold shadow-lg">
+        📄 Download PDF
       </a>
-
-      {% if invoice.client_email_or_whatsapp %}
-      <a href="https://wa.me/{{ invoice.client_email_or_whatsapp|urlencode }}" target="_blank"
-         class="btn-animate px-6 py-3 border border-gray-500 rounded-xl hover:bg-gray-800 transition">
-        💬 Send via WhatsApp
-      </a>
-      {% endif %}
 
       <a href="{% url 'create_invoice' %}" 
-         class="btn-animate px-6 py-3 border border-gray-500 rounded-xl hover:bg-gray-800 transition">
+         class="btn-animate px-6 py-3 border border-gray-500 rounded-xl hover:bg-gray-800">
         ➕ Create Another
       </a>
 
       <a href="{% url 'landing_page' %}" 
-         class="btn-animate px-6 py-3 border border-gray-500 rounded-xl hover:bg-gray-800 transition">
+         class="btn-animate px-6 py-3 border border-gray-500 rounded-xl hover:bg-gray-800">
         ⬅️ Back to Home
       </a>
     </div>
 
-    <!-- Email Sending Block -->
-    <div class="mt-10 bg-gray-900/50 p-5 rounded-xl border border-white/10">
+    <!-- Email Sending Section -->
+    <div class="mt-10 bg-gray-900/50 p-6 rounded-xl border border-white/10">
+      <h3 class="text-lg font-bold mb-4 text-green-400">✉️ Send via Email</h3>
+      
       {% if success %}
-        <div class="text-green-400 mb-3 font-medium">{{ success }}</div>
+        <div class="bg-green-500/20 border border-green-500/50 text-green-300 p-3 rounded-lg mb-4 text-sm">
+          ✓ {{ success }}
+        </div>
       {% endif %}
       {% if error %}
-        <div class="text-red-400 mb-3 font-medium">{{ error }}</div>
+        <div class="bg-red-500/20 border border-red-500/50 text-red-300 p-3 rounded-lg mb-4 text-sm">
+          ✗ {{ error }}
+        </div>
       {% endif %}
 
       <form method="post" action="{% url 'send_invoice_email' invoice.pk %}">
         {% csrf_token %}
-        <label class="text-sm text-gray-400 mb-1 block">Send invoice to (email):</label>
-        <input type="email" name="to_email" placeholder="client@example.com" 
-               class="w-full p-2 rounded bg-black/20 border border-white/10 text-sm text-gray-200 focus:outline-none focus:border-violet-500" />
+        <label class="text-sm text-gray-400 mb-2 block">Recipient Email Address</label>
+        <input type="email" name="to_email" 
+               placeholder="client@example.com" 
+               value="{{ invoice.client_email_or_whatsapp|default:'' }}"
+               class="w-full p-3 rounded-lg bg-black/30 border border-white/10 text-sm text-gray-200 focus:outline-none focus:border-violet-500 focus:ring-2 focus:ring-violet-500/50" />
 
-        <div class="mt-4 flex flex-wrap gap-3">
-          <button type="submit" 
-                  class="btn-animate px-5 py-2 bg-green-600 rounded-lg hover:bg-green-500 font-medium shadow">
-            ✉️ Send Email (Attach PDF)
-          </button>
+        <button type="submit" 
+                class="mt-4 btn-animate w-full px-5 py-3 bg-green-600 rounded-lg hover:bg-green-500 font-medium shadow-lg">
+          📧 Send Email with PDF Attachment
+        </button>
+      </form>
+    </div>
 
-          <a href="{% url 'invoice_pdf' invoice.pk %}" 
-             class="btn-animate px-5 py-2 border border-gray-500 rounded-lg hover:bg-gray-800 font-medium">
-            ⬇️ Download & Send Manually
-          </a>
+    <!-- WhatsApp Sending Section -->
+    <div class="mt-6 bg-gray-900/50 p-6 rounded-xl border border-white/10">
+      <h3 class="text-lg font-bold mb-4 text-green-400">💬 Send via WhatsApp</h3>
+      
+      {% if whatsapp_success %}
+        <div class="bg-green-500/20 border border-green-500/50 text-green-300 p-3 rounded-lg mb-4 text-sm">
+          ✓ {{ whatsapp_success }}
         </div>
+      {% endif %}
+      {% if whatsapp_error %}
+        <div class="bg-yellow-500/20 border border-yellow-500/50 text-yellow-300 p-3 rounded-lg mb-4 text-sm">
+          ⚠️ {{ whatsapp_error }}
+          {% if 'not configured' in whatsapp_error %}
+            <div class="mt-2 text-xs">
+              <p>To enable WhatsApp functionality:</p>
+              <ol class="list-decimal list-inside mt-1 ml-2">
+                <li>Set up a Twilio account</li>
+                <li>Add your TWILIO_ACCOUNT_SID and TWILIO_AUTH_TOKEN as secrets</li>
+                <li>Configure your WhatsApp number in TWILIO_WHATSAPP_NUMBER</li>
+              </ol>
+            </div>
+          {% endif %}
+        </div>
+      {% endif %}
+
+      <form method="post" action="{% url 'send_invoice_whatsapp' invoice.pk %}">
+        {% csrf_token %}
+        <label class="text-sm text-gray-400 mb-2 block">Recipient WhatsApp Number (with country code)</label>
+        <input type="tel" name="whatsapp_number" 
+               placeholder="+1234567890" 
+               value="{{ invoice.client_email_or_whatsapp|default:'' }}"
+               class="w-full p-3 rounded-lg bg-black/30 border border-white/10 text-sm text-gray-200 focus:outline-none focus:border-green-500 focus:ring-2 focus:ring-green-500/50" />
+        
+        <p class="text-xs text-gray-500 mt-2">💡 Include country code (e.g., +1 for USA, +44 for UK)</p>
+
+        <button type="submit" 
+                class="mt-4 btn-animate w-full px-5 py-3 bg-gradient-to-r from-green-500 to-green-600 rounded-lg hover:from-green-600 hover:to-green-700 font-medium shadow-lg">
+          💬 Send via WhatsApp with PDF
+        </button>
       </form>
     </div>
   </main>
 
   <!-- Footer -->
-  <footer class="mt-12 text-gray-400 text-sm text-center px-4">
-    Built with ❤️ by <strong>Jeffery Onome Tech Solutions</strong> — powered by 
-    <span class="font-semibold text-violet-400">Django</span>, styled with 
-    <span class="font-semibold text-violet-400">Tailwind</span>, and crafted by <strong>Jeffery Onome</strong>.
+  <footer class="mt-12 text-gray-400 text-sm text-center px-4 max-w-2xl">
+    <p>Built with ❤️ by <strong class="text-violet-400">Jeffery Onome</strong></p>
+    <p class="text-xs mt-2">Powered by Django, Twilio & Tailwind CSS</p>
   </footer>
 
 </body>

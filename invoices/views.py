@@ -8,6 +8,8 @@ from django.core.mail import EmailMessage
 from django.conf import settings
 from io import BytesIO
 from xhtml2pdf import pisa
+import base64
+import re
 
 from .forms import InvoiceForm
 from .models import Invoice
@@ -133,6 +135,106 @@ def send_invoice_email(request, pk):
     else:
         # Simple GET fallback
         return render(request, 'invoices/invoice_detail.html', {'invoice': invoice})
+
+
+# ----------------------------
+# Send Invoice via WhatsApp
+# ----------------------------
+def send_invoice_whatsapp(request, pk):
+    """Send invoice PDF via WhatsApp using Twilio."""
+    invoice = get_object_or_404(Invoice, pk=pk)
+
+    if request.method == 'POST':
+        whatsapp_number = request.POST.get('whatsapp_number') or getattr(invoice, 'client_email_or_whatsapp', None)
+        
+        if not whatsapp_number:
+            return render(request, 'invoices/invoice_detail.html', {
+                'invoice': invoice,
+                'whatsapp_error': 'No WhatsApp number provided.'
+            })
+
+        whatsapp_number = _normalize_phone_number(whatsapp_number)
+
+        if not settings.TWILIO_ACCOUNT_SID or not settings.TWILIO_AUTH_TOKEN:
+            return render(request, 'invoices/invoice_detail.html', {
+                'invoice': invoice,
+                'whatsapp_error': 'WhatsApp functionality is not configured. Please set up Twilio credentials.'
+            })
+
+        pdf_bytes = _render_invoice_pdf(invoice)
+        if not pdf_bytes:
+            return render(request, 'invoices/invoice_detail.html', {
+                'invoice': invoice,
+                'whatsapp_error': 'Could not generate PDF.'
+            })
+
+        try:
+            from twilio.rest import Client
+            
+            client = Client(settings.TWILIO_ACCOUNT_SID, settings.TWILIO_AUTH_TOKEN)
+
+            media_url = _create_public_pdf_url(request, invoice, pdf_bytes)
+
+            message_body = (
+                f"📄 *Invoice {invoice.invoice_id}*\n\n"
+                f"From: {invoice.business_name}\n"
+                f"Amount: {invoice.currency} {invoice.amount}\n\n"
+                f"Please find your invoice attached.\n\n"
+                f"Thank you for your business!"
+            )
+
+            message = client.messages.create(
+                body=message_body,
+                from_=settings.TWILIO_WHATSAPP_NUMBER,
+                to=f'whatsapp:{whatsapp_number}',
+                media_url=[media_url] if media_url else None
+            )
+
+            return render(request, 'invoices/invoice_detail.html', {
+                'invoice': invoice,
+                'whatsapp_success': f'WhatsApp message sent successfully to {whatsapp_number}!'
+            })
+        except ImportError:
+            return render(request, 'invoices/invoice_detail.html', {
+                'invoice': invoice,
+                'whatsapp_error': 'Twilio package not installed.'
+            })
+        except Exception as e:
+            return render(request, 'invoices/invoice_detail.html', {
+                'invoice': invoice,
+                'whatsapp_error': f'Failed to send WhatsApp message: {str(e)}'
+            })
+    else:
+        return render(request, 'invoices/invoice_detail.html', {'invoice': invoice})
+
+
+# ----------------------------
+# Utility Functions
+# ----------------------------
+def _normalize_phone_number(phone):
+    """Normalize phone number to E.164 format."""
+    phone = re.sub(r'[^\d+]', '', phone)
+    
+    if phone.startswith('+'):
+        return phone
+    elif phone.startswith('00'):
+        return '+' + phone[2:]
+    elif len(phone) == 10:
+        return '+1' + phone
+    elif len(phone) == 11 and phone.startswith('1'):
+        return '+' + phone
+    else:
+        return '+' + phone
+
+
+def _create_public_pdf_url(request, invoice, pdf_bytes):
+    """
+    Create a publicly accessible URL for the PDF.
+    In production, this should upload to cloud storage (S3, Cloudinary, etc.)
+    For now, we return the direct PDF URL from the invoice detail page.
+    """
+    pdf_url = request.build_absolute_uri(reverse('invoice_pdf', args=[invoice.pk]))
+    return pdf_url
 
 
 # ----------------------------
