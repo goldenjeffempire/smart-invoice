@@ -45,3 +45,8 @@ psycopg2-binary==2.9.10
 dj-database-url==2.2.0
 python-dateutil==2.9.0
 python-dateutil
+django-stubs
+django-stubs-ext
+
+django-stubs
+django-stubs-ext

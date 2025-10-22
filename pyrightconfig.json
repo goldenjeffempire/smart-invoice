@@ -1,0 +1,40 @@
+{
+  "pythonVersion": "3.11",
+  "typeCheckingMode": "basic",
+  "reportMissingImports": false,
+  "reportMissingTypeStubs": false,
+  "reportUnknownMemberType": false,
+  "reportUnknownArgumentType": false,
+  "reportUnknownVariableType": false,
+  "reportUnknownParameterType": false,
+  "reportGeneralTypeIssues": false,
+  "reportAttributeAccessIssue": false,
+  "reportPrivateUsage": false,
+  "reportOptionalMemberAccess": false,
+  "reportOptionalSubscript": false,
+  "reportOptionalCall": false,
+  "reportOptionalIterable": false,
+  "reportOptionalContextManager": false,
+  "reportOptionalOperand": false,
+  "reportIncompatibleMethodOverride": false,
+  "reportIncompatibleVariableOverride": false,
+  "exclude": [
+    "**/node_modules",
+    "**/__pycache__",
+    "**/venv",
+    "**/.pythonlibs",
+    "**/staticfiles",
+    "**/migrations"
+  ],
+  "stubPath": "./.pythonlibs/lib/python3.11/site-packages",
+  "executionEnvironments": [
+    {
+      "root": ".",
+      "pythonVersion": "3.11",
+      "pythonPlatform": "Linux",
+      "extraPaths": [
+        "./.pythonlibs/lib/python3.11/site-packages"
+      ]
+    }
+  ]
+}
