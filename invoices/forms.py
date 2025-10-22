@@ -1,6 +1,6 @@
 # invoices/forms.py
 from django import forms
-from .models import Invoice
+from .models import Invoice, SupportInquiry
 from datetime import timedelta
 from django.utils import timezone
 
@@ -103,3 +103,32 @@ class InvoiceForm(forms.ModelForm):
         if not self.instance.pk:
             self.fields['issue_date'].initial = timezone.now().date()
             self.fields['due_date'].initial = timezone.now().date() + timedelta(days=30)
+
+
+class SupportInquiryForm(forms.ModelForm):
+    class Meta:
+        model = SupportInquiry
+        fields = ['name', 'email', 'subject', 'message']
+        widgets = {
+            'name': forms.TextInput(attrs={
+                'class': 'w-full px-4 py-3 rounded-lg border border-purple-200 focus:border-purple-500 focus:ring-2 focus:ring-purple-200 transition',
+                'placeholder': 'Your Full Name',
+                'required': True
+            }),
+            'email': forms.EmailInput(attrs={
+                'class': 'w-full px-4 py-3 rounded-lg border border-purple-200 focus:border-purple-500 focus:ring-2 focus:ring-purple-200 transition',
+                'placeholder': 'your.email@example.com',
+                'required': True
+            }),
+            'subject': forms.TextInput(attrs={
+                'class': 'w-full px-4 py-3 rounded-lg border border-purple-200 focus:border-purple-500 focus:ring-2 focus:ring-purple-200 transition',
+                'placeholder': 'How can we help you?',
+                'required': True
+            }),
+            'message': forms.Textarea(attrs={
+                'class': 'w-full px-4 py-3 rounded-lg border border-purple-200 focus:border-purple-500 focus:ring-2 focus:ring-purple-200 transition',
+                'placeholder': 'Please describe your inquiry in detail...',
+                'rows': 6,
+                'required': True
+            }),
+        }

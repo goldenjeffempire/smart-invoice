@@ -29,6 +29,23 @@ PAYMENT_TERMS_CHOICES = [
     ('net_90', 'Net 90 Days'),
 ]
 
+class SupportInquiry(models.Model):
+    name = models.CharField(max_length=200, verbose_name="Name")
+    email = models.EmailField(verbose_name="Email")
+    subject = models.CharField(max_length=300, verbose_name="Subject")
+    message = models.TextField(verbose_name="Message")
+    created_at = models.DateTimeField(default=timezone.now)
+    is_read = models.BooleanField(default=False)
+    
+    class Meta:
+        ordering = ['-created_at']
+        verbose_name = "Support Inquiry"
+        verbose_name_plural = "Support Inquiries"
+    
+    def __str__(self):
+        return f"{self.subject} - {self.email}"
+
+
 class Invoice(models.Model):
     invoice_id = models.CharField(max_length=32, unique=True, editable=False)
     created_at = models.DateTimeField(default=timezone.now)
@@ -65,6 +82,7 @@ class Invoice(models.Model):
     
     notes = models.TextField(blank=True, verbose_name="Additional Notes")
     payment_instructions = models.TextField(blank=True, verbose_name="Payment Instructions")
+    paystack_reference = models.CharField(max_length=100, blank=True, null=True, verbose_name="Paystack Reference")
     
     def save(self, *args, **kwargs):
         if not self.invoice_id:

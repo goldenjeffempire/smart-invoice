@@ -15,8 +15,8 @@ from decimal import Decimal
 import base64
 import re
 
-from .forms import InvoiceForm
-from .models import Invoice
+from .forms import InvoiceForm, SupportInquiryForm
+from .models import Invoice, SupportInquiry
 
 
 # ----------------------------
@@ -327,3 +327,210 @@ def invoice_preview(request):
     dummy_invoice.save = lambda: None
     
     return render(request, 'invoices/invoice_pdf.html', {'invoice': dummy_invoice})
+
+
+# ----------------------------
+# FAQ Page
+# ----------------------------
+def faq_page(request):
+    """Display FAQ page."""
+    return render(request, 'invoices/faq.html')
+
+
+# ----------------------------
+# Support Page
+# ----------------------------
+def support_page(request):
+    """Handle support inquiries."""
+    if request.method == 'POST':
+        form = SupportInquiryForm(request.POST)
+        if form.is_valid():
+            inquiry = form.save()
+            
+            try:
+                subject = f"New Support Inquiry: {inquiry.subject}"
+                body = f"""New support inquiry received:
+
+Name: {inquiry.name}
+Email: {inquiry.email}
+Subject: {inquiry.subject}
+
+Message:
+{inquiry.message}
+
+---
+Submitted at: {inquiry.created_at}
+"""
+                admin_email = settings.EMAIL_HOST_USER or 'support@smartinvoice.com'
+                email = EmailMessage(subject, body, inquiry.email, [admin_email])
+                email.send(fail_silently=True)
+            except Exception:
+                pass
+            
+            messages.success(request, 'Thank you for contacting us! We have received your message and will respond within 24 hours.')
+            return redirect('support')
+        else:
+            messages.error(request, 'Please correct the errors in the form.')
+    else:
+        form = SupportInquiryForm()
+    
+    return render(request, 'invoices/support.html', {'form': form})
+
+
+# ----------------------------
+# Payment Integration
+# ----------------------------
+def initialize_paystack_payment(request, pk):
+    """Initialize Paystack transaction and redirect to payment page."""
+    import requests
+    import json
+    
+    invoice = get_object_or_404(Invoice, pk=pk)
+    
+    if not settings.PAYSTACK_SECRET_KEY:
+        messages.error(request, 'Payment system is not configured. Please contact support.')
+        return redirect('invoice_detail', pk=pk)
+    
+    amount_in_kobo = int(invoice.total_amount * 100)
+    
+    headers = {
+        'Authorization': f'Bearer {settings.PAYSTACK_SECRET_KEY}',
+        'Content-Type': 'application/json',
+    }
+    
+    callback_url = request.build_absolute_uri(reverse('payment_callback'))
+    
+    payload = {
+        'amount': amount_in_kobo,
+        'email': invoice.client_email or 'customer@example.com',
+        'reference': invoice.invoice_id,
+        'currency': invoice.currency,
+        'callback_url': callback_url,
+        'metadata': {
+            'invoice_id': invoice.invoice_id,
+            'business_name': invoice.business_name,
+            'client_name': invoice.client_name,
+        }
+    }
+    
+    try:
+        response = requests.post(
+            'https://api.paystack.co/transaction/initialize',
+            headers=headers,
+            data=json.dumps(payload),
+            timeout=10
+        )
+        
+        response_data = response.json()
+        
+        if response_data.get('status') and response_data.get('data'):
+            authorization_url = response_data['data']['authorization_url']
+            reference = response_data['data']['reference']
+            
+            invoice.paystack_reference = reference
+            invoice.save()
+            
+            return redirect(authorization_url)
+        else:
+            messages.error(request, f"Payment initialization failed: {response_data.get('message', 'Unknown error')}")
+            return redirect('invoice_detail', pk=pk)
+            
+    except requests.exceptions.RequestException as e:
+        messages.error(request, f'Payment system error: {str(e)}')
+        return redirect('invoice_detail', pk=pk)
+
+
+def payment_callback(request):
+    """Handle Paystack payment callback."""
+    reference = request.GET.get('reference')
+    
+    if not reference:
+        messages.error(request, 'Invalid payment reference.')
+        return redirect('invoice_list')
+    
+    try:
+        invoice = Invoice.objects.get(paystack_reference=reference)
+        invoice.status = 'paid'
+        invoice.paid_date = timezone.now().date()
+        invoice.save()
+        
+        messages.success(request, f'Payment successful! Invoice {invoice.invoice_id} has been marked as paid.')
+        return redirect('invoice_detail', pk=invoice.pk)
+    except Invoice.DoesNotExist:
+        messages.error(request, 'Invoice not found.')
+        return redirect('invoice_list')
+
+
+def send_whatsapp_payment_link(request, pk):
+    """Send WhatsApp message with Paystack payment link."""
+    import requests
+    import json
+    
+    invoice = get_object_or_404(Invoice, pk=pk)
+    
+    if not invoice.client_phone:
+        messages.error(request, 'No WhatsApp number provided for this client.')
+        return redirect('invoice_detail', pk=pk)
+    
+    if not settings.PAYSTACK_SECRET_KEY:
+        messages.error(request, 'Payment system is not configured.')
+        return redirect('invoice_detail', pk=pk)
+    
+    amount_in_kobo = int(invoice.total_amount * 100)
+    
+    headers = {
+        'Authorization': f'Bearer {settings.PAYSTACK_SECRET_KEY}',
+        'Content-Type': 'application/json',
+    }
+    
+    callback_url = request.build_absolute_uri(reverse('payment_callback'))
+    
+    payload = {
+        'amount': amount_in_kobo,
+        'email': invoice.client_email or 'customer@example.com',
+        'reference': f"{invoice.invoice_id}-{timezone.now().timestamp()}",
+        'currency': invoice.currency,
+        'callback_url': callback_url,
+        'metadata': {
+            'invoice_id': invoice.invoice_id,
+            'business_name': invoice.business_name,
+            'client_name': invoice.client_name,
+        }
+    }
+    
+    try:
+        response = requests.post(
+            'https://api.paystack.co/transaction/initialize',
+            headers=headers,
+            data=json.dumps(payload),
+            timeout=10
+        )
+        
+        response_data = response.json()
+        
+        if response_data.get('status') and response_data.get('data'):
+            payment_link = response_data['data']['authorization_url']
+            
+            client_phone = invoice.client_phone.strip()
+            if client_phone.startswith('+'):
+                whatsapp_number = client_phone[1:]
+            else:
+                whatsapp_number = client_phone.replace(' ', '').replace('-', '')
+            
+            message = f"💰 *Invoice {invoice.invoice_id}*%0A%0A"
+            message += f"From: {invoice.business_name}%0A"
+            message += f"Amount: {invoice.currency} {invoice.total_amount}%0A"
+            message += f"Due: {invoice.due_date if invoice.due_date else 'Upon receipt'}%0A%0A"
+            message += f"Click here to pay securely:%0A{payment_link}%0A%0A"
+            message += f"Thank you for your business!"
+            
+            whatsapp_link = f"https://wa.me/{whatsapp_number}?text={message}"
+            
+            return redirect(whatsapp_link)
+        else:
+            messages.error(request, 'Failed to generate payment link.')
+            return redirect('invoice_detail', pk=pk)
+            
+    except requests.exceptions.RequestException as e:
+        messages.error(request, f'Payment system error: {str(e)}')
+        return redirect('invoice_detail', pk=pk)

@@ -11,4 +11,9 @@ urlpatterns = [
     path('invoice/<int:pk>/send-email/', views.send_invoice_email, name='send_invoice_email'),
     path('invoice/<int:pk>/send-whatsapp/', views.send_invoice_whatsapp, name='send_invoice_whatsapp'),
     path('invoice/preview/', views.invoice_preview, name='invoice_preview'),
+    path('invoice/<int:pk>/pay/', views.initialize_paystack_payment, name='initialize_payment'),
+    path('invoice/<int:pk>/whatsapp-pay/', views.send_whatsapp_payment_link, name='whatsapp_payment_link'),
+    path('payment/callback/', views.payment_callback, name='payment_callback'),
+    path('faq/', views.faq_page, name='faq'),
+    path('support/', views.support_page, name='support'),
 ]

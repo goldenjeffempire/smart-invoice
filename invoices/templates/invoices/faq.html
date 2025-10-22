@@ -1,0 +1,323 @@
+{% load static %}
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="description" content="Frequently Asked Questions - Smart Invoice Platform" />
+  <title>FAQ — Smart Invoice</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <style>
+    :root { color-scheme: dark; }
+    * { scroll-behavior: smooth; }
+
+    body {
+      background: #0a0118;
+      font-family: 'Inter', sans-serif;
+      overflow-x: hidden;
+      position: relative;
+      min-height: 100vh;
+      color: #f3f4f6;
+    }
+
+    .animated-bg { position: fixed; width: 100%; height: 100%; top: 0; left: 0; z-index: 0; overflow: hidden; }
+    .bg-orb { position: absolute; border-radius: 50%; filter: blur(90px); opacity: 0.4; animation: float 25s infinite ease-in-out; }
+    .orb-1 { width: 700px; height: 700px; background: radial-gradient(circle, rgba(147, 51, 234, 0.6), transparent); top: -15%; left: -15%; animation-delay: 0s; }
+    .orb-2 { width: 600px; height: 600px; background: radial-gradient(circle, rgba(236, 72, 153, 0.6), transparent); top: 30%; right: -10%; animation-delay: 7s; }
+    .orb-3 { width: 550px; height: 550px; background: radial-gradient(circle, rgba(59, 130, 246, 0.5), transparent); bottom: -15%; left: 25%; animation-delay: 3s; }
+    
+    @keyframes float {
+      0%,100%{ transform: translate(0,0) scale(1) rotate(0deg); }
+      25%{ transform: translate(40px,-60px) scale(1.15) rotate(5deg); }
+      50%{ transform: translate(-30px,40px) scale(0.95) rotate(-3deg); }
+      75%{ transform: translate(20px,-30px) scale(1.08) rotate(4deg); }
+    }
+
+    .glass { 
+      background: rgba(255, 255, 255, 0.05); 
+      backdrop-filter: blur(20px); 
+      border: 1px solid rgba(255,255,255,0.1); 
+      border-radius: 1rem; 
+      box-shadow: 0 8px 32px rgba(0,0,0,0.3); 
+    }
+
+    .faq-item {
+      background: rgba(255,255,255,0.03);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,0.08);
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .faq-item:hover {
+      border-color: rgba(168,85,247,0.4);
+      background: rgba(255,255,255,0.08);
+    }
+
+    .faq-item.active {
+      border-color: rgba(168,85,247,0.6);
+      background: rgba(168,85,247,0.1);
+    }
+
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .faq-item.active .faq-answer {
+      max-height: 1000px;
+    }
+
+    .faq-icon {
+      transition: transform 0.3s ease;
+    }
+
+    .faq-item.active .faq-icon {
+      transform: rotate(180deg);
+    }
+
+    .gradient-text {
+      background: linear-gradient(135deg, #ec4899 0%, #8b5cf6 50%, #06b6d4 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="animated-bg">
+    <div class="bg-orb orb-1"></div>
+    <div class="bg-orb orb-2"></div>
+    <div class="bg-orb orb-3"></div>
+  </div>
+
+  <div class="relative z-10">
+    <!-- Navbar -->
+    <nav class="glass mx-4 mt-4 md:mx-8 md:mt-6 px-6 py-4">
+      <div class="container mx-auto flex items-center justify-between">
+        <a href="{% url 'landing' %}" class="flex items-center space-x-3">
+          <div class="bg-gradient-to-br from-purple-500 to-pink-500 p-2 rounded-lg">
+            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+            </svg>
+          </div>
+          <span class="text-xl font-bold text-white">Smart Invoice</span>
+        </a>
+        
+        <div class="hidden md:flex items-center space-x-8">
+          <a href="{% url 'landing' %}#features" class="text-gray-300 hover:text-white transition">Features</a>
+          <a href="{% url 'faq' %}" class="text-purple-400 font-medium">FAQ</a>
+          <a href="{% url 'support' %}" class="text-gray-300 hover:text-white transition">Support</a>
+          <a href="{% url 'invoice_list' %}" class="px-6 py-2 bg-gradient-to-r from-purple-600 to-pink-600 rounded-lg text-white font-semibold hover:shadow-lg hover:shadow-purple-500/50 transition">Dashboard</a>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <div class="container mx-auto px-4 py-16 md:py-24">
+      <div class="text-center max-w-4xl mx-auto mb-16">
+        <h1 class="text-5xl md:text-7xl font-bold mb-6">
+          <span class="gradient-text">Frequently Asked</span><br/>
+          <span class="text-white">Questions</span>
+        </h1>
+        <p class="text-xl text-gray-300 max-w-2xl mx-auto">
+          Find answers to common questions about Smart Invoice. Can't find what you're looking for? <a href="{% url 'support' %}" class="text-purple-400 hover:text-purple-300 underline">Contact our support team</a>.
+        </p>
+      </div>
+
+      <!-- FAQ Items -->
+      <div class="max-w-4xl mx-auto space-y-4">
+        
+        <div class="faq-item rounded-xl p-6" onclick="toggleFaq(this)">
+          <div class="flex justify-between items-start">
+            <h3 class="text-xl font-semibold text-white pr-8">How do I create my first invoice?</h3>
+            <svg class="faq-icon w-6 h-6 text-purple-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+            </svg>
+          </div>
+          <div class="faq-answer mt-4">
+            <p class="text-gray-300 leading-relaxed">
+              Creating your first invoice is simple! Navigate to the Dashboard and click "Create Invoice". Fill in your business details, client information, and itemize your products or services. You can add tax, discounts, and payment terms. Once complete, you can download as PDF, email directly to your client, or share via WhatsApp.
+            </p>
+          </div>
+        </div>
+
+        <div class="faq-item rounded-xl p-6" onclick="toggleFaq(this)">
+          <div class="flex justify-between items-start">
+            <h3 class="text-xl font-semibold text-white pr-8">What payment methods are supported?</h3>
+            <svg class="faq-icon w-6 h-6 text-purple-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+            </svg>
+          </div>
+          <div class="faq-answer mt-4">
+            <p class="text-gray-300 leading-relaxed">
+              Smart Invoice integrates with Paystack to accept payments via credit/debit cards, bank transfers, USSD, and mobile money. Each invoice includes a secure payment link that your clients can use to pay instantly. You can also add custom payment instructions for wire transfers or other payment methods.
+            </p>
+          </div>
+        </div>
+
+        <div class="faq-item rounded-xl p-6" onclick="toggleFaq(this)">
+          <div class="flex justify-between items-start">
+            <h3 class="text-xl font-semibold text-white pr-8">Can I send invoices via WhatsApp?</h3>
+            <svg class="faq-icon w-6 h-6 text-purple-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+            </svg>
+          </div>
+          <div class="faq-answer mt-4">
+            <p class="text-gray-300 leading-relaxed">
+              Yes! Smart Invoice supports WhatsApp integration via Twilio. You can send professional invoice PDFs directly to your clients' WhatsApp numbers with a single click. The message includes invoice details, payment links, and the PDF attachment.
+            </p>
+          </div>
+        </div>
+
+        <div class="faq-item rounded-xl p-6" onclick="toggleFaq(this)">
+          <div class="flex justify-between items-start">
+            <h3 class="text-xl font-semibold text-white pr-8">What currencies are supported?</h3>
+            <svg class="faq-icon w-6 h-6 text-purple-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+            </svg>
+          </div>
+          <div class="faq-answer mt-4">
+            <p class="text-gray-300 leading-relaxed">
+              We support multiple currencies including USD (US Dollar), EUR (Euro), GBP (British Pound), NGN (Nigerian Naira), CAD (Canadian Dollar), and AUD (Australian Dollar). You can select your preferred currency for each invoice.
+            </p>
+          </div>
+        </div>
+
+        <div class="faq-item rounded-xl p-6" onclick="toggleFaq(this)">
+          <div class="flex justify-between items-start">
+            <h3 class="text-xl font-semibold text-white pr-8">How do I track invoice status?</h3>
+            <svg class="faq-icon w-6 h-6 text-purple-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+            </svg>
+          </div>
+          <div class="faq-answer mt-4">
+            <p class="text-gray-300 leading-relaxed">
+              Every invoice has a status: Draft, Sent, Paid, Overdue, or Cancelled. Your dashboard displays real-time stats for each status. You can filter and search invoices, and the system automatically marks invoices as overdue when they pass their due date.
+            </p>
+          </div>
+        </div>
+
+        <div class="faq-item rounded-xl p-6" onclick="toggleFaq(this)">
+          <div class="flex justify-between items-start">
+            <h3 class="text-xl font-semibold text-white pr-8">Can I customize my invoices?</h3>
+            <svg class="faq-icon w-6 h-6 text-purple-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+            </svg>
+          </div>
+          <div class="faq-answer mt-4">
+            <p class="text-gray-300 leading-relaxed">
+              Absolutely! You can add your business logo, customize payment terms, include notes, add tax rates, apply discounts, and provide custom payment instructions. Each invoice is professionally designed and mobile-responsive.
+            </p>
+          </div>
+        </div>
+
+        <div class="faq-item rounded-xl p-6" onclick="toggleFaq(this)">
+          <div class="flex justify-between items-start">
+            <h3 class="text-xl font-semibold text-white pr-8">Is my data secure?</h3>
+            <svg class="faq-icon w-6 h-6 text-purple-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+            </svg>
+          </div>
+          <div class="faq-answer mt-4">
+            <p class="text-gray-300 leading-relaxed">
+              Yes, security is our top priority. All data is encrypted in transit and at rest. Payment processing is handled by Paystack, a PCI-DSS compliant payment gateway. We never store your payment card details. Our platform follows industry-standard security best practices.
+            </p>
+          </div>
+        </div>
+
+        <div class="faq-item rounded-xl p-6" onclick="toggleFaq(this)">
+          <div class="flex justify-between items-start">
+            <h3 class="text-xl font-semibold text-white pr-8">What if I need help or have issues?</h3>
+            <svg class="faq-icon w-6 h-6 text-purple-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+            </svg>
+          </div>
+          <div class="faq-answer mt-4">
+            <p class="text-gray-300 leading-relaxed">
+              Our support team is here to help! Visit our <a href="{% url 'support' %}" class="text-purple-400 hover:text-purple-300 underline">Support page</a> to submit an inquiry. We typically respond within 24 hours during business days. For urgent issues, please include "URGENT" in your subject line.
+            </p>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- CTA Section -->
+      <div class="max-w-4xl mx-auto mt-16 text-center glass p-12 rounded-2xl">
+        <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">Ready to Get Started?</h2>
+        <p class="text-gray-300 mb-8 text-lg">Create your first professional invoice in under 2 minutes.</p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <a href="{% url 'create_invoice' %}" class="px-8 py-4 bg-gradient-to-r from-purple-600 to-pink-600 rounded-lg text-white font-semibold hover:shadow-lg hover:shadow-purple-500/50 transition">
+            Create Invoice
+          </a>
+          <a href="{% url 'support' %}" class="px-8 py-4 bg-white/5 border border-white/20 rounded-lg text-white font-semibold hover:bg-white/10 transition">
+            Contact Support
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="relative z-10 mt-24 border-t border-white/10 bg-black/20 backdrop-blur-sm">
+      <div class="container mx-auto px-4 py-12">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+          <div>
+            <div class="flex items-center space-x-3 mb-4">
+              <div class="bg-gradient-to-br from-purple-500 to-pink-500 p-2 rounded-lg">
+                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                </svg>
+              </div>
+              <span class="text-xl font-bold text-white">Smart Invoice</span>
+            </div>
+            <p class="text-gray-400 text-sm">Professional invoicing for modern businesses.</p>
+          </div>
+          <div>
+            <h3 class="text-white font-semibold mb-4">Product</h3>
+            <ul class="space-y-2">
+              <li><a href="{% url 'landing' %}#features" class="text-gray-400 hover:text-purple-400 transition text-sm">Features</a></li>
+              <li><a href="{% url 'invoice_list' %}" class="text-gray-400 hover:text-purple-400 transition text-sm">Dashboard</a></li>
+              <li><a href="{% url 'create_invoice' %}" class="text-gray-400 hover:text-purple-400 transition text-sm">Create Invoice</a></li>
+            </ul>
+          </div>
+          <div>
+            <h3 class="text-white font-semibold mb-4">Support</h3>
+            <ul class="space-y-2">
+              <li><a href="{% url 'faq' %}" class="text-gray-400 hover:text-purple-400 transition text-sm">FAQ</a></li>
+              <li><a href="{% url 'support' %}" class="text-gray-400 hover:text-purple-400 transition text-sm">Contact Us</a></li>
+            </ul>
+          </div>
+          <div>
+            <h3 class="text-white font-semibold mb-4">Legal</h3>
+            <ul class="space-y-2">
+              <li><a href="#" class="text-gray-400 hover:text-purple-400 transition text-sm">Privacy Policy</a></li>
+              <li><a href="#" class="text-gray-400 hover:text-purple-400 transition text-sm">Terms of Service</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="border-t border-white/10 pt-8 text-center">
+          <p class="text-gray-400 text-sm">&copy; 2025 Smart Invoice. All rights reserved. Built with care for modern businesses.</p>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    function toggleFaq(element) {
+      const allItems = document.querySelectorAll('.faq-item');
+      allItems.forEach(item => {
+        if (item !== element && item.classList.contains('active')) {
+          item.classList.remove('active');
+        }
+      });
+      element.classList.toggle('active');
+    }
+  </script>
+</body>
+</html>
