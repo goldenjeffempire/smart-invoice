@@ -1,70 +1,452 @@
+{% load widget_tweaks %}
 <!doctype html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Create Invoice — Onome</title>
+  <title>Create Invoice — Smart Invoice</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      color-scheme: dark;
+    }
+
+    body {
+      background: linear-gradient(135deg, #0a0118 0%, #1a0a2e 50%, #0a0118 100%);
+      font-family: 'Inter', sans-serif;
+      color: #f3f4f6;
+      min-height: 100vh;
+    }
+
+    .glass {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    }
+
+    .input-field {
+      background: rgba(0, 0, 0, 0.3);
+      border: 2px solid rgba(255, 255, 255, 0.1);
+      transition: all 0.3s ease;
+    }
+
+    .input-field:focus {
+      border-color: rgba(168, 85, 247, 0.6);
+      background: rgba(0, 0, 0, 0.4);
+      box-shadow: 0 0 0 3px rgba(168, 85, 247, 0.1);
+      outline: none;
+    }
+
+    .input-field:hover {
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #8b5cf6, #ec4899);
+      color: white;
+      font-weight: 600;
+      box-shadow: 0 10px 25px rgba(168, 85, 247, 0.4);
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 15px 35px rgba(236, 72, 153, 0.5);
+    }
+
+    .btn-primary::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+      transition: left 0.5s;
+    }
+
+    .btn-primary:hover::before {
+      left: 100%;
+    }
+
+    .fade-in {
+      opacity: 0;
+      animation: fadeIn 0.6s ease forwards;
+    }
+
+    @keyframes fadeIn {
+      to {
+        opacity: 1;
+      }
+    }
+
+    .slide-up {
+      opacity: 0;
+      transform: translateY(20px);
+      animation: slideUp 0.6s ease forwards;
+    }
+
+    @keyframes slideUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    label {
+      color: #e9d5ff;
+      font-weight: 500;
+      font-size: 0.95rem;
+      margin-bottom: 0.5rem;
+      display: block;
+    }
+
+    .gradient-text {
+      background: linear-gradient(135deg, #a855f7, #ec4899);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .progress-bar {
+      height: 4px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #8b5cf6, #ec4899);
+      transition: width 0.3s ease;
+    }
+
+    .field-icon {
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      opacity: 0.5;
+    }
+
+    .has-icon {
+      padding-left: 40px;
+    }
+
+    .error-message {
+      color: #fca5a5;
+      font-size: 0.875rem;
+      margin-top: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .success-icon {
+      color: #86efac;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .input-field:valid ~ .success-icon {
+      opacity: 1;
+    }
+
+    .floating-label {
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #9ca3af;
+      transition: all 0.3s ease;
+      pointer-events: none;
+    }
+
+    .input-field:focus ~ .floating-label,
+    .input-field:not(:placeholder-shown) ~ .floating-label {
+      top: -10px;
+      font-size: 0.75rem;
+      color: #a855f7;
+      background: #0a0118;
+      padding: 0 5px;
+    }
+  </style>
 </head>
-<body class="bg-gray-900 text-gray-100">
-  {% load widget_tweaks %}
-  <div class="max-w-3xl mx-auto p-6">
-    <header class="mb-6">
-      <h1 class="text-3xl font-bold">Smart Invoice Generator</h1>
-      <p class="text-gray-400">Create a clean invoice in seconds — built by <strong>Jeffery Onome</strong>.</p>
+
+<body>
+  <!-- Background Orbs -->
+  <div class="fixed inset-0 overflow-hidden pointer-events-none">
+    <div class="absolute w-96 h-96 rounded-full bg-purple-500/20 blur-3xl -top-20 -left-20 animate-pulse"></div>
+    <div class="absolute w-96 h-96 rounded-full bg-pink-500/20 blur-3xl -bottom-20 -right-20 animate-pulse" style="animation-delay: 1s"></div>
+  </div>
+
+  <div class="relative z-10 min-h-screen">
+    <!-- Header -->
+    <header class="px-6 py-6">
+      <div class="max-w-4xl mx-auto flex justify-between items-center">
+        <a href="/" class="flex items-center gap-3 group">
+          <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-violet-500 to-fuchsia-500 flex items-center justify-center text-2xl shadow-lg group-hover:scale-110 transition">
+            📄
+          </div>
+          <span class="text-xl font-bold">Smart Invoice</span>
+        </a>
+        <a href="/" class="text-gray-400 hover:text-white transition text-sm">
+          ← Back to Home
+        </a>
+      </div>
     </header>
 
-    <div class="bg-gray-800 p-6 rounded-xl shadow">
-      <form method="post" novalidate>
-        {% csrf_token %}
-        {{ form.non_field_errors }}
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div>
-            {{ form.business_name.label_tag }}
-            {{ form.business_name|add_class:"w-full p-2 rounded bg-black/30 border border-white/10" }}
-          </div>
-          <div>
-            {{ form.client_name.label_tag }}
-            {{ form.client_name|add_class:"w-full p-2 rounded bg-black/30 border border-white/10" }}
-          </div>
+    <!-- Main Content -->
+    <main class="px-6 py-8 fade-in">
+      <div class="max-w-4xl mx-auto">
+        <!-- Page Title -->
+        <div class="text-center mb-10 slide-up">
+          <h1 class="text-4xl md:text-5xl font-black mb-4">
+            <span class="gradient-text">Create Your Invoice</span>
+          </h1>
+          <p class="text-gray-400 text-lg">Fill in the details below to generate a professional invoice</p>
         </div>
 
-        <div class="mt-4">
-          {{ form.client_email_or_whatsapp.label_tag }}
-          {{ form.client_email_or_whatsapp|add_class:"w-full p-2 rounded bg-black/30 border border-white/10" }}
+        <!-- Progress Bar -->
+        <div class="progress-bar mb-8 slide-up" style="animation-delay: 0.1s">
+          <div class="progress-fill" id="progressFill" style="width: 0%"></div>
         </div>
 
-        <div class="mt-4">
-          {{ form.description.label_tag }}
-          {{ form.description|add_class:"w-full p-2 rounded bg-black/30 border border-white/10" }}
+        <!-- Form -->
+        <div class="glass rounded-3xl p-8 md:p-10 slide-up" style="animation-delay: 0.2s">
+          <form method="post" id="invoiceForm" novalidate>
+            {% csrf_token %}
+            
+            {% if form.non_field_errors %}
+              <div class="mb-6 p-4 rounded-xl bg-red-500/10 border border-red-500/30">
+                <div class="flex items-center gap-2 text-red-400">
+                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                  </svg>
+                  <span>{{ form.non_field_errors }}</span>
+                </div>
+              </div>
+            {% endif %}
+
+            <!-- Business & Client Info -->
+            <div class="mb-8">
+              <h2 class="text-2xl font-bold mb-6 flex items-center gap-2">
+                <span class="text-3xl">🏢</span>
+                <span>Business & Client Information</span>
+              </h2>
+              
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Business Name -->
+                <div class="relative">
+                  {{ form.business_name.label_tag }}
+                  {{ form.business_name|add_class:"w-full px-4 py-3 rounded-xl input-field text-white" }}
+                  {% if form.business_name.errors %}
+                    <div class="error-message">
+                      <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path>
+                      </svg>
+                      {{ form.business_name.errors.0 }}
+                    </div>
+                  {% endif %}
+                </div>
+
+                <!-- Client Name -->
+                <div class="relative">
+                  {{ form.client_name.label_tag }}
+                  {{ form.client_name|add_class:"w-full px-4 py-3 rounded-xl input-field text-white" }}
+                  {% if form.client_name.errors %}
+                    <div class="error-message">
+                      <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path>
+                      </svg>
+                      {{ form.client_name.errors.0 }}
+                    </div>
+                  {% endif %}
+                </div>
+              </div>
+
+              <!-- Client Contact -->
+              <div class="mt-6">
+                {{ form.client_email_or_whatsapp.label_tag }}
+                {{ form.client_email_or_whatsapp|add_class:"w-full px-4 py-3 rounded-xl input-field text-white" }}
+                {% if form.client_email_or_whatsapp.errors %}
+                  <div class="error-message">
+                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                      <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path>
+                    </svg>
+                    {{ form.client_email_or_whatsapp.errors.0 }}
+                  </div>
+                {% endif %}
+              </div>
+            </div>
+
+            <!-- Invoice Details -->
+            <div class="mb-8">
+              <h2 class="text-2xl font-bold mb-6 flex items-center gap-2">
+                <span class="text-3xl">📝</span>
+                <span>Invoice Details</span>
+              </h2>
+
+              <!-- Description -->
+              <div class="mb-6">
+                {{ form.description.label_tag }}
+                {{ form.description|add_class:"w-full px-4 py-3 rounded-xl input-field text-white min-h-[120px]" }}
+                {% if form.description.errors %}
+                  <div class="error-message">
+                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                      <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path>
+                    </svg>
+                    {{ form.description.errors.0 }}
+                  </div>
+                {% endif %}
+              </div>
+
+              <!-- Amount & Currency -->
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                  {{ form.amount.label_tag }}
+                  {{ form.amount|add_class:"w-full px-4 py-3 rounded-xl input-field text-white" }}
+                  {% if form.amount.errors %}
+                    <div class="error-message">
+                      <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path>
+                      </svg>
+                      {{ form.amount.errors.0 }}
+                    </div>
+                  {% endif %}
+                </div>
+
+                <div>
+                  {{ form.currency.label_tag }}
+                  {{ form.currency|add_class:"w-full px-4 py-3 rounded-xl input-field text-white" }}
+                  {% if form.currency.errors %}
+                    <div class="error-message">
+                      <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path>
+                      </svg>
+                      {{ form.currency.errors.0 }}
+                    </div>
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+
+            <!-- Additional Notes -->
+            <div class="mb-8">
+              <h2 class="text-2xl font-bold mb-6 flex items-center gap-2">
+                <span class="text-3xl">💬</span>
+                <span>Additional Notes (Optional)</span>
+              </h2>
+
+              <div>
+                {{ form.notes.label_tag }}
+                {{ form.notes|add_class:"w-full px-4 py-3 rounded-xl input-field text-white min-h-[100px]" }}
+                <p class="text-sm text-gray-400 mt-2">Add payment terms, thank you message, or any other relevant information</p>
+                {% if form.notes.errors %}
+                  <div class="error-message">
+                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                      <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path>
+                    </svg>
+                    {{ form.notes.errors.0 }}
+                  </div>
+                {% endif %}
+              </div>
+            </div>
+
+            <!-- Submit Buttons -->
+            <div class="flex flex-col sm:flex-row gap-4 mt-10">
+              <button type="submit" class="btn-primary px-8 py-4 rounded-xl text-lg flex-1 flex items-center justify-center gap-2">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+                <span>Generate Invoice</span>
+              </button>
+              <a href="/" class="px-8 py-4 rounded-xl text-lg flex-1 text-center border-2 border-white/20 hover:border-white/40 hover:bg-white/5 transition flex items-center justify-center gap-2">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+                </svg>
+                <span>Cancel</span>
+              </a>
+            </div>
+          </form>
         </div>
 
-        <div class="grid grid-cols-2 gap-4 mt-4">
-          <div>
-            {{ form.amount.label_tag }}
-            {{ form.amount|add_class:"w-full p-2 rounded bg-black/30 border border-white/10" }}
-          </div>
-          <div>
-            {{ form.currency.label_tag }}
-            {{ form.currency|add_class:"w-full p-2 rounded bg-black/30 border border-white/10" }}
-          </div>
+        <!-- Help Text -->
+        <div class="mt-8 text-center text-gray-400 text-sm slide-up" style="animation-delay: 0.3s">
+          <p>✨ Your invoice will be generated instantly and available for download as a PDF</p>
         </div>
-
-        <div class="mt-4">
-          {{ form.notes.label_tag }}
-          {{ form.notes|add_class:"w-full p-2 rounded bg-black/30 border border-white/10" }}
-        </div>
-
-        <div class="mt-6 flex gap-3">
-          <button type="submit" class="px-4 py-2 rounded bg-violet-600">Generate Invoice</button>
-          <a href="/" class="px-4 py-2 rounded border border-white/10">Back</a>
-        </div>
-      </form>
-    </div>
-
-    <footer class="mt-6 text-gray-500 text-sm">
-      Built by <strong>Jeffery Onome</strong> — <a href="https://onome-portfolio-ten.vercel.app" class="underline">onome-portfolio-ten.vercel.app</a>
-    </footer>
+      </div>
+    </main>
   </div>
+
+  <script>
+    // Form Progress Tracking
+    const form = document.getElementById('invoiceForm');
+    const progressFill = document.getElementById('progressFill');
+    const fields = form.querySelectorAll('input, textarea, select');
+    
+    function updateProgress() {
+      let filledFields = 0;
+      let requiredFields = 0;
+      
+      fields.forEach(field => {
+        if (field.value.trim() !== '') {
+          filledFields++;
+        }
+        requiredFields++;
+      });
+      
+      const progress = (filledFields / requiredFields) * 100;
+      progressFill.style.width = progress + '%';
+    }
+
+    fields.forEach(field => {
+      field.addEventListener('input', updateProgress);
+      field.addEventListener('change', updateProgress);
+    });
+
+    // Initial progress check
+    updateProgress();
+
+    // Form Validation Enhancement
+    form.addEventListener('submit', function(e) {
+      const submitBtn = form.querySelector('button[type="submit"]');
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = `
+        <svg class="animate-spin w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+        </svg>
+        <span>Generating...</span>
+      `;
+    });
+
+    // Auto-save to localStorage (optional enhancement)
+    fields.forEach(field => {
+      const savedValue = localStorage.getItem(field.name);
+      if (savedValue && !field.value) {
+        field.value = savedValue;
+      }
+      
+      field.addEventListener('input', function() {
+        localStorage.setItem(field.name, field.value);
+      });
+    });
+
+    // Clear localStorage on successful submit
+    form.addEventListener('submit', function() {
+      setTimeout(() => {
+        fields.forEach(field => {
+          localStorage.removeItem(field.name);
+        });
+      }, 1000);
+    });
+  </script>
 </body>
 </html>
