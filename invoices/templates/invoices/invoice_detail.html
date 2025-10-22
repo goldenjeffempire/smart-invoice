@@ -21,13 +21,18 @@
     }
   </style>
 </head>
+
 <body class="bg-gradient-to-br from-gray-900 via-violet-900 to-gray-800 text-gray-100 min-h-screen flex flex-col items-center py-12">
+
+  <!-- Header -->
   <header class="mb-10 text-center">
     <h1 class="text-4xl font-bold mb-2">Invoice {{ invoice.invoice_id }}</h1>
     <p class="text-gray-400">Issued to <span class="font-semibold text-white">{{ invoice.client_name }}</span></p>
   </header>
 
-  <main class="glass rounded-2xl shadow-2xl p-8 w-[90%] md:w-[600px]">
+  <!-- Main Card -->
+  <main class="glass rounded-2xl shadow-2xl p-8 w-[90%] md:w-[650px]">
+    <!-- Invoice Info -->
     <div class="text-left mb-6">
       <p><span class="font-semibold">Client Email:</span> {{ invoice.client_email }}</p>
       <p><span class="font-semibold">Description:</span> {{ invoice.item_description }}</p>
@@ -35,13 +40,21 @@
       <p><span class="font-semibold">Due Date:</span> {{ invoice.due_date }}</p>
     </div>
 
-    <div class="flex justify-center gap-4 flex-wrap mt-8">
-      <a href="{% url 'invoice_pdf' pk=invoice.pk %}" 
+    <!-- Action Buttons -->
+    <div class="mt-8 flex flex-wrap gap-4 justify-center">
+      <a href="{% url 'invoice_pdf' invoice.pk %}" 
          class="btn-animate px-6 py-3 bg-violet-600 rounded-xl text-white font-semibold hover:bg-violet-500 transition shadow-lg">
         🧾 Download PDF
       </a>
 
-      <a href="{% url 'invoice_create' %}" 
+      {% if invoice.client_email_or_whatsapp %}
+      <a href="https://wa.me/{{ invoice.client_email_or_whatsapp|urlencode }}" target="_blank"
+         class="btn-animate px-6 py-3 border border-gray-500 rounded-xl hover:bg-gray-800 transition">
+        💬 Send via WhatsApp
+      </a>
+      {% endif %}
+
+      <a href="{% url 'create_invoice' %}" 
          class="btn-animate px-6 py-3 border border-gray-500 rounded-xl hover:bg-gray-800 transition">
         ➕ Create Another
       </a>
@@ -51,12 +64,43 @@
         ⬅️ Back to Home
       </a>
     </div>
+
+    <!-- Email Sending Block -->
+    <div class="mt-10 bg-gray-900/50 p-5 rounded-xl border border-white/10">
+      {% if success %}
+        <div class="text-green-400 mb-3 font-medium">{{ success }}</div>
+      {% endif %}
+      {% if error %}
+        <div class="text-red-400 mb-3 font-medium">{{ error }}</div>
+      {% endif %}
+
+      <form method="post" action="{% url 'send_invoice_email' invoice.pk %}">
+        {% csrf_token %}
+        <label class="text-sm text-gray-400 mb-1 block">Send invoice to (email):</label>
+        <input type="email" name="to_email" placeholder="client@example.com" 
+               class="w-full p-2 rounded bg-black/20 border border-white/10 text-sm text-gray-200 focus:outline-none focus:border-violet-500" />
+
+        <div class="mt-4 flex flex-wrap gap-3">
+          <button type="submit" 
+                  class="btn-animate px-5 py-2 bg-green-600 rounded-lg hover:bg-green-500 font-medium shadow">
+            ✉️ Send Email (Attach PDF)
+          </button>
+
+          <a href="{% url 'invoice_pdf' invoice.pk %}" 
+             class="btn-animate px-5 py-2 border border-gray-500 rounded-lg hover:bg-gray-800 font-medium">
+            ⬇️ Download & Send Manually
+          </a>
+        </div>
+      </form>
+    </div>
   </main>
 
+  <!-- Footer -->
   <footer class="mt-12 text-gray-400 text-sm text-center px-4">
     Built with ❤️ by <strong>Jeffery Onome Tech Solutions</strong> — powered by 
     <span class="font-semibold text-violet-400">Django</span>, styled with 
     <span class="font-semibold text-violet-400">Tailwind</span>, and crafted by <strong>Jeffery Onome</strong>.
   </footer>
+
 </body>
 </html>
