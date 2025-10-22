@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analytics Dashboard - Smart Invoice</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 min-h-screen">
+    <div class="container mx-auto px-4 py-8">
+        <div class="flex justify-between items-center mb-8">
+            <h1 class="text-4xl font-bold text-white">Analytics Dashboard</h1>
+            <a href="{% url 'invoice_list' %}" class="px-6 py-3 bg-purple-600 hover:bg-purple-700 text-white rounded-lg transition">
+                Back to Invoices
+            </a>
+        </div>
+
+        <!-- Revenue Metrics -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+            <div class="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border border-white/20">
+                <h3 class="text-gray-300 text-sm font-semibold mb-2">Total Revenue</h3>
+                <p class="text-3xl font-bold text-white">${{ analytics.revenue_metrics.total_revenue|floatformat:2 }}</p>
+                <p class="text-green-400 text-sm mt-2">{{ analytics.invoice_statistics.paid_count }} paid invoices</p>
+            </div>
+            <div class="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border border-white/20">
+                <h3 class="text-gray-300 text-sm font-semibold mb-2">Pending Revenue</h3>
+                <p class="text-3xl font-bold text-white">${{ analytics.revenue_metrics.pending_revenue|floatformat:2 }}</p>
+                <p class="text-yellow-400 text-sm mt-2">{{ analytics.invoice_statistics.sent_count }} sent invoices</p>
+            </div>
+            <div class="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border border-white/20">
+                <h3 class="text-gray-300 text-sm font-semibold mb-2">Overdue Revenue</h3>
+                <p class="text-3xl font-bold text-white">${{ analytics.revenue_metrics.overdue_revenue|floatformat:2 }}</p>
+                <p class="text-red-400 text-sm mt-2">{{ analytics.invoice_statistics.overdue_count }} overdue invoices</p>
+            </div>
+        </div>
+
+        <!-- Invoice Statistics -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+            <div class="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border border-white/20">
+                <h2 class="text-2xl font-bold text-white mb-6">Invoice Statistics</h2>
+                <div class="space-y-4">
+                    <div class="flex justify-between items-center">
+                        <span class="text-gray-300">Total Invoices</span>
+                        <span class="text-white font-semibold">{{ analytics.invoice_statistics.total_invoices }}</span>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <span class="text-gray-300">Payment Rate</span>
+                        <span class="text-white font-semibold">{{ analytics.invoice_statistics.payment_rate }}%</span>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <span class="text-gray-300">Average Invoice Value</span>
+                        <span class="text-white font-semibold">${{ analytics.invoice_statistics.avg_invoice_value|floatformat:2 }}</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border border-white/20">
+                <h2 class="text-2xl font-bold text-white mb-6">Top Clients</h2>
+                <div class="space-y-4">
+                    {% for client in analytics.top_clients %}
+                    <div class="flex justify-between items-center border-b border-white/10 pb-2">
+                        <div>
+                            <p class="text-white font-semibold">{{ client.name }}</p>
+                            <p class="text-gray-400 text-sm">{{ client.total_invoices }} invoices</p>
+                        </div>
+                        <span class="text-purple-400 font-bold">${{ client.total_revenue|floatformat:2 }}</span>
+                    </div>
+                    {% empty %}
+                    <p class="text-gray-400">No client data available</p>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+        <!-- Export Actions -->
+        <div class="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border border-white/20">
+            <h2 class="text-2xl font-bold text-white mb-6">Export Data</h2>
+            <div class="flex flex-wrap gap-4">
+                <a href="{% url 'export_invoices' %}" class="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition">
+                    Export Invoices (CSV)
+                </a>
+                <a href="{% url 'export_payments' %}" class="px-6 py-3 bg-green-600 hover:bg-green-700 text-white rounded-lg transition">
+                    Export Payments (CSV)
+                </a>
+                <a href="{% url 'export_clients' %}" class="px-6 py-3 bg-purple-600 hover:bg-purple-700 text-white rounded-lg transition">
+                    Export Clients (CSV)
+                </a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

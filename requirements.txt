@@ -43,3 +43,5 @@ whitenoise==6.11.0
 twilio
 psycopg2-binary==2.9.10
 dj-database-url==2.2.0
+python-dateutil==2.9.0
+python-dateutil

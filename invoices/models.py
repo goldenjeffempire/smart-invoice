@@ -47,8 +47,93 @@ class SupportInquiry(models.Model):
         return f"{self.subject} - {self.email}"
 
 
+PAYMENT_STATUS_CHOICES = [
+    ('pending', 'Pending'),
+    ('successful', 'Successful'),
+    ('failed', 'Failed'),
+    ('cancelled', 'Cancelled'),
+]
+
+PAYMENT_METHOD_CHOICES = [
+    ('paystack', 'Paystack'),
+    ('bank_transfer', 'Bank Transfer'),
+    ('cash', 'Cash'),
+    ('other', 'Other'),
+]
+
+
+class Client(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='clients')
+    name = models.CharField(max_length=200, verbose_name="Client Name")
+    email = models.EmailField(max_length=200, blank=True, verbose_name="Email")
+    phone = models.CharField(max_length=50, blank=True, verbose_name="Phone/WhatsApp")
+    address = models.TextField(blank=True, verbose_name="Address")
+    company_name = models.CharField(max_length=200, blank=True, verbose_name="Company Name")
+    tax_id = models.CharField(max_length=100, blank=True, verbose_name="Tax ID/VAT Number")
+    
+    created_at = models.DateTimeField(default=timezone.now)
+    updated_at = models.DateTimeField(auto_now=True)
+    
+    notes = models.TextField(blank=True, verbose_name="Notes")
+    
+    class Meta:
+        ordering = ['name']
+        verbose_name = "Client"
+        verbose_name_plural = "Clients"
+        indexes = [
+            models.Index(fields=['user', 'name']),
+            models.Index(fields=['email']),
+        ]
+        unique_together = ['user', 'email']
+    
+    def __str__(self):
+        return f"{self.name} ({self.email})" if self.email else self.name
+    
+    @property
+    def total_invoices(self):
+        return self.invoices.count()
+    
+    @property
+    def total_revenue(self):
+        return self.invoices.filter(status='paid').aggregate(total=models.Sum('total_amount'))['total'] or Decimal('0.00')
+
+
+class PaymentTransaction(models.Model):
+    invoice = models.ForeignKey('Invoice', on_delete=models.CASCADE, related_name='payments')
+    transaction_reference = models.CharField(max_length=200, unique=True)
+    payment_method = models.CharField(max_length=20, choices=PAYMENT_METHOD_CHOICES, default='paystack')
+    amount = models.DecimalField(max_digits=12, decimal_places=2)
+    currency = models.CharField(max_length=3)
+    status = models.CharField(max_length=20, choices=PAYMENT_STATUS_CHOICES, default='pending')
+    
+    paystack_response = models.JSONField(blank=True, null=True)
+    payment_date = models.DateTimeField(blank=True, null=True)
+    created_at = models.DateTimeField(default=timezone.now)
+    updated_at = models.DateTimeField(auto_now=True)
+    
+    paid_by = models.CharField(max_length=200, blank=True)
+    payment_email = models.EmailField(blank=True)
+    payment_phone = models.CharField(max_length=50, blank=True)
+    
+    notes = models.TextField(blank=True)
+    
+    class Meta:
+        ordering = ['-created_at']
+        verbose_name = "Payment Transaction"
+        verbose_name_plural = "Payment Transactions"
+        indexes = [
+            models.Index(fields=['transaction_reference']),
+            models.Index(fields=['status', 'created_at']),
+            models.Index(fields=['invoice', 'status']),
+        ]
+    
+    def __str__(self):
+        return f"{self.transaction_reference} - {self.status} - {self.currency} {self.amount}"
+
+
 class Invoice(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='invoices', null=True, blank=True)
+    client = models.ForeignKey(Client, on_delete=models.SET_NULL, related_name='invoices', null=True, blank=True)
     invoice_id = models.CharField(max_length=32, unique=True, editable=False)
     created_at = models.DateTimeField(default=timezone.now)
     updated_at = models.DateTimeField(auto_now=True)
@@ -120,3 +205,33 @@ class Invoice(models.Model):
         ordering = ['-created_at']
         verbose_name = "Invoice"
         verbose_name_plural = "Invoices"
+        indexes = [
+            models.Index(fields=['user', 'status']),
+            models.Index(fields=['status', 'due_date']),
+            models.Index(fields=['invoice_id']),
+            models.Index(fields=['created_at']),
+            models.Index(fields=['paystack_reference']),
+        ]
+
+
+class InvoiceLineItem(models.Model):
+    invoice = models.ForeignKey(Invoice, on_delete=models.CASCADE, related_name='line_items')
+    description = models.TextField(verbose_name="Item Description")
+    quantity = models.DecimalField(max_digits=10, decimal_places=2, default=1, verbose_name="Quantity")
+    unit_price = models.DecimalField(max_digits=12, decimal_places=2, verbose_name="Unit Price")
+    amount = models.DecimalField(max_digits=12, decimal_places=2, editable=False)
+    
+    created_at = models.DateTimeField(default=timezone.now)
+    order = models.IntegerField(default=0, verbose_name="Display Order")
+    
+    def save(self, *args, **kwargs):
+        self.amount = self.quantity * self.unit_price
+        super().save(*args, **kwargs)
+    
+    class Meta:
+        ordering = ['order', 'id']
+        verbose_name = "Invoice Line Item"
+        verbose_name_plural = "Invoice Line Items"
+    
+    def __str__(self):
+        return f"{self.description[:50]} - {self.quantity} x {self.unit_price}"

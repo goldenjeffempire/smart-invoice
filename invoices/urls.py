@@ -20,6 +20,13 @@ urlpatterns = [
     path('invoice/<int:pk>/pay/', views.initialize_paystack_payment, name='initialize_payment'),
     path('invoice/<int:pk>/whatsapp-pay/', views.send_whatsapp_payment_link, name='whatsapp_payment_link'),
     path('payment/callback/', views.payment_callback, name='payment_callback'),
+    path('payment/webhook/', views.paystack_webhook, name='paystack_webhook'),
+    
+    # Analytics & Reports
+    path('analytics/', views.analytics_dashboard, name='analytics_dashboard'),
+    path('export/invoices/', views.export_invoices, name='export_invoices'),
+    path('export/payments/', views.export_payments, name='export_payments'),
+    path('export/clients/', views.export_clients, name='export_clients'),
     
     # Support
     path('faq/', views.faq_page, name='faq'),

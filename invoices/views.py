@@ -81,11 +81,32 @@ def invoice_list(request):
 @login_required
 def create_invoice(request):
     """Create a new invoice with professional fields."""
+    from .models import Client
+    
     if request.method == 'POST':
         form = InvoiceForm(request.POST)
         if form.is_valid():
             invoice = form.save(commit=False)
             invoice.user = request.user
+            
+            if invoice.client_email:
+                client, created = Client.objects.get_or_create(
+                    user=request.user,
+                    email=invoice.client_email,
+                    defaults={
+                        'name': invoice.client_name,
+                        'phone': invoice.client_phone,
+                        'address': invoice.client_address,
+                    }
+                )
+                if not created and invoice.client_name:
+                    client.name = invoice.client_name
+                    client.phone = invoice.client_phone or client.phone
+                    client.address = invoice.client_address or client.address
+                    client.save()
+                
+                invoice.client = client
+            
             invoice.save()
             messages.success(request, f'Invoice {invoice.invoice_id} created successfully!')
             return redirect('invoice_detail', pk=invoice.pk)
@@ -113,12 +134,34 @@ def invoice_detail(request, pk):
 @login_required
 def invoice_update(request, pk):
     """Update an existing invoice."""
+    from .models import Client
+    
     invoice = get_object_or_404(Invoice, pk=pk, user=request.user)
     
     if request.method == 'POST':
         form = InvoiceForm(request.POST, instance=invoice)
         if form.is_valid():
-            invoice = form.save()
+            invoice = form.save(commit=False)
+            
+            if invoice.client_email:
+                client, created = Client.objects.get_or_create(
+                    user=request.user,
+                    email=invoice.client_email,
+                    defaults={
+                        'name': invoice.client_name,
+                        'phone': invoice.client_phone,
+                        'address': invoice.client_address,
+                    }
+                )
+                if not created and invoice.client_name:
+                    client.name = invoice.client_name
+                    client.phone = invoice.client_phone or client.phone
+                    client.address = invoice.client_address or client.address
+                    client.save()
+                
+                invoice.client = client
+            
+            invoice.save()
             messages.success(request, f'Invoice {invoice.invoice_id} updated successfully!')
             return redirect('invoice_detail', pk=invoice.pk)
         else:
@@ -392,91 +435,59 @@ Submitted at: {inquiry.created_at}
 # ----------------------------
 def initialize_paystack_payment(request, pk):
     """Initialize Paystack transaction and redirect to payment page."""
-    import requests
-    import json
+    from .payment_service import PaystackService
     
-    invoice = get_object_or_404(Invoice, pk=pk)
+    invoice = get_object_or_404(Invoice, pk=pk, user=request.user)
     
     if not settings.PAYSTACK_SECRET_KEY:
         messages.error(request, 'Payment system is not configured. Please contact support.')
         return redirect('invoice_detail', pk=pk)
     
-    amount_in_kobo = int(invoice.total_amount * 100)
-    
-    headers = {
-        'Authorization': f'Bearer {settings.PAYSTACK_SECRET_KEY}',
-        'Content-Type': 'application/json',
-    }
-    
+    paystack = PaystackService()
     callback_url = request.build_absolute_uri(reverse('payment_callback'))
     
-    payload = {
-        'amount': amount_in_kobo,
-        'email': invoice.client_email or 'customer@example.com',
-        'reference': invoice.invoice_id,
-        'currency': invoice.currency,
-        'callback_url': callback_url,
-        'metadata': {
-            'invoice_id': invoice.invoice_id,
-            'business_name': invoice.business_name,
-            'client_name': invoice.client_name,
-        }
-    }
+    result = paystack.initialize_transaction(invoice, callback_url)
     
-    try:
-        response = requests.post(
-            'https://api.paystack.co/transaction/initialize',
-            headers=headers,
-            data=json.dumps(payload),
-            timeout=10
-        )
-        
-        response_data = response.json()
-        
-        if response_data.get('status') and response_data.get('data'):
-            authorization_url = response_data['data']['authorization_url']
-            reference = response_data['data']['reference']
-            
-            invoice.paystack_reference = reference
-            invoice.save()
-            
-            return redirect(authorization_url)
-        else:
-            messages.error(request, f"Payment initialization failed: {response_data.get('message', 'Unknown error')}")
-            return redirect('invoice_detail', pk=pk)
-            
-    except requests.exceptions.RequestException as e:
-        messages.error(request, f'Payment system error: {str(e)}')
+    if result['success']:
+        return redirect(result['authorization_url'])
+    else:
+        messages.error(request, f"Payment initialization failed: {result.get('message', 'Unknown error')}")
         return redirect('invoice_detail', pk=pk)
 
 
 def payment_callback(request):
-    """Handle Paystack payment callback."""
+    """Handle Paystack payment callback and verify transaction."""
+    from .payment_service import PaystackService
+    
     reference = request.GET.get('reference')
     
     if not reference:
         messages.error(request, 'Invalid payment reference.')
         return redirect('invoice_list')
     
-    try:
-        invoice = Invoice.objects.get(paystack_reference=reference)
-        invoice.status = 'paid'
-        invoice.paid_date = timezone.now().date()
-        invoice.save()
+    paystack = PaystackService()
+    verification = paystack.verify_transaction(reference)
+    
+    if verification['success'] and verification['status'] == 'success':
+        result = paystack.process_payment_success(verification['data'])
         
-        messages.success(request, f'Payment successful! Invoice {invoice.invoice_id} has been marked as paid.')
-        return redirect('invoice_detail', pk=invoice.pk)
-    except Invoice.DoesNotExist:
-        messages.error(request, 'Invoice not found.')
+        if result['success']:
+            invoice = result['invoice']
+            messages.success(request, f'Payment successful! Invoice {invoice.invoice_id} has been marked as paid.')
+            return redirect('invoice_detail', pk=invoice.pk)
+        else:
+            messages.error(request, 'Error processing payment. Please contact support.')
+            return redirect('invoice_list')
+    else:
+        messages.error(request, f'Payment verification failed: {verification.get("message", "Unknown error")}')
         return redirect('invoice_list')
 
 
 def send_whatsapp_payment_link(request, pk):
     """Send WhatsApp message with Paystack payment link."""
-    import requests
-    import json
+    from .payment_service import PaystackService
     
-    invoice = get_object_or_404(Invoice, pk=pk)
+    invoice = get_object_or_404(Invoice, pk=pk, user=request.user)
     
     if not invoice.client_phone:
         messages.error(request, 'No WhatsApp number provided for this client.')
@@ -486,64 +497,84 @@ def send_whatsapp_payment_link(request, pk):
         messages.error(request, 'Payment system is not configured.')
         return redirect('invoice_detail', pk=pk)
     
-    amount_in_kobo = int(invoice.total_amount * 100)
-    
-    headers = {
-        'Authorization': f'Bearer {settings.PAYSTACK_SECRET_KEY}',
-        'Content-Type': 'application/json',
-    }
-    
+    paystack = PaystackService()
     callback_url = request.build_absolute_uri(reverse('payment_callback'))
     
-    payload = {
-        'amount': amount_in_kobo,
-        'email': invoice.client_email or 'customer@example.com',
-        'reference': f"{invoice.invoice_id}-{timezone.now().timestamp()}",
-        'currency': invoice.currency,
-        'callback_url': callback_url,
-        'metadata': {
-            'invoice_id': invoice.invoice_id,
-            'business_name': invoice.business_name,
-            'client_name': invoice.client_name,
-        }
-    }
+    result = paystack.initialize_transaction(invoice, callback_url)
+    
+    if result['success']:
+        payment_link = result['authorization_url']
+        
+        client_phone = invoice.client_phone.strip()
+        if client_phone.startswith('+'):
+            whatsapp_number = client_phone[1:]
+        else:
+            whatsapp_number = client_phone.replace(' ', '').replace('-', '')
+        
+        message = f"💰 *Invoice {invoice.invoice_id}*%0A%0A"
+        message += f"From: {invoice.business_name}%0A"
+        message += f"Amount: {invoice.currency} {invoice.total_amount}%0A"
+        message += f"Due: {invoice.due_date if invoice.due_date else 'Upon receipt'}%0A%0A"
+        message += f"Click here to pay securely:%0A{payment_link}%0A%0A"
+        message += f"Thank you for your business!"
+        
+        whatsapp_link = f"https://wa.me/{whatsapp_number}?text={message}"
+        
+        messages.success(request, 'Payment link generated! Opening WhatsApp...')
+        return redirect(whatsapp_link)
+    else:
+        messages.error(request, f'Failed to generate payment link: {result.get("message", "Unknown error")}')
+        return redirect('invoice_detail', pk=pk)
+
+
+from django.views.decorators.csrf import csrf_exempt
+from django.http import JsonResponse
+
+
+@csrf_exempt
+def paystack_webhook(request):
+    """Handle Paystack webhook notifications."""
+    from .payment_service import PaystackService
+    import json
+    
+    if request.method != 'POST':
+        return JsonResponse({'error': 'Method not allowed'}, status=405)
+    
+    signature = request.META.get('HTTP_X_PAYSTACK_SIGNATURE')
+    if not signature:
+        return JsonResponse({'error': 'No signature'}, status=400)
+    
+    payload = request.body.decode('utf-8')
+    
+    paystack = PaystackService()
+    if not paystack.verify_webhook_signature(payload, signature):
+        return JsonResponse({'error': 'Invalid signature'}, status=400)
     
     try:
-        response = requests.post(
-            'https://api.paystack.co/transaction/initialize',
-            headers=headers,
-            data=json.dumps(payload),
-            timeout=10
-        )
+        data = json.loads(payload)
+        event = data.get('event')
+        event_data = data.get('data', {})
         
-        response_data = response.json()
-        
-        if response_data.get('status') and response_data.get('data'):
-            payment_link = response_data['data']['authorization_url']
-            
-            client_phone = invoice.client_phone.strip()
-            if client_phone.startswith('+'):
-                whatsapp_number = client_phone[1:]
+        if event == 'charge.success':
+            result = paystack.process_payment_success(event_data)
+            if result['success']:
+                return JsonResponse({'status': 'success'})
             else:
-                whatsapp_number = client_phone.replace(' ', '').replace('-', '')
-            
-            message = f"💰 *Invoice {invoice.invoice_id}*%0A%0A"
-            message += f"From: {invoice.business_name}%0A"
-            message += f"Amount: {invoice.currency} {invoice.total_amount}%0A"
-            message += f"Due: {invoice.due_date if invoice.due_date else 'Upon receipt'}%0A%0A"
-            message += f"Click here to pay securely:%0A{payment_link}%0A%0A"
-            message += f"Thank you for your business!"
-            
-            whatsapp_link = f"https://wa.me/{whatsapp_number}?text={message}"
-            
-            return redirect(whatsapp_link)
-        else:
-            messages.error(request, 'Failed to generate payment link.')
-            return redirect('invoice_detail', pk=pk)
-            
-    except requests.exceptions.RequestException as e:
-        messages.error(request, f'Payment system error: {str(e)}')
-        return redirect('invoice_detail', pk=pk)
+                return JsonResponse({'error': result.get('message')}, status=500)
+        
+        elif event == 'charge.failed':
+            result = paystack.process_payment_failure(event_data)
+            if result['success']:
+                return JsonResponse({'status': 'acknowledged'})
+            else:
+                return JsonResponse({'error': result.get('message')}, status=500)
+        
+        return JsonResponse({'status': 'event_not_handled'})
+        
+    except json.JSONDecodeError:
+        return JsonResponse({'error': 'Invalid JSON'}, status=400)
+    except Exception as e:
+        return JsonResponse({'error': str(e)}, status=500)
 
 
 # ----------------------------
@@ -600,3 +631,60 @@ def logout_view(request):
     logout(request)
     messages.success(request, 'You have been logged out successfully.')
     return redirect('landing')
+
+
+# ----------------------------
+# Analytics Dashboard
+# ----------------------------
+@login_required
+def analytics_dashboard(request):
+    """Display analytics dashboard with revenue metrics and insights."""
+    from .analytics import AnalyticsService
+    
+    analytics = AnalyticsService(request.user)
+    dashboard_data = analytics.get_dashboard_summary()
+    
+    return render(request, 'invoices/analytics_dashboard.html', {
+        'analytics': dashboard_data
+    })
+
+
+# ----------------------------
+# Export Functions
+# ----------------------------
+@login_required
+def export_invoices(request):
+    """Export invoices to CSV."""
+    from .export_service import ExportService
+    
+    invoices = Invoice.objects.filter(user=request.user).order_by('-created_at')
+    
+    status_filter = request.GET.get('status')
+    if status_filter:
+        invoices = invoices.filter(status=status_filter)
+    
+    return ExportService.export_invoices_csv(invoices)
+
+
+@login_required
+def export_payments(request):
+    """Export payment transactions to CSV."""
+    from .export_service import ExportService
+    from .models import PaymentTransaction
+    
+    payments = PaymentTransaction.objects.filter(
+        invoice__user=request.user
+    ).order_by('-created_at')
+    
+    return ExportService.export_payments_csv(payments)
+
+
+@login_required
+def export_clients(request):
+    """Export clients to CSV."""
+    from .export_service import ExportService
+    from .models import Client
+    
+    clients = Client.objects.filter(user=request.user).order_by('name')
+    
+    return ExportService.export_clients_csv(clients)

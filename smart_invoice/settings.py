@@ -33,7 +33,6 @@ DEBUG = os.environ.get('DJANGO_DEBUG', 'True') == 'True'
 ALLOWED_HOSTS = os.environ.get(
     'DJANGO_ALLOWED_HOSTS', '127.0.0.1,localhost,.onrender.com,.replit.dev,.repl.co'
 ).split(',')
-ALLOWED_HOSTS.append('*')
 
 # Application definition
 
@@ -174,15 +173,64 @@ PAYSTACK_PUBLIC_KEY = os.environ.get('PAYSTACK_PUBLIC_KEY', '')
 PAYSTACK_SECRET_KEY = os.environ.get('PAYSTACK_SECRET_KEY', '')
 PAYSTACK_CALLBACK_URL = os.environ.get('PAYSTACK_CALLBACK_URL', '')
 
-# Allow Replit iframe embedding
-X_FRAME_OPTIONS = 'ALLOWALL'
+# CSRF Trusted Origins
 CSRF_TRUSTED_ORIGINS = [
     'https://*.replit.dev',
     'https://*.repl.co',
+    'https://*.onrender.com',
 ]
 
+# Frame Options - SAMEORIGIN for Replit, DENY for production
+if DEBUG:
+    X_FRAME_OPTIONS = 'SAMEORIGIN'
+else:
+    X_FRAME_OPTIONS = 'DENY'
+
+# Production Security Settings
+if not DEBUG:
+    SECURE_SSL_REDIRECT = True
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True
+    SECURE_HSTS_SECONDS = 31536000
+    SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+    SECURE_HSTS_PRELOAD = True
+    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 # Authentication settings
 LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = 'invoice_list'
 LOGOUT_REDIRECT_URL = 'landing'
+
+# Logging Configuration
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'verbose': {
+            'format': '{levelname} {asctime} {module} {message}',
+            'style': '{',
+        },
+    },
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+            'formatter': 'verbose'
+        },
+    },
+    'root': {
+        'handlers': ['console'],
+        'level': 'INFO',
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['console'],
+            'level': 'INFO',
+            'propagate': False,
+        },
+        'invoices': {
+            'handlers': ['console'],
+            'level': 'INFO',
+            'propagate': False,
+        },
+    },
+}

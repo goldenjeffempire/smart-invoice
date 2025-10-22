@@ -4,7 +4,7 @@ expertMode = true
 
 [nix]
 channel = "stable-25_05"
-packages = ["cacert", "cairo", "cargo", "freetype", "glibcLocales", "lcms2", "libffi", "libiconv", "libimagequant", "libjpeg", "libtiff", "libwebp", "libxcrypt", "openjpeg", "openssl", "pgadmin4", "pkg-config", "rustc", "tcl", "tk", "xcodebuild", "zlib", "postgresql"]
+packages = ["cacert", "cairo", "cargo", "freetype", "glibcLocales", "lcms2", "libffi", "libiconv", "libimagequant", "libjpeg", "libtiff", "libwebp", "libxcrypt", "openjpeg", "openssl", "pgadmin4", "pkg-config", "postgresql", "rustc", "tcl", "tk", "xcodebuild", "zlib"]
 
 [workflows]
 runButton = "Project"
@@ -44,5 +44,5 @@ externalPort = 3001
 
 [deployment]
 deploymentTarget = "autoscale"
-run = ["gunicorn", "--bind=0.0.0.0:5000", "--reuse-port", "smart_invoice.wsgi:application"]
-build = ["python", "manage.py", "collectstatic", "--noinput"]
+run = ["gunicorn", "--bind", "0.0.0.0:5000", "--reuse-port", "--workers", "4", "smart_invoice.wsgi:application"]
+build = ["python3.11", "-m", "pip", "install", "-r", "requirements.txt"]
