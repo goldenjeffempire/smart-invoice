@@ -12,13 +12,8 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
   <style>
-    :root {
-      color-scheme: dark;
-    }
-
-    * {
-      scroll-behavior: smooth;
-    }
+    :root { color-scheme: dark; }
+    * { scroll-behavior: smooth; }
 
     body {
       background: linear-gradient(135deg, #0a0118 0%, #1a0a2e 50%, #0a0118 100%);
@@ -30,326 +25,80 @@
     }
 
     /* Animated Background */
-    .animated-bg {
-      position: fixed;
-      width: 100%;
-      height: 100%;
-      top: 0;
-      left: 0;
-      z-index: 0;
-      overflow: hidden;
-    }
-
-    .bg-orb {
-      position: absolute;
-      border-radius: 50%;
-      filter: blur(80px);
-      opacity: 0.4;
-      animation: float 20s infinite ease-in-out;
-    }
-
-    .orb-1 {
-      width: 500px;
-      height: 500px;
-      background: radial-gradient(circle, rgba(147, 51, 234, 0.6), transparent);
-      top: -10%;
-      left: -10%;
-      animation-delay: 0s;
-    }
-
-    .orb-2 {
-      width: 400px;
-      height: 400px;
-      background: radial-gradient(circle, rgba(236, 72, 153, 0.6), transparent);
-      top: 30%;
-      right: -5%;
-      animation-delay: 7s;
-    }
-
-    .orb-3 {
-      width: 350px;
-      height: 350px;
-      background: radial-gradient(circle, rgba(59, 130, 246, 0.6), transparent);
-      bottom: -10%;
-      left: 30%;
-      animation-delay: 3s;
-    }
-
+    .animated-bg { position: fixed; width: 100%; height: 100%; top: 0; left: 0; z-index: 0; overflow: hidden; }
+    .bg-orb { position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0.4; animation: float 20s infinite ease-in-out; }
+    .orb-1 { width: 500px; height: 500px; background: radial-gradient(circle, rgba(147, 51, 234, 0.6), transparent); top: -10%; left: -10%; animation-delay: 0s; }
+    .orb-2 { width: 400px; height: 400px; background: radial-gradient(circle, rgba(236, 72, 153, 0.6), transparent); top: 30%; right: -5%; animation-delay: 7s; }
+    .orb-3 { width: 350px; height: 350px; background: radial-gradient(circle, rgba(59, 130, 246, 0.6), transparent); bottom: -10%; left: 30%; animation-delay: 3s; }
     @keyframes float {
-      0%, 100% {
-        transform: translate(0, 0) scale(1);
-      }
-      33% {
-        transform: translate(30px, -50px) scale(1.1);
-      }
-      66% {
-        transform: translate(-20px, 30px) scale(0.9);
-      }
+      0%,100%{ transform: translate(0,0) scale(1); }
+      33%{ transform: translate(30px,-50px) scale(1.1); }
+      66%{ transform: translate(-20px,30px) scale(0.9); }
     }
 
-    /* Glass Effect */
-    .glass {
-      background: rgba(255, 255, 255, 0.05);
-      backdrop-filter: blur(20px);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: 1.5rem;
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-    }
-
-    .glass-card {
-      background: rgba(255, 255, 255, 0.03);
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-
-    .glass-card:hover {
-      transform: translateY(-8px) scale(1.02);
-      border-color: rgba(168, 85, 247, 0.4);
-      box-shadow: 0 20px 40px rgba(139, 92, 246, 0.3);
-      background: rgba(255, 255, 255, 0.08);
-    }
+    /* Glass Effects */
+    .glass { background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.1); border-radius: 1.5rem; box-shadow: 0 8px 32px rgba(0,0,0,0.3); }
+    .glass-card { background: rgba(255,255,255,0.03); backdrop-filter: blur(10px); border:1px solid rgba(255,255,255,0.08); transition: all 0.4s cubic-bezier(0.4,0,0.2,1); }
+    .glass-card:hover { transform: translateY(-8px) scale(1.02); border-color: rgba(168,85,247,0.4); box-shadow:0 20px 40px rgba(139,92,246,0.3); background: rgba(255,255,255,0.08); }
 
     /* Buttons */
-    .btn {
-      position: relative;
-      overflow: hidden;
-      transition: all 0.3s ease;
-      display: inline-block;
-      font-weight: 600;
-    }
-
-    .btn-primary {
-      background: linear-gradient(135deg, #8b5cf6, #ec4899);
-      color: white;
-      box-shadow: 0 10px 25px rgba(168, 85, 247, 0.4);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-    }
-
-    .btn-primary:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 15px 35px rgba(236, 72, 153, 0.5);
-    }
-
-    .btn-primary::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -100%;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-      transition: left 0.5s;
-    }
-
-    .btn-primary:hover::before {
-      left: 100%;
-    }
-
-    .btn-outline {
-      border: 2px solid rgba(168, 85, 247, 0.5);
-      color: #e9d5ff;
-      background: rgba(139, 92, 246, 0.1);
-    }
-
-    .btn-outline:hover {
-      background: rgba(139, 92, 246, 0.2);
-      border-color: rgba(168, 85, 247, 0.8);
-      transform: translateY(-2px);
-    }
+    .btn { position: relative; overflow: hidden; transition: all 0.3s ease; display:inline-block; font-weight:600; }
+    .btn-primary { background: linear-gradient(135deg,#8b5cf6,#ec4899); color:white; box-shadow:0 10px 25px rgba(168,85,247,0.4); border:1px solid rgba(255,255,255,0.2); }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow:0 15px 35px rgba(236,72,153,0.5); }
+    .btn-primary::before { content:''; position:absolute; top:0; left:-100%; width:100%; height:100%; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent); transition:left 0.5s; }
+    .btn-primary:hover::before { left:100%; }
+    .btn-outline { border:2px solid rgba(168,85,247,0.5); color:#e9d5ff; background:rgba(139,92,246,0.1); }
+    .btn-outline:hover { background:rgba(139,92,246,0.2); border-color: rgba(168,85,247,0.8); transform: translateY(-2px); }
 
     /* Navigation */
-    nav {
-      background: rgba(10, 1, 24, 0.8);
-      backdrop-filter: blur(20px);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-      transition: all 0.3s ease;
-    }
-
-    nav.scrolled {
-      background: rgba(10, 1, 24, 0.95);
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
-    }
+    nav { background: rgba(10,1,24,0.8); backdrop-filter: blur(20px); border-bottom:1px solid rgba(255,255,255,0.1); transition: all 0.3s ease; }
+    nav.scrolled { background: rgba(10,1,24,0.95); box-shadow:0 4px 20px rgba(0,0,0,0.4); }
 
     /* Animations */
-    .fade-in-up {
-      opacity: 0;
-      transform: translateY(30px);
-      animation: fadeInUp 0.8s ease forwards;
-    }
-
-    @keyframes fadeInUp {
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    .reveal {
-      opacity: 0;
-      transform: translateY(50px);
-      transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-
-    .reveal.active {
-      opacity: 1;
-      transform: translateY(0);
-    }
+    .fade-in-up { opacity:0; transform: translateY(30px); animation: fadeInUp 0.8s ease forwards; }
+    @keyframes fadeInUp { to { opacity:1; transform: translateY(0); } }
+    .reveal { opacity:0; transform: translateY(50px); transition: all 0.8s cubic-bezier(0.4,0,0.2,1); }
+    .reveal.active { opacity:1; transform:translateY(0); }
 
     /* Hero Image */
-    .hero-image {
-      animation: floating 6s ease-in-out infinite;
-      box-shadow: 0 25px 60px rgba(139, 92, 246, 0.4);
-      border: 2px solid rgba(168, 85, 247, 0.3);
-    }
-
-    @keyframes floating {
-      0%, 100% {
-        transform: translateY(0px);
-      }
-      50% {
-        transform: translateY(-20px);
-      }
-    }
+    .hero-image { animation: floating 6s ease-in-out infinite; box-shadow:0 25px 60px rgba(139,92,246,0.4); border:2px solid rgba(168,85,247,0.3); }
+    @keyframes floating { 0%,100%{ transform: translateY(0px); } 50%{ transform: translateY(-20px); } }
 
     /* Step Numbers */
-    .step-number {
-      background: linear-gradient(135deg, #8b5cf6, #ec4899);
-      width: 60px;
-      height: 60px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 24px;
-      font-weight: 800;
-      box-shadow: 0 10px 25px rgba(139, 92, 246, 0.5);
-      position: relative;
-    }
-
-    .step-number::after {
-      content: '';
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      border-radius: 50%;
-      background: inherit;
-      filter: blur(20px);
-      opacity: 0.6;
-      z-index: -1;
-    }
+    .step-number { background: linear-gradient(135deg,#8b5cf6,#ec4899); width:60px;height:60px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:800;box-shadow:0 10px 25px rgba(139,92,246,0.5);position:relative; }
+    .step-number::after { content:''; position:absolute;width:100%;height:100%;border-radius:50%;background:inherit;filter:blur(20px);opacity:0.6; z-index:-1; }
 
     /* Feature Icons */
-    .feature-icon {
-      font-size: 3rem;
-      filter: drop-shadow(0 10px 20px rgba(139, 92, 246, 0.4));
-      transition: all 0.3s ease;
-    }
-
-    .glass-card:hover .feature-icon {
-      transform: scale(1.1) rotate(5deg);
-    }
+    .feature-icon { font-size:3rem; filter: drop-shadow(0 10px 20px rgba(139,92,246,0.4)); transition: all 0.3s ease; }
+    .glass-card:hover .feature-icon { transform: scale(1.1) rotate(5deg); }
 
     /* Stats Counter */
-    .stat-number {
-      background: linear-gradient(135deg, #a855f7, #ec4899);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
+    .stat-number { background: linear-gradient(135deg,#a855f7,#ec4899); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip:text; }
 
     /* Video Container */
-    .video-container {
-      position: relative;
-      padding-bottom: 56.25%; /* 16:9 aspect ratio */
-      height: 0;
-      overflow: hidden;
-      border-radius: 1rem;
-      box-shadow: 0 25px 60px rgba(139, 92, 246, 0.4);
-    }
-
-    .video-container iframe,
-    .video-container video {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      border: 2px solid rgba(168, 85, 247, 0.3);
-      border-radius: 1rem;
-    }
+    .video-container { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius:1rem; box-shadow:0 25px 60px rgba(139,92,246,0.4); }
+    .video-container iframe, .video-container video { position:absolute; top:0; left:0; width:100%; height:100%; border:2px solid rgba(168,85,247,0.3); border-radius:1rem; }
 
     /* Gradient Text */
-    .gradient-text {
-      background: linear-gradient(135deg, #a855f7, #ec4899, #f97316);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
+    .gradient-text { background: linear-gradient(135deg,#a855f7,#ec4899,#f97316); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
 
     /* Pulse Animation */
-    .pulse-ring {
-      animation: pulse-ring 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-    }
-
-    @keyframes pulse-ring {
-      0%, 100% {
-        opacity: 1;
-        transform: scale(1);
-      }
-      50% {
-        opacity: 0.5;
-        transform: scale(1.1);
-      }
-    }
+    .pulse-ring { animation: pulse-ring 2s cubic-bezier(0.4,0,0.6,1) infinite; }
+    @keyframes pulse-ring { 0%,100%{opacity:1;transform:scale(1);}50%{opacity:0.5;transform:scale(1.1);} }
 
     /* Image Preview Container */
-    .preview-container {
-      perspective: 1000px;
-    }
-
-    .preview-image {
-      transition: transform 0.6s ease;
-      transform-style: preserve-3d;
-    }
-
-    .preview-container:hover .preview-image {
-      transform: rotateY(5deg) rotateX(-5deg);
-    }
+    .preview-container { perspective:1000px; }
+    .preview-image { transition: transform 0.6s ease; transform-style: preserve-3d; }
+    .preview-container:hover .preview-image { transform: rotateY(5deg) rotateX(-5deg); }
 
     /* Loading Animation */
-    .loading-dots span {
-      animation: loading 1.4s infinite;
-    }
-
-    .loading-dots span:nth-child(2) {
-      animation-delay: 0.2s;
-    }
-
-    .loading-dots span:nth-child(3) {
-      animation-delay: 0.4s;
-    }
-
-    @keyframes loading {
-      0%, 60%, 100% {
-        transform: translateY(0);
-      }
-      30% {
-        transform: translateY(-10px);
-      }
-    }
+    .loading-dots span { animation: loading 1.4s infinite; }
+    .loading-dots span:nth-child(2){animation-delay:0.2s;}
+    .loading-dots span:nth-child(3){animation-delay:0.4s;}
+    @keyframes loading{0%,60%,100%{transform:translateY(0);}30%{transform:translateY(-10px);}}
 
     /* Scroll Progress Bar */
-    .scroll-progress {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 0%;
-      height: 3px;
-      background: linear-gradient(90deg, #8b5cf6, #ec4899);
-      z-index: 9999;
-      transition: width 0.1s ease;
-    }
+    .scroll-progress { position: fixed; top:0; left:0; width:0%; height:3px; background: linear-gradient(90deg,#8b5cf6,#ec4899); z-index:9999; transition: width 0.1s ease; }
   </style>
 </head>
 
@@ -365,132 +114,164 @@
   </div>
 
   <!-- Navigation -->
-  <nav class="fixed top-0 left-0 w-full z-50" id="navbar">
-    <div class="max-w-7xl mx-auto px-5 py-4 flex justify-between items-center">
-      <div class="flex items-center gap-3">
-        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-violet-500 to-fuchsia-500 flex items-center justify-center text-2xl shadow-lg">
-          📄
-        </div>
-        <span class="text-xl font-bold tracking-tight">Smart Invoice</span>
-      </div>
-      <div class="hidden md:flex items-center gap-8">
-        <a href="#features" class="text-sm font-medium text-gray-300 hover:text-white transition">Features</a>
-        <a href="#demo" class="text-sm font-medium text-gray-300 hover:text-white transition">Demo</a>
-        <a href="{% url 'create_invoice' %}" class="btn btn-primary px-6 py-2 rounded-lg text-sm">Get Started</a>
-      </div>
-      <a href="https://onome-portfolio-ten.vercel.app" target="_blank" class="md:hidden text-sm font-medium text-gray-300 hover:text-white transition">
-        Portfolio →
-      </a>
-    </div>
-  </nav>
-
-  <!-- Hero Section -->
-  <section class="relative z-10 mt-32 md:mt-40 px-6 mb-20">
-    <div class="max-w-7xl mx-auto">
-      <div class="grid md:grid-cols-2 gap-12 items-center">
-        <div class="fade-in-up" style="animation-delay: 0.1s">
-          <div class="inline-block px-4 py-2 rounded-full glass mb-6">
-            <span class="text-sm font-semibold gradient-text">✨ The Future of Invoicing</span>
+  <header>
+    <nav class="fixed top-0 left-0 w-full z-50" id="navbar">
+      <div class="max-w-7xl mx-auto px-5 py-4 flex justify-between items-center">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-violet-500 to-fuchsia-500 flex items-center justify-center text-2xl shadow-lg">
+            📄
           </div>
-          <h1 class="text-5xl md:text-7xl font-black leading-tight mb-6">
-            <span class="gradient-text">Smart, Simple</span><br>
-            <span class="text-white">& Stunning</span><br>
-            <span class="gradient-text">Invoicing</span>
-          </h1>
-          <p class="text-gray-300 text-lg md:text-xl leading-relaxed mb-8 max-w-xl">
-            Generate professional invoices in <span class="font-bold text-violet-400">seconds</span>. 
-            Designed for freelancers, startups, and teams who value elegance, speed, and precision.
-          </p>
-          <div class="flex flex-wrap gap-4">
-            <a href="{% url 'create_invoice' %}" class="btn btn-primary px-8 py-4 rounded-xl text-lg">
-              🚀 Create Invoice Now
-            </a>
-            <a href="#demo" class="btn btn-outline px-8 py-4 rounded-xl text-lg">
-              👀 See Demo
-            </a>
+          <span class="text-xl font-bold tracking-tight">Smart Invoice</span>
+        </div>
+        <div class="hidden md:flex items-center gap-8">
+          <a href="#features" class="text-sm font-medium text-gray-300 hover:text-white transition">Features</a>
+          <a href="#demo" class="text-sm font-medium text-gray-300 hover:text-white transition">Demo</a>
+          <a href="{% url 'create_invoice' %}" class="btn btn-primary px-6 py-2 rounded-lg text-sm">Get Started</a>
+        </div>
+        <a href="https://onome-portfolio-ten.vercel.app" target="_blank" class="md:hidden text-sm font-medium text-gray-300 hover:text-white transition">
+          Portfolio →
+        </a>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <!-- Hero Section -->
+    <section class="relative z-10 mt-32 md:mt-40 px-6 mb-20">
+      <div class="max-w-7xl mx-auto">
+        <div class="grid md:grid-cols-2 gap-12 items-center">
+          <div class="fade-in-up" style="animation-delay: 0.1s">
+            <div class="inline-block px-4 py-2 rounded-full glass mb-6">
+              <span class="text-sm font-semibold gradient-text">✨ The Future of Invoicing</span>
+            </div>
+            <h1 class="text-5xl md:text-7xl font-black leading-tight mb-6">
+              <span class="gradient-text">Smart, Simple</span><br>
+              <span class="text-white">Invoicing</span>
+            </h1>
+            <p class="text-gray-300 text-lg md:text-xl leading-relaxed mb-8 max-w-xl">
+              Send professional invoices in <span class="font-bold text-violet-400">seconds</span> and get paid faster. Perfect for freelancers, startups, and growing teams.
+            </p>
+            <div class="flex flex-wrap gap-4">
+              <a href="{% url 'create_invoice' %}" class="btn btn-primary px-8 py-4 rounded-xl text-lg transform transition hover:-translate-y-1 hover:scale-105">
+                🚀 Get Started
+              </a>
+              <a href="#demo" class="btn btn-outline px-8 py-4 rounded-xl text-lg">
+                👀 See Demo
+              </a>
+            </div>
+            <div class="mt-10 flex items-center gap-8">
+              <div>
+                <div class="text-3xl font-black stat-number" data-target="500">0</div>
+                <div class="text-sm text-gray-400">Invoices Created</div>
+              </div>
+              <div>
+                <div class="text-3xl font-black stat-number" data-target="100">0%</div>
+                <div class="text-sm text-gray-400">Free Forever</div>
+              </div>
+              <div>
+                <div class="text-3xl font-black stat-number">⚡</div>
+                <div class="text-sm text-gray-400">Lightning Fast</div>
+              </div>
+            </div>
           </div>
-          <div class="mt-10 flex items-center gap-8">
-            <div>
-              <div class="text-3xl font-black stat-number">500+</div>
-              <div class="text-sm text-gray-400">Invoices Created</div>
-            </div>
-            <div>
-              <div class="text-3xl font-black stat-number">100%</div>
-              <div class="text-sm text-gray-400">Free Forever</div>
-            </div>
-            <div>
-              <div class="text-3xl font-black stat-number">⚡</div>
-              <div class="text-sm text-gray-400">Lightning Fast</div>
-            </div>
+          <div class="fade-in-up preview-container" style="animation-delay: 0.3s">
+            <img src="{% static 'invoice-preview.png' %}" alt="Invoice Preview" class="preview-image hero-image w-full rounded-2xl shadow-2xl">
           </div>
         </div>
-        <div class="fade-in-up preview-container" style="animation-delay: 0.3s">
-          <img src="{% static 'invoice-preview.png' %}" alt="Invoice Preview" class="preview-image hero-image w-full rounded-2xl shadow-2xl">
+      </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="relative z-10 px-6 py-20 reveal">
+      <div class="max-w-7xl mx-auto">
+        <div class="text-center mb-16">
+          <h2 class="text-4xl md:text-5xl font-black mb-4">
+            <span class="gradient-text">Powerful Features</span>
+          </h2>
+          <p class="text-gray-400 text-lg max-w-2xl mx-auto">
+            Everything you need to create, manage, and send professional invoices
+          </p>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div class="glass-card p-8 rounded-2xl reveal" style="transition-delay:0.1s">
+            <div class="feature-icon mb-4">⚡</div>
+            <h3 class="text-2xl font-bold mb-3">Instant PDF Export</h3>
+            <p class="text-gray-400 leading-relaxed">
+              One click to generate beautiful, downloadable PDFs. No templates, no headaches.
+            </p>
+          </div>
+          <div class="glass-card p-8 rounded-2xl reveal" style="transition-delay:0.2s">
+            <div class="feature-icon mb-4">🎨</div>
+            <h3 class="text-2xl font-bold mb-3">Custom Branding</h3>
+            <p class="text-gray-400 leading-relaxed">
+              Add your logo, colors, and business details effortlessly for a personalized touch.
+            </p>
+          </div>
+          <div class="glass-card p-8 rounded-2xl reveal" style="transition-delay:0.3s">
+            <div class="feature-icon mb-4">☁️</div>
+            <h3 class="text-2xl font-bold mb-3">Cloud-Ready</h3>
+            <p class="text-gray-400 leading-relaxed">
+              Secure, scalable backend built on Django. Your data stays protected.
+            </p>
+          </div>
+          <div class="glass-card p-8 rounded-2xl reveal" style="transition-delay:0.4s">
+            <div class="feature-icon mb-4">📱</div>
+            <h3 class="text-2xl font-bold mb-3">Mobile Responsive</h3>
+            <p class="text-gray-400 leading-relaxed">
+              Works perfectly on any device - desktop, tablet, or smartphone.
+            </p>
+          </div>
+          <div class="glass-card p-8 rounded-2xl reveal" style="transition-delay:0.5s">
+            <div class="feature-icon mb-4">💼</div>
+            <h3 class="text-2xl font-bold mb-3">Professional Templates</h3>
+            <p class="text-gray-400 leading-relaxed">
+              Clean, modern invoice designs that make your business look professional.
+            </p>
+          </div>
+          <div class="glass-card p-8 rounded-2xl reveal" style="transition-delay:0.6s">
+            <div class="feature-icon mb-4">🔒</div>
+            <h3 class="text-2xl font-bold mb-3">Secure & Private</h3>
+            <p class="text-gray-400 leading-relaxed">
+              Your data is encrypted and secure. We take privacy seriously.
+            </p>
+          </div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
+  </main>
 
-  <!-- Features Section -->
-  <section id="features" class="relative z-10 px-6 py-20 reveal">
-    <div class="max-w-7xl mx-auto">
-      <div class="text-center mb-16">
-        <h2 class="text-4xl md:text-5xl font-black mb-4">
-          <span class="gradient-text">Powerful Features</span>
-        </h2>
-        <p class="text-gray-400 text-lg max-w-2xl mx-auto">
-          Everything you need to create, manage, and send professional invoices
-        </p>
-      </div>
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        <div class="glass-card p-8 rounded-2xl">
-          <div class="feature-icon mb-4">⚡</div>
-          <h3 class="text-2xl font-bold mb-3">Instant PDF Export</h3>
-          <p class="text-gray-400 leading-relaxed">
-            One click to generate beautiful, downloadable PDFs. No templates, no headaches.
-          </p>
-        </div>
+  <script>
+    // Scroll Progress
+    window.addEventListener('scroll', () => {
+      const scrollProgress = document.getElementById('scrollProgress');
+      scrollProgress.style.width = ((window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100) + '%';
+      
+      // Navbar shrink
+      const navbar = document.getElementById('navbar');
+      window.scrollY > 50 ? navbar.classList.add('scrolled') : navbar.classList.remove('scrolled');
+      
+      // Reveal animations
+      document.querySelectorAll('.reveal').forEach(el => {
+        if(el.getBoundingClientRect().top < window.innerHeight - 100) el.classList.add('active');
+      });
+    });
 
-        <div class="glass-card p-8 rounded-2xl">
-          <div class="feature-icon mb-4">🎨</div>
-          <h3 class="text-2xl font-bold mb-3">Custom Branding</h3>
-          <p class="text-gray-400 leading-relaxed">
-            Add your logo, colors, and business details effortlessly for a personalized touch.
-          </p>
-        </div>
-
-        <div class="glass-card p-8 rounded-2xl">
-          <div class="feature-icon mb-4">☁️</div>
-          <h3 class="text-2xl font-bold mb-3">Cloud-Ready</h3>
-          <p class="text-gray-400 leading-relaxed">
-            Secure, scalable backend built on Django. Your data stays protected.
-          </p>
-        </div>
-
-        <div class="glass-card p-8 rounded-2xl">
-          <div class="feature-icon mb-4">📱</div>
-          <h3 class="text-2xl font-bold mb-3">Mobile Responsive</h3>
-          <p class="text-gray-400 leading-relaxed">
-            Works perfectly on any device - desktop, tablet, or smartphone.
-          </p>
-        </div>
-
-        <div class="glass-card p-8 rounded-2xl">
-          <div class="feature-icon mb-4">💼</div>
-          <h3 class="text-2xl font-bold mb-3">Professional Templates</h3>
-          <p class="text-gray-400 leading-relaxed">
-            Clean, modern invoice designs that make your business look professional.
-          </p>
-        </div>
-
-        <div class="glass-card p-8 rounded-2xl">
-          <div class="feature-icon mb-4">🔒</div>
-          <h3 class="text-2xl font-bold mb-3">Secure & Private</h3>
-          <p class="text-gray-400 leading-relaxed">
-            Your data is encrypted and secure. We take privacy seriously.
-          </p>
-        </div>
-      </div>
-    </div>
-  </section>
-
+    // Animated Counters
+    const counters = document.querySelectorAll('.stat-number');
+    counters.forEach(counter => {
+      const target = +counter.getAttribute('data-target');
+      let count = 0;
+      const increment = target / 100;
+      const interval = setInterval(() => {
+        count += increment;
+        if(count >= target) {
+          counter.textContent = target + (counter.textContent.includes('%') ? '%' : '');
+          clearInterval(interval);
+        } else {
+          counter.textContent = Math.floor(count) + (counter.textContent.includes('%') ? '%' : '');
+        }
+      }, 15);
+    });
+  </script>
+</body>
+</html>
