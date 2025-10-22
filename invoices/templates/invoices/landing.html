@@ -1,349 +1,21 @@
 {% load static %}
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <meta name="description" content="Smart Invoice — The most advanced invoicing platform for modern businesses. Create professional invoices in seconds, get paid faster, and grow your business." />
-  <meta name="keywords" content="invoice, invoicing software, billing, accounting, freelancer, business, professional invoices" />
-  <title>Smart Invoice — Enterprise-Grade Invoicing Platform for Modern Businesses</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Smart Invoice - The most advanced invoicing platform for modern businesses. Create professional invoices in seconds, get paid faster.">
+  <title>Smart Invoice - Enterprise Invoicing Platform</title>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📄</text></svg>">
   <link rel="stylesheet" href="{% static 'css/output.css' %}">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-
-  <style>
-    :root { color-scheme: dark; }
-    * { scroll-behavior: smooth; }
-
-    body {
-      background: #0a0118;
-      font-family: 'Inter', sans-serif;
-      overflow-x: hidden;
-      position: relative;
-      min-height: 100vh;
-      color: #f3f4f6;
-    }
-
-    /* Advanced Animated Background with Multiple Layers */
-    .animated-bg { position: fixed; width: 100%; height: 100%; top: 0; left: 0; z-index: 0; overflow: hidden; }
-    .bg-orb { position: absolute; border-radius: 50%; filter: blur(90px); opacity: 0.4; animation: float 25s infinite ease-in-out; }
-    .orb-1 { width: 700px; height: 700px; background: radial-gradient(circle, rgba(147, 51, 234, 0.6), transparent); top: -15%; left: -15%; animation-delay: 0s; }
-    .orb-2 { width: 600px; height: 600px; background: radial-gradient(circle, rgba(236, 72, 153, 0.6), transparent); top: 30%; right: -10%; animation-delay: 7s; }
-    .orb-3 { width: 550px; height: 550px; background: radial-gradient(circle, rgba(59, 130, 246, 0.5), transparent); bottom: -15%; left: 25%; animation-delay: 3s; }
-    .orb-4 { width: 450px; height: 450px; background: radial-gradient(circle, rgba(168, 85, 247, 0.4), transparent); top: 50%; left: 45%; animation-delay: 12s; }
-    .orb-5 { width: 400px; height: 400px; background: radial-gradient(circle, rgba(251, 146, 60, 0.3), transparent); bottom: 20%; right: 20%; animation-delay: 9s; }
-    
-    @keyframes float {
-      0%,100%{ transform: translate(0,0) scale(1) rotate(0deg); }
-      25%{ transform: translate(40px,-60px) scale(1.15) rotate(5deg); }
-      50%{ transform: translate(-30px,40px) scale(0.95) rotate(-3deg); }
-      75%{ transform: translate(20px,-30px) scale(1.08) rotate(4deg); }
-    }
-
-    /* Enhanced Glass Effects with Gradient Borders */
-    .glass { 
-      background: rgba(255, 255, 255, 0.05); 
-      backdrop-filter: blur(20px); 
-      border: 1px solid rgba(255,255,255,0.1); 
-      border-radius: 1.5rem; 
-      box-shadow: 0 8px 32px rgba(0,0,0,0.3); 
-      position: relative;
-    }
-    
-    .glass::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      border-radius: 1.5rem;
-      padding: 2px;
-      background: linear-gradient(135deg, rgba(168,85,247,0.5), rgba(236,72,153,0.5));
-      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-      -webkit-mask-composite: xor;
-      mask-composite: exclude;
-      opacity: 0;
-      transition: opacity 0.3s ease;
-    }
-    
-    .glass:hover::before {
-      opacity: 1;
-    }
-    
-    .glass-card { 
-      background: rgba(255,255,255,0.03); 
-      backdrop-filter: blur(10px); 
-      border:1px solid rgba(255,255,255,0.08); 
-      transition: all 0.4s cubic-bezier(0.4,0,0.2,1); 
-      position: relative;
-      overflow: hidden;
-    }
-    
-    .glass-card::after {
-      content: '';
-      position: absolute;
-      top: -50%;
-      left: -50%;
-      width: 200%;
-      height: 200%;
-      background: linear-gradient(45deg, transparent, rgba(255,255,255,0.05), transparent);
-      transform: rotate(45deg);
-      transition: all 0.6s ease;
-    }
-    
-    .glass-card:hover::after {
-      left: 100%;
-    }
-    
-    .glass-card:hover { 
-      transform: translateY(-8px) scale(1.02); 
-      border-color: rgba(168,85,247,0.4); 
-      box-shadow:0 20px 40px rgba(139,92,246,0.3); 
-      background: rgba(255,255,255,0.08); 
-    }
-
-    /* Advanced Button Styles with Ripple Effect */
-    .btn { 
-      position: relative; 
-      overflow: hidden; 
-      transition: all 0.3s ease; 
-      display:inline-block; 
-      font-weight:600; 
-    }
-    
-    .btn-primary { 
-      background: linear-gradient(135deg,#8b5cf6,#ec4899); 
-      color:white; 
-      box-shadow:0 10px 25px rgba(168,85,247,0.4); 
-      border:1px solid rgba(255,255,255,0.2); 
-    }
-    
-    .btn-primary:hover { 
-      transform: translateY(-2px) scale(1.02); 
-      box-shadow:0 15px 35px rgba(236,72,153,0.5); 
-    }
-    
-    .btn-primary::before { 
-      content:''; 
-      position:absolute; 
-      top:0; 
-      left:-100%; 
-      width:100%; 
-      height:100%; 
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent); 
-      transition:left 0.5s; 
-    }
-    
-    .btn-primary:hover::before { 
-      left:100%; 
-    }
-    
-    .btn-outline { 
-      border:2px solid rgba(168,85,247,0.5); 
-      color:#e9d5ff; 
-      background:rgba(139,92,246,0.1); 
-    }
-    
-    .btn-outline:hover { 
-      background:rgba(139,92,246,0.2); 
-      border-color: rgba(168,85,247,0.8); 
-      transform: translateY(-2px); 
-    }
-
-    /* Navigation with Glassmorphism */
-    nav { 
-      background: rgba(10,1,24,0.8); 
-      backdrop-filter: blur(20px); 
-      border-bottom:1px solid rgba(255,255,255,0.1); 
-      transition: all 0.3s ease; 
-    }
-    
-    nav.scrolled { 
-      background: rgba(10,1,24,0.95); 
-      box-shadow:0 4px 20px rgba(0,0,0,0.4); 
-      padding-top: 0.75rem;
-      padding-bottom: 0.75rem;
-    }
-
-    /* Advanced Animations */
-    .fade-in-up { 
-      opacity:0; 
-      transform: translateY(30px); 
-      animation: fadeInUp 0.8s ease forwards; 
-    }
-    
-    @keyframes fadeInUp { 
-      to { 
-        opacity:1; 
-        transform: translateY(0); 
-      } 
-    }
-    
-    .reveal { 
-      opacity:0; 
-      transform: translateY(50px); 
-      transition: all 0.8s cubic-bezier(0.4,0,0.2,1); 
-    }
-    
-    .reveal.active { 
-      opacity:1; 
-      transform:translateY(0); 
-    }
-
-    /* Hero Image with 3D Transform */
-    .hero-image { 
-      animation: floating 6s ease-in-out infinite; 
-      box-shadow:0 25px 60px rgba(139,92,246,0.4); 
-      border:2px solid rgba(168,85,247,0.3); 
-      transition: transform 0.3s ease;
-    }
-    
-    .hero-image:hover {
-      transform: perspective(1000px) rotateY(5deg) rotateX(-5deg) scale(1.02);
-    }
-    
-    @keyframes floating { 
-      0%,100%{ transform: translateY(0px); } 
-      50%{ transform: translateY(-20px); } 
-    }
-
-    /* Gradient Text with Animation */
-    .gradient-text { 
-      background: linear-gradient(135deg,#a855f7,#ec4899,#f97316); 
-      -webkit-background-clip:text; 
-      -webkit-text-fill-color:transparent; 
-      background-clip:text; 
-      background-size: 200% 200%;
-      animation: gradient-shift 3s ease infinite;
-    }
-    
-    @keyframes gradient-shift {
-      0%, 100% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-    }
-
-    /* Scroll Progress Bar */
-    .scroll-progress { 
-      position: fixed; 
-      top:0; 
-      left:0; 
-      width:0%; 
-      height:3px; 
-      background: linear-gradient(90deg,#8b5cf6,#ec4899); 
-      z-index:9999; 
-      transition: width 0.1s ease; 
-      box-shadow: 0 0 10px rgba(139, 92, 246, 0.8);
-    }
-
-    /* Interactive Stats Counter */
-    .stat-number { 
-      background: linear-gradient(135deg,#a855f7,#ec4899); 
-      -webkit-background-clip: text; 
-      -webkit-text-fill-color: transparent; 
-      background-clip:text; 
-      display: inline-block;
-      transition: transform 0.3s ease;
-    }
-    
-    .stat-number:hover {
-      transform: scale(1.1);
-    }
-
-    /* Feature Icons with Bounce Animation */
-    .feature-icon { 
-      font-size:3rem; 
-      filter: drop-shadow(0 10px 20px rgba(139,92,246,0.4)); 
-      transition: all 0.3s ease; 
-      display: inline-block;
-    }
-    
-    .glass-card:hover .feature-icon { 
-      transform: scale(1.2) rotate(5deg); 
-      animation: bounce 0.6s ease;
-    }
-    
-    @keyframes bounce {
-      0%, 100% { transform: scale(1.2) rotate(5deg) translateY(0); }
-      50% { transform: scale(1.2) rotate(5deg) translateY(-10px); }
-    }
-
-    /* Trust Badge Animation */
-    .trust-badge {
-      transition: all 0.3s ease;
-      opacity: 0.6;
-    }
-    
-    .trust-badge:hover {
-      opacity: 1;
-      transform: scale(1.05);
-    }
-
-    /* Testimonial Card */
-    .testimonial-card {
-      background: rgba(255, 255, 255, 0.03);
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      transition: all 0.4s ease;
-    }
-    
-    .testimonial-card:hover {
-      transform: translateY(-8px);
-      box-shadow: 0 20px 40px rgba(139, 92, 246, 0.3);
-      border-color: rgba(168, 85, 247, 0.3);
-    }
-
-    /* CTA Section with Pulse Animation */
-    .cta-pulse {
-      animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-    }
-    
-    @keyframes pulse {
-      0%, 100% {
-        opacity: 1;
-      }
-      50% {
-        opacity: 0.8;
-      }
-    }
-
-    /* Mobile Menu Animation */
-    .mobile-menu {
-      transform: translateX(100%);
-      transition: transform 0.3s ease-in-out;
-    }
-    
-    .mobile-menu.active {
-      transform: translateX(0);
-    }
-
-    /* Shine Effect */
-    .shine {
-      position: relative;
-      overflow: hidden;
-    }
-    
-    .shine::after {
-      content: '';
-      position: absolute;
-      top: -50%;
-      left: -50%;
-      width: 200%;
-      height: 200%;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
-      transform: rotate(45deg);
-      animation: shine 3s infinite;
-    }
-    
-    @keyframes shine {
-      0% { left: -200%; }
-      100% { left: 200%; }
-    }
-  </style>
 </head>
 
-<body>
-  <!-- Scroll Progress Bar -->
-  <div class="scroll-progress" id="scrollProgress"></div>
+<body class="min-h-screen">
+  <!-- Progress Bar -->
+  <div class="progress-bar" id="progressBar"></div>
 
   <!-- Animated Background -->
   <div class="animated-bg">
@@ -355,149 +27,148 @@
   </div>
 
   <!-- Navigation -->
-  <header>
-    <nav class="fixed top-0 left-0 w-full z-50" id="navbar">
-      <div class="max-w-7xl mx-auto px-5 py-4 flex justify-between items-center">
-        <div class="flex items-center gap-3 group cursor-pointer">
-          <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-violet-500 to-fuchsia-500 flex items-center justify-center text-2xl shadow-lg transition-transform group-hover:scale-110 group-hover:rotate-12">
+  <nav class="glass-nav fixed w-full top-0 z-50" id="navbar">
+    <div class="max-w-7xl mx-auto px-6 py-4">
+      <div class="flex items-center justify-between">
+        <!-- Logo -->
+        <a href="/" class="flex items-center gap-3 group">
+          <div class="w-10 h-10 rounded-xl bg-gradient-primary flex items-center justify-center text-2xl shadow-glow transition-all duration-300 group-hover:scale-110 group-hover:rotate-12">
             📄
           </div>
-          <span class="text-xl font-bold tracking-tight">Smart Invoice</span>
-        </div>
+          <span class="text-xl font-bold">Smart Invoice</span>
+        </a>
+
+        <!-- Desktop Navigation -->
         <div class="hidden md:flex items-center gap-8">
-          <a href="#features" class="text-sm font-medium text-gray-300 hover:text-white transition relative group">
-            Features
-            <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-violet-500 to-fuchsia-500 group-hover:w-full transition-all duration-300"></span>
-          </a>
-          <a href="{% url 'faq' %}" class="text-sm font-medium text-gray-300 hover:text-white transition relative group">
-            FAQ
-            <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-violet-500 to-fuchsia-500 group-hover:w-full transition-all duration-300"></span>
-          </a>
-          <a href="{% url 'support' %}" class="text-sm font-medium text-gray-300 hover:text-white transition relative group">
-            Support
-            <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-violet-500 to-fuchsia-500 group-hover:w-full transition-all duration-300"></span>
-          </a>
+          <a href="#features" class="text-sm font-medium text-gray-300 hover:text-white transition-colors">Features</a>
+          <a href="{% url 'faq' %}" class="text-sm font-medium text-gray-300 hover:text-white transition-colors">FAQ</a>
+          <a href="{% url 'support' %}" class="text-sm font-medium text-gray-300 hover:text-white transition-colors">Support</a>
           {% if user.is_authenticated %}
-            <a href="{% url 'invoice_list' %}" class="text-sm font-medium text-gray-300 hover:text-white transition relative group">
-              Dashboard
-              <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-violet-500 to-fuchsia-500 group-hover:w-full transition-all duration-300"></span>
-            </a>
-            <a href="{% url 'logout' %}" class="btn btn-secondary px-6 py-2 rounded-lg text-sm bg-gray-700 hover:bg-gray-600 text-white">Logout</a>
+            <a href="{% url 'invoice_list' %}" class="text-sm font-medium text-gray-300 hover:text-white transition-colors">Dashboard</a>
+            <a href="{% url 'logout' %}" class="btn btn-ghost btn-sm">Logout</a>
           {% else %}
-            <a href="{% url 'login' %}" class="text-sm font-medium text-gray-300 hover:text-white transition relative group">
-              Login
-              <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-violet-500 to-fuchsia-500 group-hover:w-full transition-all duration-300"></span>
-            </a>
-            <a href="{% url 'signup' %}" class="btn btn-primary px-6 py-2 rounded-lg text-sm">Get Started Free</a>
+            <a href="{% url 'login' %}" class="text-sm font-medium text-gray-300 hover:text-white transition-colors">Login</a>
+            <a href="{% url 'signup' %}" class="btn btn-primary btn-sm">Get Started Free</a>
           {% endif %}
         </div>
-        <button class="md:hidden text-white" id="mobileMenuBtn">
+
+        <!-- Mobile Menu Button -->
+        <button class="md:hidden text-white p-2" id="mobileMenuBtn" aria-label="Toggle menu">
           <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
           </svg>
         </button>
       </div>
-    </nav>
-  </header>
+    </div>
+  </nav>
 
   <!-- Mobile Menu -->
-  <div class="mobile-menu fixed top-0 right-0 w-64 h-full bg-gray-900/95 backdrop-blur-xl z-50 p-6" id="mobileMenu">
-    <button class="absolute top-4 right-4 text-white" id="closeMobileMenu">
-      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-      </svg>
-    </button>
-    <div class="flex flex-col gap-6 mt-12">
-      <a href="#features" class="text-white hover:text-violet-400 transition">Features</a>
-      <a href="{% url 'faq' %}" class="text-white hover:text-violet-400 transition">FAQ</a>
-      <a href="{% url 'support' %}" class="text-white hover:text-violet-400 transition">Support</a>
-      {% if user.is_authenticated %}
-        <a href="{% url 'invoice_list' %}" class="text-white hover:text-violet-400 transition">Dashboard</a>
-        <a href="{% url 'logout' %}" class="btn btn-secondary px-6 py-3 rounded-lg text-center bg-gray-700">Logout</a>
-      {% else %}
-        <a href="{% url 'login' %}" class="text-white hover:text-violet-400 transition">Login</a>
-        <a href="{% url 'signup' %}" class="btn btn-primary px-6 py-3 rounded-lg text-center">Get Started Free</a>
-      {% endif %}
+  <div class="fixed inset-0 bg-black/60 backdrop-blur-sm z-[60] opacity-0 pointer-events-none transition-opacity duration-300" id="mobileOverlay"></div>
+  <div class="fixed top-0 right-0 h-full w-80 max-w-full glass-strong z-[70] transform translate-x-full transition-transform duration-300" id="mobileMenu">
+    <div class="p-6">
+      <button class="absolute top-6 right-6 text-white hover:text-violet-400 transition-colors" id="closeMobileMenu">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+        </svg>
+      </button>
+      <div class="mt-16 flex flex-col gap-6">
+        <a href="#features" class="text-white text-lg hover:text-violet-400 transition-colors mobile-link">Features</a>
+        <a href="{% url 'faq' %}" class="text-white text-lg hover:text-violet-400 transition-colors mobile-link">FAQ</a>
+        <a href="{% url 'support' %}" class="text-white text-lg hover:text-violet-400 transition-colors mobile-link">Support</a>
+        {% if user.is_authenticated %}
+          <a href="{% url 'invoice_list' %}" class="text-white text-lg hover:text-violet-400 transition-colors mobile-link">Dashboard</a>
+          <a href="{% url 'logout' %}" class="btn btn-ghost w-full">Logout</a>
+        {% else %}
+          <a href="{% url 'login' %}" class="text-white text-lg hover:text-violet-400 transition-colors mobile-link">Login</a>
+          <a href="{% url 'signup' %}" class="btn btn-primary w-full">Get Started Free</a>
+        {% endif %}
+      </div>
     </div>
   </div>
 
-  <main>
+  <!-- Main Content -->
+  <main class="relative z-10">
     <!-- Hero Section -->
-    <section class="relative z-10 mt-32 md:mt-40 px-6 mb-20">
+    <section class="pt-32 pb-20 px-6">
       <div class="max-w-7xl mx-auto">
-        <div class="grid md:grid-cols-2 gap-12 items-center">
-          <div class="fade-in-up" style="animation-delay: 0.1s">
-            <div class="inline-block px-4 py-2 rounded-full glass mb-6 cta-pulse">
-              <span class="text-sm font-semibold gradient-text">✨ Trusted by 10,000+ Businesses Worldwide</span>
+        <div class="grid lg:grid-cols-2 gap-16 items-center">
+          <!-- Left Column -->
+          <div class="scroll-reveal">
+            <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full glass mb-6">
+              <span class="text-sm font-semibold text-violet-300">✨ Trusted by 50,000+ Businesses Worldwide</span>
             </div>
-            <h1 class="text-5xl md:text-7xl font-black leading-tight mb-6">
+            <h1 class="text-5xl lg:text-7xl font-black leading-tight mb-6">
               <span class="gradient-text">Smart, Simple</span><br>
               <span class="text-white">Invoicing</span>
             </h1>
-            <p class="text-gray-300 text-lg md:text-xl leading-relaxed mb-8 max-w-xl">
+            <p class="text-lg text-gray-300 mb-8 leading-relaxed max-w-xl">
               The most advanced invoicing platform for modern businesses. Create professional invoices in <span class="font-bold text-violet-400">seconds</span>, get paid <span class="font-bold text-fuchsia-400">3x faster</span>, and focus on growing your business.
             </p>
-            <div class="flex flex-wrap gap-4">
-              <a href="{% url 'create_invoice' %}" class="btn btn-primary px-8 py-4 rounded-xl text-lg transform transition hover:-translate-y-1 hover:scale-105 shine">
+            <div class="flex flex-col sm:flex-row gap-4 mb-12">
+              <a href="{% url 'signup' %}" class="btn btn-primary btn-lg ripple-effect text-center">
                 🚀 Start Free Trial
               </a>
-              <a href="#features" class="btn btn-outline px-8 py-4 rounded-xl text-lg">
+              <a href="#features" class="btn btn-outline btn-lg text-center">
                 👀 See Features
               </a>
             </div>
-            <div class="mt-10 flex items-center gap-8 flex-wrap">
-              <div class="group cursor-pointer">
-                <div class="text-3xl font-black stat-number" data-target="10000">0</div>
+            <!-- Stats -->
+            <div class="flex items-center gap-8 flex-wrap mb-10">
+              <div class="hover-lift cursor-pointer">
+                <div class="text-3xl font-black gradient-text">10000</div>
                 <div class="text-sm text-gray-400">Active Users</div>
               </div>
-              <div class="group cursor-pointer">
-                <div class="text-3xl font-black stat-number" data-target="99">0%</div>
+              <div class="hover-lift cursor-pointer">
+                <div class="text-3xl font-black gradient-text">99%</div>
                 <div class="text-sm text-gray-400">Satisfaction Rate</div>
               </div>
-              <div class="group cursor-pointer">
-                <div class="text-3xl font-black stat-number">⚡</div>
+              <div class="hover-lift cursor-pointer">
+                <div class="text-3xl font-black">⚡</div>
                 <div class="text-sm text-gray-400">Lightning Fast</div>
               </div>
             </div>
-            
             <!-- Trust Badges -->
-            <div class="mt-10 pt-8 border-t border-white/10">
-              <p class="text-xs text-gray-400 mb-4">TRUSTED BY LEADING COMPANIES</p>
-              <div class="flex flex-wrap items-center gap-6 opacity-50">
-                <span class="trust-badge text-2xl">🏢</span>
-                <span class="trust-badge text-2xl">🏭</span>
-                <span class="trust-badge text-2xl">🏪</span>
-                <span class="trust-badge text-2xl">🏗️</span>
-                <span class="trust-badge text-2xl">💼</span>
+            <div class="pt-8 border-t border-white/10">
+              <p class="text-xs text-gray-400 mb-4 uppercase tracking-wider">Trusted by Leading Companies</p>
+              <div class="flex items-center gap-6 opacity-40">
+                <span class="text-2xl hover-lift cursor-pointer">🏢</span>
+                <span class="text-2xl hover-lift cursor-pointer">🏭</span>
+                <span class="text-2xl hover-lift cursor-pointer">🏪</span>
+                <span class="text-2xl hover-lift cursor-pointer">🏗️</span>
+                <span class="text-2xl hover-lift cursor-pointer">💼</span>
               </div>
             </div>
           </div>
-          <div class="fade-in-up preview-container" style="animation-delay: 0.3s">
-            <img src="{% static 'invoice-preview.png' %}" alt="Professional Invoice Preview" class="preview-image hero-image w-full rounded-2xl shadow-2xl">
+          <!-- Right Column -->
+          <div class="scroll-reveal">
+            <div class="relative">
+              <div class="absolute inset-0 bg-gradient-primary opacity-20 blur-3xl rounded-full"></div>
+              <img src="{% static 'invoice-preview.png' %}" alt="Invoice Preview" class="relative w-full rounded-2xl shadow-glass-lg hover-lift">
+            </div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Social Proof Section -->
-    <section class="relative z-10 px-6 py-12 reveal">
-      <div class="max-w-7xl mx-auto">
-        <div class="glass p-8 rounded-2xl">
-          <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
-            <div>
-              <div class="text-4xl font-black gradient-text mb-2">50K+</div>
+    <!-- Stats Cards -->
+    <section class="py-16 px-6 scroll-reveal">
+      <div class="max-w-6xl mx-auto">
+        <div class="glass-card p-12 rounded-3xl">
+          <div class="grid grid-cols-2 lg:grid-cols-4 gap-12 text-center">
+            <div class="hover-lift">
+              <div class="text-5xl font-black gradient-text mb-2">50K+</div>
               <div class="text-sm text-gray-400">Invoices Generated</div>
             </div>
-            <div>
-              <div class="text-4xl font-black gradient-text mb-2">$50M+</div>
+            <div class="hover-lift">
+              <div class="text-5xl font-black gradient-text mb-2">$50M+</div>
               <div class="text-sm text-gray-400">Revenue Processed</div>
             </div>
-            <div>
-              <div class="text-4xl font-black gradient-text mb-2">150+</div>
+            <div class="hover-lift">
+              <div class="text-5xl font-black gradient-text mb-2">150+</div>
               <div class="text-sm text-gray-400">Countries</div>
             </div>
-            <div>
-              <div class="text-4xl font-black gradient-text mb-2">24/7</div>
+            <div class="hover-lift">
+              <div class="text-5xl font-black gradient-text mb-2">24/7</div>
               <div class="text-sm text-gray-400">Support Available</div>
             </div>
           </div>
@@ -505,58 +176,58 @@
       </div>
     </section>
 
-    <!-- Features Section -->
-    <section id="features" class="relative z-10 px-6 py-20 reveal">
+    <!-- Features -->
+    <section id="features" class="py-24 px-6 scroll-reveal">
       <div class="max-w-7xl mx-auto">
         <div class="text-center mb-16">
-          <div class="inline-block px-4 py-2 rounded-full glass mb-4">
-            <span class="text-sm font-semibold text-violet-400">POWERFUL FEATURES</span>
+          <div class="inline-block px-4 py-2 rounded-full glass-subtle mb-4">
+            <span class="text-sm font-semibold text-violet-400 uppercase">Powerful Features</span>
           </div>
-          <h2 class="text-4xl md:text-5xl font-black mb-4">
+          <h2 class="text-5xl font-black mb-4">
             <span class="gradient-text">Everything You Need</span>
           </h2>
-          <p class="text-gray-400 text-lg max-w-2xl mx-auto">
+          <p class="text-lg text-gray-400 max-w-2xl mx-auto">
             Professional invoicing tools designed for businesses of all sizes
           </p>
         </div>
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          <div class="glass-card p-8 rounded-2xl reveal" style="transition-delay:0.1s">
-            <div class="feature-icon mb-4">⚡</div>
+        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div class="glass-card p-8 rounded-2xl hover-glow scroll-reveal">
+            <div class="text-5xl mb-4">⚡</div>
             <h3 class="text-2xl font-bold mb-3">Instant PDF Export</h3>
             <p class="text-gray-400 leading-relaxed">
               Generate beautiful, professional PDFs with one click. Download instantly and share with clients.
             </p>
           </div>
-          <div class="glass-card p-8 rounded-2xl reveal" style="transition-delay:0.2s">
-            <div class="feature-icon mb-4">🎨</div>
+          <div class="glass-card p-8 rounded-2xl hover-glow scroll-reveal">
+            <div class="text-5xl mb-4">🎨</div>
             <h3 class="text-2xl font-bold mb-3">Custom Branding</h3>
             <p class="text-gray-400 leading-relaxed">
               Add your logo, customize colors, and personalize every invoice to match your brand identity.
             </p>
           </div>
-          <div class="glass-card p-8 rounded-2xl reveal" style="transition-delay:0.3s">
-            <div class="feature-icon mb-4">☁️</div>
+          <div class="glass-card p-8 rounded-2xl hover-glow scroll-reveal">
+            <div class="text-5xl mb-4">☁️</div>
             <h3 class="text-2xl font-bold mb-3">Cloud-Based</h3>
             <p class="text-gray-400 leading-relaxed">
               Access your invoices from anywhere. Secure Django backend ensures your data is always protected.
             </p>
           </div>
-          <div class="glass-card p-8 rounded-2xl reveal" style="transition-delay:0.4s">
-            <div class="feature-icon mb-4">📧</div>
+          <div class="glass-card p-8 rounded-2xl hover-glow scroll-reveal">
+            <div class="text-5xl mb-4">📧</div>
             <h3 class="text-2xl font-bold mb-3">Email & WhatsApp</h3>
             <p class="text-gray-400 leading-relaxed">
               Send invoices directly via email or WhatsApp. Get paid faster with instant delivery.
             </p>
           </div>
-          <div class="glass-card p-8 rounded-2xl reveal" style="transition-delay:0.5s">
-            <div class="feature-icon mb-4">💰</div>
+          <div class="glass-card p-8 rounded-2xl hover-glow scroll-reveal">
+            <div class="text-5xl mb-4">💰</div>
             <h3 class="text-2xl font-bold mb-3">Multi-Currency</h3>
             <p class="text-gray-400 leading-relaxed">
               Support for USD, EUR, GBP, NGN, CAD, AUD. Bill clients globally with ease.
             </p>
           </div>
-          <div class="glass-card p-8 rounded-2xl reveal" style="transition-delay:0.6s">
-            <div class="feature-icon mb-4">📊</div>
+          <div class="glass-card p-8 rounded-2xl hover-glow scroll-reveal">
+            <div class="text-5xl mb-4">📊</div>
             <h3 class="text-2xl font-bold mb-3">Smart Analytics</h3>
             <p class="text-gray-400 leading-relaxed">
               Track invoice status, payment history, and business insights in real-time dashboard.
@@ -566,80 +237,60 @@
       </div>
     </section>
 
-    <!-- Testimonials Section -->
-    <section id="testimonials" class="relative z-10 px-6 py-20 reveal">
+    <!-- Testimonials -->
+    <section class="py-24 px-6 scroll-reveal">
       <div class="max-w-7xl mx-auto">
         <div class="text-center mb-16">
-          <div class="inline-block px-4 py-2 rounded-full glass mb-4">
-            <span class="text-sm font-semibold text-fuchsia-400">TESTIMONIALS</span>
+          <div class="inline-block px-4 py-2 rounded-full glass-subtle mb-4">
+            <span class="text-sm font-semibold text-fuchsia-400 uppercase">Testimonials</span>
           </div>
-          <h2 class="text-4xl md:text-5xl font-black mb-4">
+          <h2 class="text-5xl font-black mb-4">
             <span class="gradient-text">Loved by Businesses</span>
           </h2>
-          <p class="text-gray-400 text-lg max-w-2xl mx-auto">
+          <p class="text-lg text-gray-400 max-w-2xl mx-auto">
             See what our customers say about their experience
           </p>
         </div>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div class="testimonial-card p-8 rounded-2xl reveal" style="transition-delay:0.1s">
-            <div class="flex items-center gap-2 mb-4">
-              <span class="text-2xl">⭐</span>
-              <span class="text-2xl">⭐</span>
-              <span class="text-2xl">⭐</span>
-              <span class="text-2xl">⭐</span>
-              <span class="text-2xl">⭐</span>
+        <div class="grid md:grid-cols-3 gap-6">
+          <div class="glass-card p-8 rounded-2xl hover-lift scroll-reveal">
+            <div class="flex gap-1 mb-4">
+              <span class="text-yellow-400">⭐⭐⭐⭐⭐</span>
             </div>
             <p class="text-gray-300 mb-6 leading-relaxed">
-              "Smart Invoice transformed how we bill our clients. We've reduced invoice creation time by 80% and get paid 3x faster. Absolutely game-changing!"
+              "Smart Invoice transformed how we bill our clients. We've reduced billing time by 80% and get paid 3x faster. Absolutely game-changing!"
             </p>
             <div class="flex items-center gap-3">
-              <div class="w-12 h-12 rounded-full bg-gradient-to-br from-violet-500 to-fuchsia-500 flex items-center justify-center text-xl font-bold">
-                JD
-              </div>
+              <div class="w-12 h-12 rounded-full bg-gradient-to-br from-violet-500 to-purple-600 flex items-center justify-center text-white font-bold">JD</div>
               <div>
                 <div class="font-semibold">James Davidson</div>
                 <div class="text-sm text-gray-400">CEO, TechStart Inc.</div>
               </div>
             </div>
           </div>
-          
-          <div class="testimonial-card p-8 rounded-2xl reveal" style="transition-delay:0.2s">
-            <div class="flex items-center gap-2 mb-4">
-              <span class="text-2xl">⭐</span>
-              <span class="text-2xl">⭐</span>
-              <span class="text-2xl">⭐</span>
-              <span class="text-2xl">⭐</span>
-              <span class="text-2xl">⭐</span>
+          <div class="glass-card p-8 rounded-2xl hover-lift scroll-reveal">
+            <div class="flex gap-1 mb-4">
+              <span class="text-yellow-400">⭐⭐⭐⭐⭐</span>
             </div>
             <p class="text-gray-300 mb-6 leading-relaxed">
-              "As a freelance designer, this platform is exactly what I needed. Professional invoices in seconds, and my clients love how polished they look!"
+              "As a freelance designer, this platform has made my invoicing so smooth. Professional invoices in seconds, and my clients love it too!"
             </p>
             <div class="flex items-center gap-3">
-              <div class="w-12 h-12 rounded-full bg-gradient-to-br from-fuchsia-500 to-pink-500 flex items-center justify-center text-xl font-bold">
-                SM
-              </div>
+              <div class="w-12 h-12 rounded-full bg-gradient-to-br from-fuchsia-500 to-pink-600 flex items-center justify-center text-white font-bold">SM</div>
               <div>
                 <div class="font-semibold">Sarah Martinez</div>
                 <div class="text-sm text-gray-400">Freelance Designer</div>
               </div>
             </div>
           </div>
-          
-          <div class="testimonial-card p-8 rounded-2xl reveal" style="transition-delay:0.3s">
-            <div class="flex items-center gap-2 mb-4">
-              <span class="text-2xl">⭐</span>
-              <span class="text-2xl">⭐</span>
-              <span class="text-2xl">⭐</span>
-              <span class="text-2xl">⭐</span>
-              <span class="text-2xl">⭐</span>
+          <div class="glass-card p-8 rounded-2xl hover-lift scroll-reveal">
+            <div class="flex gap-1 mb-4">
+              <span class="text-yellow-400">⭐⭐⭐⭐⭐</span>
             </div>
             <p class="text-gray-300 mb-6 leading-relaxed">
-              "The WhatsApp integration is brilliant! Being able to send invoices directly to clients' phones has improved our payment collection rate significantly."
+              "The WhatsApp integration is brilliant! I can send invoices directly to clients' phones and they can pay me instantly. Love it!"
             </p>
             <div class="flex items-center gap-3">
-              <div class="w-12 h-12 rounded-full bg-gradient-to-br from-pink-500 to-orange-500 flex items-center justify-center text-xl font-bold">
-                AP
-              </div>
+              <div class="w-12 h-12 rounded-full bg-gradient-to-br from-rose-500 to-red-600 flex items-center justify-center text-white font-bold">AP</div>
               <div>
                 <div class="font-semibold">Ahmed Patel</div>
                 <div class="text-sm text-gray-400">Founder, Digital Solutions</div>
@@ -650,256 +301,188 @@
       </div>
     </section>
 
-    <!-- How It Works Section -->
-    <section id="how-it-works" class="relative z-10 px-6 py-20 reveal">
+    <!-- How It Works -->
+    <section class="py-24 px-6 scroll-reveal">
       <div class="max-w-7xl mx-auto">
         <div class="text-center mb-16">
-          <div class="inline-block px-4 py-2 rounded-full glass mb-4">
-            <span class="text-sm font-semibold text-blue-400">HOW IT WORKS</span>
+          <div class="inline-block px-4 py-2 rounded-full glass-subtle mb-4">
+            <span class="text-sm font-semibold text-blue-400 uppercase">How It Works</span>
           </div>
-          <h2 class="text-4xl md:text-5xl font-black mb-4">
+          <h2 class="text-5xl font-black mb-4">
             <span class="gradient-text">Three Simple Steps</span>
           </h2>
-          <p class="text-gray-400 text-lg max-w-2xl mx-auto">
+          <p class="text-lg text-gray-400 max-w-2xl mx-auto">
             Start creating professional invoices in under 60 seconds
           </p>
         </div>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-          <div class="glass-card p-8 rounded-2xl text-center reveal" style="transition-delay:0.1s">
-            <div class="w-20 h-20 rounded-full bg-gradient-to-br from-violet-500 to-fuchsia-500 flex items-center justify-center text-4xl font-black mx-auto mb-6 shadow-xl">
-              1
-            </div>
-            <h3 class="text-2xl font-bold mb-4">Fill Details</h3>
+        <div class="grid md:grid-cols-3 gap-8">
+          <div class="glass-card p-8 rounded-2xl text-center hover-lift scroll-reveal">
+            <div class="w-20 h-20 rounded-full bg-gradient-to-br from-violet-500 to-purple-600 flex items-center justify-center text-white font-black text-3xl mx-auto mb-6 shadow-glow">1</div>
+            <h3 class="text-2xl font-bold mb-3">Fill Details</h3>
             <p class="text-gray-400 leading-relaxed">
-              Enter your business information, client details, and invoice items using our intuitive multi-step form.
+              Enter your business information, client details, and invoice items using our intuitive step-by-step form.
             </p>
           </div>
-          <div class="glass-card p-8 rounded-2xl text-center reveal" style="transition-delay:0.2s">
-            <div class="w-20 h-20 rounded-full bg-gradient-to-br from-fuchsia-500 to-pink-500 flex items-center justify-center text-4xl font-black mx-auto mb-6 shadow-xl">
-              2
-            </div>
-            <h3 class="text-2xl font-bold mb-4">Generate PDF</h3>
+          <div class="glass-card p-8 rounded-2xl text-center hover-lift scroll-reveal">
+            <div class="w-20 h-20 rounded-full bg-gradient-to-br from-fuchsia-500 to-pink-600 flex items-center justify-center text-white font-black text-3xl mx-auto mb-6 shadow-glow-pink">2</div>
+            <h3 class="text-2xl font-bold mb-3">Generate PDF</h3>
             <p class="text-gray-400 leading-relaxed">
               Click generate and watch your professional invoice appear instantly as a beautiful, downloadable PDF.
             </p>
           </div>
-          <div class="glass-card p-8 rounded-2xl text-center reveal" style="transition-delay:0.3s">
-            <div class="w-20 h-20 rounded-full bg-gradient-to-br from-pink-500 to-orange-500 flex items-center justify-center text-4xl font-black mx-auto mb-6 shadow-xl">
-              3
-            </div>
-            <h3 class="text-2xl font-bold mb-4">Send & Get Paid</h3>
+          <div class="glass-card p-8 rounded-2xl text-center hover-lift scroll-reveal">
+            <div class="w-20 h-20 rounded-full bg-gradient-to-br from-rose-500 to-orange-600 flex items-center justify-center text-white font-black text-3xl mx-auto mb-6 shadow-glow">3</div>
+            <h3 class="text-2xl font-bold mb-3">Send & Get Paid</h3>
             <p class="text-gray-400 leading-relaxed">
-              Send your invoice via email or WhatsApp and get paid faster with professional presentation and instant delivery.
+              Send your invoice via email or WhatsApp and get paid faster with professional and instant delivery.
             </p>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- CTA Section -->
-    <section class="relative z-10 px-6 py-20 reveal">
+    <!-- Final CTA -->
+    <section class="py-24 px-6 scroll-reveal">
       <div class="max-w-4xl mx-auto">
-        <div class="glass p-12 md:p-16 rounded-3xl text-center shine">
-          <h2 class="text-4xl md:text-6xl font-black mb-6">
-            <span class="gradient-text">Ready to Transform Your Invoicing?</span>
-          </h2>
-          <p class="text-gray-300 text-lg md:text-xl mb-8 max-w-2xl mx-auto leading-relaxed">
-            Join thousands of businesses who have streamlined their invoicing process and improved cash flow with Smart Invoice.
-          </p>
-          <div class="flex flex-col sm:flex-row gap-4 justify-center">
-            <a href="{% url 'create_invoice' %}" class="btn btn-primary px-10 py-5 rounded-xl text-xl inline-block">
-              🚀 Start Creating Invoices Free
-            </a>
-            <a href="{% url 'invoice_list' %}" class="btn btn-outline px-10 py-5 rounded-xl text-xl inline-block">
-              📊 View Dashboard
-            </a>
+        <div class="glass-card p-16 rounded-3xl text-center relative overflow-hidden">
+          <div class="absolute inset-0 bg-gradient-to-br from-violet-600/20 to-fuchsia-600/20"></div>
+          <div class="relative z-10">
+            <h2 class="text-5xl font-black mb-6">
+              <span class="gradient-text">Ready to Transform Your Invoicing?</span>
+            </h2>
+            <p class="text-xl text-gray-300 max-w-2xl mx-auto mb-8">
+              Join thousands of businesses who have streamlined their invoicing process and improved cash flow with Smart Invoice.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+              <a href="{% url 'signup' %}" class="btn btn-primary btn-lg ripple-effect hover-glow">
+                ✨ Start Creating Invoices Free
+              </a>
+              <a href="{% url 'invoice_list' %}" class="btn btn-outline btn-lg hover-lift">
+                📊 View Dashboard
+              </a>
+            </div>
+            <p class="text-sm text-gray-500 mt-6">
+              No credit card required • Free forever • Cancel anytime
+            </p>
           </div>
-          <p class="text-sm text-gray-400 mt-6">No credit card required • Free forever • Cancel anytime</p>
         </div>
       </div>
     </section>
   </main>
 
   <!-- Footer -->
-  <footer class="relative z-10 px-6 py-12 border-t border-white/10 mt-20">
-    <div class="max-w-7xl mx-auto">
-      <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
-        <div class="col-span-1 md:col-span-2">
+  <footer class="relative z-10 border-t border-white/10 mt-20">
+    <div class="max-w-7xl mx-auto px-6 py-16">
+      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
+        <div>
           <div class="flex items-center gap-3 mb-4">
-            <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-violet-500 to-fuchsia-500 flex items-center justify-center text-2xl shadow-lg">
-              📄
-            </div>
+            <div class="w-10 h-10 rounded-xl bg-gradient-primary flex items-center justify-center text-2xl shadow-glow">📄</div>
             <span class="text-xl font-bold">Smart Invoice</span>
           </div>
-          <p class="text-gray-400 leading-relaxed max-w-md mb-4">
+          <p class="text-sm text-gray-400 leading-relaxed mb-4">
             The most advanced invoicing platform for modern businesses. Create professional invoices, get paid faster, and grow your business.
           </p>
-          <p class="text-sm text-gray-500">
-            Built by <a href="https://onome-portfolio-ten.vercel.app" target="_blank" rel="noopener noreferrer" class="font-semibold text-violet-400 hover:text-violet-300 transition underline decoration-dotted">Jeffery Onome</a> — <a href="https://onome-portfolio-ten.vercel.app" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-violet-400 transition">onome-portfolio-ten.vercel.app</a>
-          </p>
+          <p class="text-xs text-gray-500">Built with ❤️ by Jeffery Onome Emuodafevware</p>
         </div>
-        
         <div>
-          <h3 class="font-bold mb-4">Quick Links</h3>
-          <ul class="space-y-2 text-gray-400">
-            <li><a href="#features" class="hover:text-violet-400 transition">Features</a></li>
-            <li><a href="{% url 'faq' %}" class="hover:text-violet-400 transition">FAQ</a></li>
-            <li><a href="{% url 'support' %}" class="hover:text-violet-400 transition">Support</a></li>
-            <li><a href="{% url 'invoice_list' %}" class="hover:text-violet-400 transition">Dashboard</a></li>
+          <h3 class="font-semibold mb-4">Quick Links</h3>
+          <ul class="space-y-2">
+            <li><a href="#features" class="text-sm text-gray-400 hover:text-white transition-colors">Features</a></li>
+            <li><a href="{% url 'faq' %}" class="text-sm text-gray-400 hover:text-white transition-colors">FAQ</a></li>
+            <li><a href="{% url 'support' %}" class="text-sm text-gray-400 hover:text-white transition-colors">Support</a></li>
+            <li><a href="{% url 'invoice_list' %}" class="text-sm text-gray-400 hover:text-white transition-colors">Dashboard</a></li>
           </ul>
         </div>
-        
         <div>
-          <h3 class="font-bold mb-4">Product</h3>
-          <ul class="space-y-2 text-gray-400">
-            <li><a href="{% url 'create_invoice' %}" class="hover:text-violet-400 transition">Create Invoice</a></li>
-            <li><a href="{% url 'invoice_list' %}" class="hover:text-violet-400 transition">My Invoices</a></li>
-            <li><span class="text-gray-600">Templates (Coming Soon)</span></li>
-            <li><span class="text-gray-600">API Access (Coming Soon)</span></li>
+          <h3 class="font-semibold mb-4">Product</h3>
+          <ul class="space-y-2">
+            <li><a href="{% url 'signup' %}" class="text-sm text-gray-400 hover:text-white transition-colors">Create Invoice</a></li>
+            <li><a href="{% url 'invoice_list' %}" class="text-sm text-gray-400 hover:text-white transition-colors">My Invoices</a></li>
+            <li><span class="text-sm text-gray-500">Templates (Coming Soon)</span></li>
+            <li><span class="text-sm text-gray-500">API Access (Coming Soon)</span></li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="font-semibold mb-4">Company</h3>
+          <ul class="space-y-2">
+            <li><span class="flex items-center gap-2 text-sm text-gray-400"><span class="text-green-400">⚡</span> Enterprise-Grade Security</span></li>
+            <li><span class="flex items-center gap-2 text-sm text-gray-400"><span class="text-violet-400">🌐</span> 99.9% Uptime</span></li>
+            <li><span class="flex items-center gap-2 text-sm text-gray-400"><span class="text-fuchsia-400">✅</span> GDPR Compliant</span></li>
           </ul>
         </div>
       </div>
-      
-      <div class="pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4">
-        <p class="text-gray-400 text-sm">
-          © 2025 Smart Invoice. All rights reserved. Powered by Django & Tailwind CSS
-        </p>
-        <div class="flex items-center gap-4 text-sm text-gray-400">
-          <span>🌟 Enterprise-Grade Security</span>
-          <span>•</span>
-          <span>⚡ 99.9% Uptime</span>
-          <span>•</span>
-          <span>🔒 GDPR Compliant</span>
-        </div>
+      <div class="pt-8 border-t border-white/5 flex flex-col sm:flex-row justify-between items-center gap-4 text-sm text-gray-500">
+        <p>&copy; 2025 Smart Invoice. All rights reserved.</p>
+        <p>Powered by Django & Security</p>
       </div>
     </div>
   </footer>
 
   <script>
-    // Scroll Progress
+    // Progress Bar
     window.addEventListener('scroll', () => {
-      const scrollProgress = document.getElementById('scrollProgress');
-      scrollProgress.style.width = ((window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100) + '%';
-      
-      // Navbar shrink
-      const navbar = document.getElementById('navbar');
-      window.scrollY > 50 ? navbar.classList.add('scrolled') : navbar.classList.remove('scrolled');
-      
-      // Reveal animations
-      document.querySelectorAll('.reveal').forEach(el => {
-        if(el.getBoundingClientRect().top < window.innerHeight - 100) el.classList.add('active');
-      });
+      const winScroll = document.documentElement.scrollTop;
+      const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      const scrolled = (winScroll / height) * 100;
+      document.getElementById('progressBar').style.width = scrolled + '%';
     });
 
-    // Animated Counters
-    const counters = document.querySelectorAll('.stat-number');
-    let counterAnimated = false;
-    
+    // Navbar Scroll Effect
+    const navbar = document.getElementById('navbar');
     window.addEventListener('scroll', () => {
-      if (!counterAnimated && window.scrollY > 100) {
-        counters.forEach(counter => {
-          const target = +counter.getAttribute('data-target');
-          if (target) {
-            let count = 0;
-            const increment = target / 80;
-            const interval = setInterval(() => {
-              count += increment;
-              if(count >= target) {
-                counter.textContent = target + (counter.textContent.includes('%') ? '%' : '');
-                clearInterval(interval);
-              } else {
-                counter.textContent = Math.floor(count) + (counter.textContent.includes('%') ? '%' : '');
-              }
-            }, 15);
-          }
-        });
-        counterAnimated = true;
+      if (window.scrollY > 50) {
+        navbar.classList.add('scrolled');
+      } else {
+        navbar.classList.remove('scrolled');
       }
     });
 
-    // Ripple Effect on Buttons
-    document.querySelectorAll('.btn').forEach(button => {
-      button.addEventListener('click', function(e) {
-        const ripple = document.createElement('span');
-        ripple.classList.add('ripple');
-        
-        const rect = this.getBoundingClientRect();
-        const size = Math.max(rect.width, rect.height);
-        const x = e.clientX - rect.left - size / 2;
-        const y = e.clientY - rect.top - size / 2;
-        
-        ripple.style.width = ripple.style.height = size + 'px';
-        ripple.style.left = x + 'px';
-        ripple.style.top = y + 'px';
-        ripple.style.position = 'absolute';
-        ripple.style.borderRadius = '50%';
-        ripple.style.background = 'rgba(255, 255, 255, 0.6)';
-        ripple.style.transform = 'scale(0)';
-        ripple.style.animation = 'ripple 0.6s ease-out';
-        ripple.style.pointerEvents = 'none';
-        
-        this.appendChild(ripple);
-        
-        setTimeout(() => ripple.remove(), 600);
-      });
-    });
-
-    // Add CSS for ripple animation
-    const style = document.createElement('style');
-    style.textContent = `
-      @keyframes ripple {
-        to {
-          transform: scale(4);
-          opacity: 0;
-        }
-      }
-    `;
-    document.head.appendChild(style);
-
-    // Mobile Menu Toggle
+    // Mobile Menu
     const mobileMenuBtn = document.getElementById('mobileMenuBtn');
-    const mobileMenu = document.getElementById('mobileMenu');
     const closeMobileMenu = document.getElementById('closeMobileMenu');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const mobileOverlay = document.getElementById('mobileOverlay');
 
-    mobileMenuBtn.addEventListener('click', () => {
-      mobileMenu.classList.add('active');
-    });
-
-    closeMobileMenu.addEventListener('click', () => {
-      mobileMenu.classList.remove('active');
-    });
-
-    // Close mobile menu when clicking a link
-    document.querySelectorAll('.mobile-menu a').forEach(link => {
-      link.addEventListener('click', () => {
-        mobileMenu.classList.remove('active');
-      });
-    });
-
-    // Parallax Effect on Hero Image
-    const heroImage = document.querySelector('.hero-image');
-    if (heroImage) {
-      window.addEventListener('mousemove', (e) => {
-        const { clientX, clientY } = e;
-        const { innerWidth, innerHeight } = window;
-        
-        const xPos = (clientX / innerWidth - 0.5) * 15;
-        const yPos = (clientY / innerHeight - 0.5) * 15;
-        
-        heroImage.style.transform = `perspective(1000px) rotateY(${xPos}deg) rotateX(${-yPos}deg)`;
-      });
+    function openMenu() {
+      mobileMenu.classList.remove('translate-x-full');
+      mobileOverlay.classList.remove('opacity-0', 'pointer-events-none');
+      document.body.style.overflow = 'hidden';
     }
 
-    // Smooth scroll for anchor links
+    function closeMenu() {
+      mobileMenu.classList.add('translate-x-full');
+      mobileOverlay.classList.add('opacity-0', 'pointer-events-none');
+      document.body.style.overflow = '';
+    }
+
+    mobileMenuBtn.addEventListener('click', openMenu);
+    closeMobileMenu.addEventListener('click', closeMenu);
+    mobileOverlay.addEventListener('click', closeMenu);
+
+    // Close menu on link click
+    document.querySelectorAll('.mobile-link').forEach(link => {
+      link.addEventListener('click', closeMenu);
+    });
+
+    // Scroll Reveal
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('revealed');
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+    document.querySelectorAll('.scroll-reveal').forEach(el => observer.observe(el));
+
+    // Smooth Scroll
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
       anchor.addEventListener('click', function (e) {
         e.preventDefault();
         const target = document.querySelector(this.getAttribute('href'));
         if (target) {
-          target.scrollIntoView({
-            behavior: 'smooth',
-            block: 'start'
-          });
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          closeMenu();
         }
       });
     });
