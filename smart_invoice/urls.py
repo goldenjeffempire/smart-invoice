@@ -17,11 +17,9 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from invoices.views import landing_page
-from django.views.generic import RedirectView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', landing_page, name='landing'),
-    path('invoices/', include('invoices.urls')),
-    path('', RedirectView.as_view(url='/invoices/create/', permanent=False)),
+    path('', include('invoices.urls')),
 ]
