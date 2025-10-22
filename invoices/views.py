@@ -175,10 +175,11 @@ def invoice_update(request, pk):
 # ----------------------------
 # Invoice Status Update
 # ----------------------------
+@login_required
 def invoice_update_status(request, pk):
     """Update invoice status."""
     if request.method == 'POST':
-        invoice = get_object_or_404(Invoice, pk=pk)
+        invoice = get_object_or_404(Invoice, pk=pk, user=request.user)
         new_status = request.POST.get('status')
         
         if new_status in dict(Invoice._meta.get_field('status').choices):
@@ -198,9 +199,10 @@ def invoice_update_status(request, pk):
 # ----------------------------
 # PDF Generation
 # ----------------------------
+@login_required
 def invoice_pdf(request, pk):
     """Download invoice as PDF."""
-    invoice = get_object_or_404(Invoice, pk=pk)
+    invoice = get_object_or_404(Invoice, pk=pk, user=request.user)
     pdf_bytes = _render_invoice_pdf(invoice)
     
     if pdf_bytes:
@@ -216,9 +218,10 @@ def invoice_pdf(request, pk):
 # ----------------------------
 # Send Invoice via Email
 # ----------------------------
+@login_required
 def send_invoice_email(request, pk):
     """Send invoice PDF via email."""
-    invoice = get_object_or_404(Invoice, pk=pk)
+    invoice = get_object_or_404(Invoice, pk=pk, user=request.user)
 
     if request.method == 'POST':
         to_email = request.POST.get('to_email') or invoice.client_email
@@ -269,9 +272,10 @@ Best regards,
 # ----------------------------
 # Send Invoice via WhatsApp
 # ----------------------------
+@login_required
 def send_invoice_whatsapp(request, pk):
     """Send invoice PDF via WhatsApp using Twilio."""
-    invoice = get_object_or_404(Invoice, pk=pk)
+    invoice = get_object_or_404(Invoice, pk=pk, user=request.user)
 
     if request.method == 'POST':
         whatsapp_number = request.POST.get('whatsapp_number') or invoice.client_phone
