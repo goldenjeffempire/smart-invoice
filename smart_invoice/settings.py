@@ -30,7 +30,7 @@ SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', get_random_secret_key())
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DJANGO_DEBUG', 'True') == 'True'
 
-ALLOWED_HOSTS = os.environ.get('DJANGO_ALLOWED_HOSTS', '127.0.0.1,localhost,.onrender.com,.replit.dev,.replit.app').split(',')
+ALLOWED_HOSTS = os.environ.get('DJANGO_ALLOWED_HOSTS', '127.0.0.1,localhost,*').split(',')
 
 # Application definition
 
@@ -171,9 +171,8 @@ if not DEBUG:
     SECURE_HSTS_INCLUDE_SUBDOMAINS = True
     SECURE_HSTS_PRELOAD = True
 
-# CSRF Trusted Origins for Render and Replit
+# CSRF Trusted Origins
 CSRF_TRUSTED_ORIGINS = [
-    'https://*.onrender.com',
-    'https://*.replit.dev',
-    'https://*.replit.app',
+    'http://localhost:5000',
+    'http://127.0.0.1:5000',
 ]

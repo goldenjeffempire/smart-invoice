@@ -6,8 +6,12 @@ from django.template.loader import render_to_string
 from django.urls import reverse
 from django.core.mail import EmailMessage
 from django.conf import settings
+from django.utils import timezone
+from django.contrib import messages
+from django.db.models import Q
 from io import BytesIO
 from xhtml2pdf import pisa
+from decimal import Decimal
 import base64
 import re
 
@@ -32,36 +36,56 @@ def _render_invoice_pdf(invoice):
 # Landing Page
 # ----------------------------
 def landing_page(request):
-    """Show landing page with a sample invoice if none exist."""
-    if not Invoice.objects.exists():
-        invoice_count = Invoice.objects.count() + 1
-        invoice_id = f"INV-{invoice_count:04d}"
-        Invoice.objects.create(
-            invoice_id=invoice_id,
-            client_name="Acme Corp",
-            client_email="client@acmecorp.com",
-            item_description="Website Automation System (Full Stack + AI Integration)",
-            amount=1200.00,
-            due_date="2025-12-31",
-        )
+    """Show modern landing page for Smart Invoice platform."""
     return render(request, 'invoices/landing.html')
+
+
+# ----------------------------
+# Invoice Dashboard/List
+# ----------------------------
+def invoice_list(request):
+    """Display all invoices with filtering and search capabilities."""
+    invoices = Invoice.objects.all()
+    
+    status_filter = request.GET.get('status')
+    if status_filter:
+        invoices = invoices.filter(status=status_filter)
+    
+    search_query = request.GET.get('q')
+    if search_query:
+        invoices = invoices.filter(
+            Q(invoice_id__icontains=search_query) |
+            Q(client_name__icontains=search_query) |
+            Q(business_name__icontains=search_query)
+        )
+    
+    context = {
+        'invoices': invoices,
+        'total_invoices': Invoice.objects.count(),
+        'draft_count': Invoice.objects.filter(status='draft').count(),
+        'sent_count': Invoice.objects.filter(status='sent').count(),
+        'paid_count': Invoice.objects.filter(status='paid').count(),
+        'overdue_count': Invoice.objects.filter(status='overdue').count(),
+    }
+    return render(request, 'invoices/invoice_list.html', context)
 
 
 # ----------------------------
 # Invoice Creation
 # ----------------------------
 def create_invoice(request):
-    """Create a new invoice with sequential invoice ID."""
+    """Create a new invoice with professional fields."""
     if request.method == 'POST':
         form = InvoiceForm(request.POST)
         if form.is_valid():
-            invoice_count = Invoice.objects.count() + 1
-            invoice = form.save(commit=False)
-            invoice.invoice_id = f"INV-{invoice_count:04d}"
-            invoice.save()
+            invoice = form.save()
+            messages.success(request, f'Invoice {invoice.invoice_id} created successfully!')
             return redirect('invoice_detail', pk=invoice.pk)
+        else:
+            messages.error(request, 'Please correct the errors below.')
     else:
         form = InvoiceForm()
+    
     return render(request, 'invoices/invoice_form.html', {'form': form})
 
 
@@ -69,9 +93,53 @@ def create_invoice(request):
 # Invoice Detail
 # ----------------------------
 def invoice_detail(request, pk):
-    """View full invoice details."""
+    """View full invoice details with actions."""
     invoice = get_object_or_404(Invoice, pk=pk)
     return render(request, 'invoices/invoice_detail.html', {'invoice': invoice})
+
+
+# ----------------------------
+# Invoice Update
+# ----------------------------
+def invoice_update(request, pk):
+    """Update an existing invoice."""
+    invoice = get_object_or_404(Invoice, pk=pk)
+    
+    if request.method == 'POST':
+        form = InvoiceForm(request.POST, instance=invoice)
+        if form.is_valid():
+            invoice = form.save()
+            messages.success(request, f'Invoice {invoice.invoice_id} updated successfully!')
+            return redirect('invoice_detail', pk=invoice.pk)
+        else:
+            messages.error(request, 'Please correct the errors below.')
+    else:
+        form = InvoiceForm(instance=invoice)
+    
+    return render(request, 'invoices/invoice_form.html', {'form': form, 'invoice': invoice})
+
+
+# ----------------------------
+# Invoice Status Update
+# ----------------------------
+def invoice_update_status(request, pk):
+    """Update invoice status."""
+    if request.method == 'POST':
+        invoice = get_object_or_404(Invoice, pk=pk)
+        new_status = request.POST.get('status')
+        
+        if new_status in dict(Invoice._meta.get_field('status').choices):
+            invoice.status = new_status
+            if new_status == 'paid':
+                invoice.paid_date = timezone.now().date()
+            invoice.save()
+            messages.success(request, f'Invoice status updated to {invoice.get_status_display()}')
+        else:
+            messages.error(request, 'Invalid status')
+        
+        return redirect('invoice_detail', pk=pk)
+    
+    return redirect('invoice_list')
 
 
 # ----------------------------
@@ -81,12 +149,15 @@ def invoice_pdf(request, pk):
     """Download invoice as PDF."""
     invoice = get_object_or_404(Invoice, pk=pk)
     pdf_bytes = _render_invoice_pdf(invoice)
+    
     if pdf_bytes:
         response = HttpResponse(pdf_bytes, content_type='application/pdf')
         filename = f"{invoice.invoice_id}.pdf"
         response['Content-Disposition'] = f'attachment; filename="{filename}"'
         return response
-    return HttpResponse("Error generating PDF", status=500)
+    
+    messages.error(request, 'Error generating PDF')
+    return redirect('invoice_detail', pk=pk)
 
 
 # ----------------------------
@@ -97,44 +168,49 @@ def send_invoice_email(request, pk):
     invoice = get_object_or_404(Invoice, pk=pk)
 
     if request.method == 'POST':
-        to_email = request.POST.get('to_email') or getattr(invoice, 'client_email_or_whatsapp', None)
+        to_email = request.POST.get('to_email') or invoice.client_email
+        
         if not to_email:
-            return render(request, 'invoices/invoice_detail.html', {
-                'invoice': invoice,
-                'error': 'No recipient provided.'
-            })
+            messages.error(request, 'No recipient email provided.')
+            return redirect('invoice_detail', pk=pk)
 
         pdf_bytes = _render_invoice_pdf(invoice)
         if not pdf_bytes:
-            return render(request, 'invoices/invoice_detail.html', {
-                'invoice': invoice,
-                'error': 'Could not generate PDF.'
-            })
+            messages.error(request, 'Could not generate PDF.')
+            return redirect('invoice_detail', pk=pk)
 
         subject = f"Invoice {invoice.invoice_id} from {invoice.business_name}"
-        body = (
-            f"Hello,\n\nPlease find attached the invoice {invoice.invoice_id} for {invoice.business_name}.\n\n"
-            f"Regards,\n{invoice.business_name}\n\n"
-            "Built by Jeffery Onome — onome-portfolio-ten.vercel.app"
-        )
+        body = f"""Hello {invoice.client_name},
+
+Please find attached Invoice {invoice.invoice_id} for the amount of {invoice.currency} {invoice.total_amount}.
+
+Invoice Details:
+- Issue Date: {invoice.issue_date}
+- Due Date: {invoice.due_date if invoice.due_date else 'Upon receipt'}
+- Amount: {invoice.currency} {invoice.total_amount}
+
+{invoice.payment_instructions if invoice.payment_instructions else ''}
+
+Thank you for your business!
+
+Best regards,
+{invoice.business_name}
+"""
 
         email = EmailMessage(subject, body, settings.EMAIL_HOST_USER, [to_email])
         email.attach(f"{invoice.invoice_id}.pdf", pdf_bytes, 'application/pdf')
 
         try:
             email.send(fail_silently=False)
-            return render(request, 'invoices/invoice_detail.html', {
-                'invoice': invoice,
-                'success': f'Email sent to {to_email}.'
-            })
+            invoice.status = 'sent'
+            invoice.save()
+            messages.success(request, f'Invoice sent successfully to {to_email}!')
         except Exception as e:
-            return render(request, 'invoices/invoice_detail.html', {
-                'invoice': invoice,
-                'error': f'Failed to send email: {e}'
-            })
-    else:
-        # Simple GET fallback
-        return render(request, 'invoices/invoice_detail.html', {'invoice': invoice})
+            messages.error(request, f'Failed to send email: {str(e)}')
+        
+        return redirect('invoice_detail', pk=pk)
+    
+    return redirect('invoice_detail', pk=pk)
 
 
 # ----------------------------
@@ -145,40 +221,34 @@ def send_invoice_whatsapp(request, pk):
     invoice = get_object_or_404(Invoice, pk=pk)
 
     if request.method == 'POST':
-        whatsapp_number = request.POST.get('whatsapp_number') or getattr(invoice, 'client_email_or_whatsapp', None)
+        whatsapp_number = request.POST.get('whatsapp_number') or invoice.client_phone
         
         if not whatsapp_number:
-            return render(request, 'invoices/invoice_detail.html', {
-                'invoice': invoice,
-                'whatsapp_error': 'No WhatsApp number provided.'
-            })
+            messages.error(request, 'No WhatsApp number provided.')
+            return redirect('invoice_detail', pk=pk)
 
         whatsapp_number = _normalize_phone_number(whatsapp_number)
 
         if not settings.TWILIO_ACCOUNT_SID or not settings.TWILIO_AUTH_TOKEN:
-            return render(request, 'invoices/invoice_detail.html', {
-                'invoice': invoice,
-                'whatsapp_error': 'WhatsApp functionality is not configured. Please set up Twilio credentials.'
-            })
+            messages.error(request, 'WhatsApp functionality is not configured. Please set up Twilio credentials.')
+            return redirect('invoice_detail', pk=pk)
 
         pdf_bytes = _render_invoice_pdf(invoice)
         if not pdf_bytes:
-            return render(request, 'invoices/invoice_detail.html', {
-                'invoice': invoice,
-                'whatsapp_error': 'Could not generate PDF.'
-            })
+            messages.error(request, 'Could not generate PDF.')
+            return redirect('invoice_detail', pk=pk)
 
         try:
             from twilio.rest import Client
             
             client = Client(settings.TWILIO_ACCOUNT_SID, settings.TWILIO_AUTH_TOKEN)
-
             media_url = _create_public_pdf_url(request, invoice, pdf_bytes)
 
             message_body = (
                 f"📄 *Invoice {invoice.invoice_id}*\n\n"
                 f"From: {invoice.business_name}\n"
-                f"Amount: {invoice.currency} {invoice.amount}\n\n"
+                f"Amount: {invoice.currency} {invoice.total_amount}\n"
+                f"Due: {invoice.due_date if invoice.due_date else 'Upon receipt'}\n\n"
                 f"Please find your invoice attached.\n\n"
                 f"Thank you for your business!"
             )
@@ -190,22 +260,18 @@ def send_invoice_whatsapp(request, pk):
                 media_url=[media_url] if media_url else None
             )
 
-            return render(request, 'invoices/invoice_detail.html', {
-                'invoice': invoice,
-                'whatsapp_success': f'WhatsApp message sent successfully to {whatsapp_number}!'
-            })
+            invoice.status = 'sent'
+            invoice.save()
+            messages.success(request, f'Invoice sent via WhatsApp to {whatsapp_number}!')
+            
         except ImportError:
-            return render(request, 'invoices/invoice_detail.html', {
-                'invoice': invoice,
-                'whatsapp_error': 'Twilio package not installed.'
-            })
+            messages.error(request, 'Twilio package not installed.')
         except Exception as e:
-            return render(request, 'invoices/invoice_detail.html', {
-                'invoice': invoice,
-                'whatsapp_error': f'Failed to send WhatsApp message: {str(e)}'
-            })
-    else:
-        return render(request, 'invoices/invoice_detail.html', {'invoice': invoice})
+            messages.error(request, f'Failed to send WhatsApp message: {str(e)}')
+        
+        return redirect('invoice_detail', pk=pk)
+    
+    return redirect('invoice_detail', pk=pk)
 
 
 # ----------------------------
@@ -230,28 +296,34 @@ def _normalize_phone_number(phone):
 def _create_public_pdf_url(request, invoice, pdf_bytes):
     """
     Create a publicly accessible URL for the PDF.
-    In production, this should upload to cloud storage (S3, Cloudinary, etc.)
-    For now, we return the direct PDF URL from the invoice detail page.
+    In production, upload to cloud storage (S3, Cloudinary, etc.)
+    For now, we return the direct PDF URL.
     """
     pdf_url = request.build_absolute_uri(reverse('invoice_pdf', args=[invoice.pk]))
     return pdf_url
 
 
 # ----------------------------
-# Invoice Preview (Optional Demo)
+# Invoice Preview (Demo)
 # ----------------------------
 def invoice_preview(request):
-    """Preview a dummy invoice (for demo or design)."""
-    dummy_data = {
-        'client_name': 'Acme Corp.',
-        'invoice_number': 'INV-001',
-        'date': '2025-10-21',
-        'due_date': '2025-11-01',
-        'items': [
-            {'description': 'Website Development', 'quantity': 1, 'price': 1200},
-            {'description': 'Hosting (3 months)', 'quantity': 1, 'price': 90},
-        ],
-        'total': 1290,
-        'status': 'Pending',
-    }
-    return render(request, 'invoices/sample_invoice.html', dummy_data)
+    """Preview a sample invoice for demo purposes."""
+    dummy_invoice = Invoice(
+        invoice_id='DEMO-001',
+        business_name='Smart Invoice Inc.',
+        business_email='hello@smartinvoice.com',
+        client_name='Acme Corporation',
+        client_email='billing@acme.com',
+        description='Professional Invoice Management System',
+        quantity=Decimal('1.00'),
+        unit_price=Decimal('1299.00'),
+        tax_rate=Decimal('10.00'),
+        discount_amount=Decimal('0.00'),
+        currency='USD',
+        status='draft',
+        payment_terms='net_30',
+        issue_date=timezone.now().date(),
+    )
+    dummy_invoice.save = lambda: None
+    
+    return render(request, 'invoices/invoice_pdf.html', {'invoice': dummy_invoice})

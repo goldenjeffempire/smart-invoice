@@ -1,29 +1,102 @@
 # invoices/models.py
 from django.db import models
 from django.utils import timezone
+from decimal import Decimal
 import uuid
 
 CURRENCY_CHOICES = [
-    ('NGN', 'Naira (NGN)'),
     ('USD', 'US Dollar (USD)'),
+    ('EUR', 'Euro (EUR)'),
     ('GBP', 'British Pound (GBP)'),
+    ('NGN', 'Naira (NGN)'),
+    ('CAD', 'Canadian Dollar (CAD)'),
+    ('AUD', 'Australian Dollar (AUD)'),
+]
+
+STATUS_CHOICES = [
+    ('draft', 'Draft'),
+    ('sent', 'Sent'),
+    ('paid', 'Paid'),
+    ('overdue', 'Overdue'),
+    ('cancelled', 'Cancelled'),
+]
+
+PAYMENT_TERMS_CHOICES = [
+    ('immediate', 'Due Immediately'),
+    ('net_15', 'Net 15 Days'),
+    ('net_30', 'Net 30 Days'),
+    ('net_60', 'Net 60 Days'),
+    ('net_90', 'Net 90 Days'),
 ]
 
 class Invoice(models.Model):
     invoice_id = models.CharField(max_length=32, unique=True, editable=False)
     created_at = models.DateTimeField(default=timezone.now)
-    business_name = models.CharField(max_length=200)
-    client_name = models.CharField(max_length=200)
-    client_email_or_whatsapp = models.CharField(max_length=200, blank=True)
-    description = models.TextField(blank=True)
-    amount = models.DecimalField(max_digits=12, decimal_places=2)
-    currency = models.CharField(max_length=3, choices=CURRENCY_CHOICES, default='NGN')
-    notes = models.TextField(blank=True)
-
+    updated_at = models.DateTimeField(auto_now=True)
+    
+    business_name = models.CharField(max_length=200, verbose_name="Business Name")
+    business_email = models.EmailField(max_length=200, blank=True, verbose_name="Business Email")
+    business_address = models.TextField(blank=True, verbose_name="Business Address")
+    business_phone = models.CharField(max_length=50, blank=True, verbose_name="Business Phone")
+    business_logo_url = models.URLField(max_length=500, blank=True, verbose_name="Business Logo URL")
+    
+    client_name = models.CharField(max_length=200, verbose_name="Client Name")
+    client_email = models.EmailField(max_length=200, blank=True, verbose_name="Client Email")
+    client_phone = models.CharField(max_length=50, blank=True, verbose_name="Client Phone/WhatsApp")
+    client_address = models.TextField(blank=True, verbose_name="Client Address")
+    
+    description = models.TextField(default='', verbose_name="Service/Product Description")
+    quantity = models.DecimalField(max_digits=10, decimal_places=2, default=1, verbose_name="Quantity")
+    unit_price = models.DecimalField(max_digits=12, decimal_places=2, default=0, verbose_name="Unit Price")
+    
+    subtotal = models.DecimalField(max_digits=12, decimal_places=2, editable=False, default=0)
+    tax_rate = models.DecimalField(max_digits=5, decimal_places=2, default=0, verbose_name="Tax Rate (%)")
+    tax_amount = models.DecimalField(max_digits=12, decimal_places=2, editable=False, default=0)
+    discount_amount = models.DecimalField(max_digits=12, decimal_places=2, default=0, verbose_name="Discount Amount")
+    total_amount = models.DecimalField(max_digits=12, decimal_places=2, editable=False, default=0)
+    
+    currency = models.CharField(max_length=3, choices=CURRENCY_CHOICES, default='USD')
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='draft')
+    payment_terms = models.CharField(max_length=20, choices=PAYMENT_TERMS_CHOICES, default='net_30')
+    
+    issue_date = models.DateField(default=timezone.now, verbose_name="Issue Date")
+    due_date = models.DateField(blank=True, null=True, verbose_name="Due Date")
+    paid_date = models.DateField(blank=True, null=True, verbose_name="Date Paid")
+    
+    notes = models.TextField(blank=True, verbose_name="Additional Notes")
+    payment_instructions = models.TextField(blank=True, verbose_name="Payment Instructions")
+    
     def save(self, *args, **kwargs):
         if not self.invoice_id:
-            self.invoice_id = f"ONM-{uuid.uuid4().hex[:8].upper()}"
+            self.invoice_id = f"INV-{uuid.uuid4().hex[:8].upper()}"
+        
+        self.subtotal = self.quantity * self.unit_price
+        self.tax_amount = (self.subtotal * self.tax_rate) / Decimal('100')
+        self.total_amount = self.subtotal + self.tax_amount - self.discount_amount
+        
+        if self.due_date and self.status == 'sent':
+            if timezone.now().date() > self.due_date and self.status != 'paid':
+                self.status = 'overdue'
+        
         super().save(*args, **kwargs)
-
+    
+    @property
+    def is_overdue(self):
+        if self.due_date and self.status not in ['paid', 'cancelled']:
+            return timezone.now().date() > self.due_date
+        return False
+    
+    @property
+    def days_until_due(self):
+        if self.due_date:
+            delta = self.due_date - timezone.now().date()
+            return delta.days
+        return None
+    
     def __str__(self):
-        return f"{self.invoice_id} — {self.business_name} → {self.client_name}"
+        return f"{self.invoice_id} — {self.business_name} → {self.client_name} ({self.get_status_display()})"
+    
+    class Meta:
+        ordering = ['-created_at']
+        verbose_name = "Invoice"
+        verbose_name_plural = "Invoices"
