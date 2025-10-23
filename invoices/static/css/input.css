@@ -577,6 +577,128 @@
 }
 
 /* ============================================
+   TOOLTIP & HELP COMPONENTS
+   ============================================ */
+@layer components {
+  .tooltip {
+    @apply relative inline-flex items-center;
+  }
+
+  .tooltip-trigger {
+    @apply inline-flex items-center justify-center w-5 h-5 rounded-full;
+    @apply bg-primary-500/20 text-primary-300 border border-primary-500/30;
+    @apply hover:bg-primary-500/30 hover:text-primary-200 hover:border-primary-500/50;
+    @apply transition-all duration-200 cursor-help;
+    font-size: 0.75rem;
+    font-weight: 600;
+  }
+
+  .tooltip-content {
+    @apply absolute z-[1000] invisible opacity-0 pointer-events-none;
+    @apply bg-gray-900 text-white text-sm rounded-xl p-3 shadow-glass-xl border border-white/10;
+    @apply transition-all duration-200;
+    max-width: 280px;
+    width: max-content;
+  }
+
+  .tooltip:hover .tooltip-content,
+  .tooltip-trigger:focus + .tooltip-content {
+    @apply visible opacity-100 pointer-events-auto;
+  }
+
+  .tooltip-content::before {
+    content: '';
+    @apply absolute w-2 h-2 bg-gray-900 border-l border-t border-white/10;
+    transform: rotate(45deg);
+  }
+
+  .tooltip-top {
+    bottom: calc(100% + 8px);
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .tooltip-top::before {
+    bottom: -5px;
+    left: 50%;
+    transform: translateX(-50%) rotate(45deg);
+    border-left: none;
+    border-top: none;
+    border-right: 1px solid rgba(255, 255, 255, 0.1);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .tooltip-bottom {
+    top: calc(100% + 8px);
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .tooltip-bottom::before {
+    top: -5px;
+    left: 50%;
+    transform: translateX(-50%) rotate(45deg);
+  }
+
+  .tooltip-right {
+    left: calc(100% + 8px);
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  .tooltip-right::before {
+    left: -5px;
+    top: 50%;
+    transform: translateY(-50%) rotate(45deg);
+    border-right: none;
+    border-bottom: none;
+    border-left: 1px solid rgba(255, 255, 255, 0.1);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .tooltip-left {
+    right: calc(100% + 8px);
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  .tooltip-left::before {
+    right: -5px;
+    top: 50%;
+    transform: translateY(-50%) rotate(45deg);
+    border-left: none;
+    border-top: none;
+    border-right: 1px solid rgba(255, 255, 255, 0.1);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .help-text {
+    @apply flex items-start gap-2 p-3 glass-subtle rounded-xl text-sm text-gray-300 mt-2;
+    @apply border-l-2 border-primary-500/50;
+  }
+
+  .help-text-icon {
+    @apply text-primary-400 flex-shrink-0 text-base;
+  }
+
+  .info-banner {
+    @apply glass-card p-4 border-l-4 border-blue-500;
+  }
+
+  .warning-banner {
+    @apply glass-card p-4 border-l-4 border-warning-500;
+  }
+
+  .success-banner {
+    @apply glass-card p-4 border-l-4 border-success-500;
+  }
+
+  .error-banner {
+    @apply glass-card p-4 border-l-4 border-danger-500;
+  }
+}
+
+/* ============================================
    UTILITY HELPERS
    ============================================ */
 @layer utilities {
