@@ -624,58 +624,6 @@
         document.head.appendChild(style);
     </script>
 
-    <!-- Footer -->
-    <footer class="relative z-10 px-6 py-12 border-t border-white/10 mt-20">
-        <div class="max-w-7xl mx-auto">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
-                <div>
-                    <div class="flex items-center gap-3 mb-4">
-                        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-violet-500 to-fuchsia-500 flex items-center justify-center text-2xl shadow-lg">
-                            📄
-                        </div>
-                        <span class="text-xl font-bold">Smart Invoice</span>
-                    </div>
-                    <p class="text-gray-400 leading-relaxed max-w-md mb-4">
-                        Enterprise-grade invoicing platform for modern businesses. Create, manage, and send professional invoices in seconds.
-                    </p>
-                    <p class="text-sm text-gray-500">
-                        Built by <a href="https://onome-portfolio-ten.vercel.app" target="_blank" rel="noopener noreferrer" class="font-semibold text-violet-400 hover:text-violet-300 transition underline decoration-dotted">Jeffery Onome</a> — <a href="https://onome-portfolio-ten.vercel.app" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-violet-400 transition">onome-portfolio-ten.vercel.app</a>
-                    </p>
-                </div>
-                
-                <div>
-                    <h3 class="font-bold mb-4">Quick Links</h3>
-                    <ul class="space-y-2 text-gray-400">
-                        <li><a href="/" class="hover:text-violet-400 transition">Home</a></li>
-                        <li><a href="{% url 'invoice_list' %}" class="hover:text-violet-400 transition">Dashboard</a></li>
-                        <li><a href="{% url 'create_invoice' %}" class="hover:text-violet-400 transition">Create Invoice</a></li>
-                        <li><a href="{% url 'faq' %}" class="hover:text-violet-400 transition">FAQ</a></li>
-                        <li><a href="{% url 'support' %}" class="hover:text-violet-400 transition">Support</a></li>
-                    </ul>
-                </div>
-                
-                <div>
-                    <h3 class="font-bold mb-4">Platform Features</h3>
-                    <ul class="space-y-2 text-gray-400">
-                        <li>⚡ Instant PDF Export</li>
-                        <li>📧 Email & WhatsApp Delivery</li>
-                        <li>☁️ Cloud-Based Storage</li>
-                        <li>💰 Multi-Currency Support</li>
-                    </ul>
-                </div>
-            </div>
-            
-            <div class="pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4">
-                <p class="text-gray-400 text-sm">
-                    © 2025 Smart Invoice. All rights reserved. Powered by Django
-                </p>
-                <div class="flex items-center gap-4 text-sm text-gray-400">
-                    <span>🌟 Enterprise-Grade</span>
-                    <span>•</span>
-                    <span>🔒 Secure</span>
-                </div>
-            </div>
-        </div>
-    </footer>
+    {% include "invoices/includes/footer.html" %}
 </body>
 </html>

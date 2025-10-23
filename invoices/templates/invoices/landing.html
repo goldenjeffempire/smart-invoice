@@ -437,63 +437,7 @@
     </section>
   </main>
 
-  <!-- Footer -->
-  <footer class="relative z-10 border-t border-white/10 mt-20">
-    <div class="container-custom py-16">
-      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
-        <!-- Brand -->
-        <div>
-          <div class="flex items-center gap-3 mb-4">
-            <div class="w-10 h-10 rounded-xl bg-gradient-primary flex items-center justify-center text-2xl shadow-glow">📄</div>
-            <span class="text-xl font-bold text-white">Smart Invoice</span>
-          </div>
-          <p class="text-sm text-gray-400 leading-relaxed mb-4">
-            The most advanced invoicing platform for modern businesses. Create professional invoices, get paid faster, and grow your business.
-          </p>
-          <p class="text-xs text-gray-500">Built with ❤️ by Jeffery Onome Emuodafevware</p>
-        </div>
-
-        <!-- Quick Links -->
-        <div>
-          <h3 class="font-semibold text-white mb-4">Quick Links</h3>
-          <ul class="space-y-2">
-            <li><a href="#features" class="text-sm text-gray-400 hover:text-white transition-colors">Features</a></li>
-            <li><a href="#testimonials" class="text-sm text-gray-400 hover:text-white transition-colors">Testimonials</a></li>
-            <li><a href="{% url 'faq' %}" class="text-sm text-gray-400 hover:text-white transition-colors">FAQ</a></li>
-            <li><a href="{% url 'support' %}" class="text-sm text-gray-400 hover:text-white transition-colors">Support</a></li>
-          </ul>
-        </div>
-
-        <!-- Product -->
-        <div>
-          <h3 class="font-semibold text-white mb-4">Product</h3>
-          <ul class="space-y-2">
-            <li><a href="{% url 'signup' %}" class="text-sm text-gray-400 hover:text-white transition-colors">Create Invoice</a></li>
-            <li><a href="{% url 'invoice_list' %}" class="text-sm text-gray-400 hover:text-white transition-colors">My Invoices</a></li>
-            <li><span class="text-sm text-gray-500">Templates (Coming Soon)</span></li>
-            <li><span class="text-sm text-gray-500">API Access (Coming Soon)</span></li>
-          </ul>
-        </div>
-
-        <!-- Trust Indicators -->
-        <div>
-          <h3 class="font-semibold text-white mb-4">Trust & Security</h3>
-          <ul class="space-y-2">
-            <li><span class="flex items-center gap-2 text-sm text-gray-400"><span class="text-success-400">✅</span> Enterprise-Grade Security</span></li>
-            <li><span class="flex items-center gap-2 text-sm text-gray-400"><span class="text-primary-400">🌐</span> 99.9% Uptime</span></li>
-            <li><span class="flex items-center gap-2 text-sm text-gray-400"><span class="text-secondary-400">🔒</span> GDPR Compliant</span></li>
-            <li><span class="flex items-center gap-2 text-sm text-gray-400"><span class="text-blue-400">💳</span> Secure Payments</span></li>
-          </ul>
-        </div>
-      </div>
-
-      <!-- Footer Bottom -->
-      <div class="pt-8 border-t border-white/10 flex flex-col sm:flex-row justify-between items-center gap-4 text-sm text-gray-500">
-        <p>&copy; 2025 Smart Invoice. All rights reserved.</p>
-        <p>Powered by Django • PostgreSQL • Paystack</p>
-      </div>
-    </div>
-  </footer>
+  {% include "invoices/includes/footer.html" %}
 
   <!-- JavaScript -->
   <script>
