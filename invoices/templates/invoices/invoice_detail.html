@@ -394,6 +394,62 @@
 
         <!-- Actions Sidebar -->
         <div class="lg:col-span-1 space-y-6">
+          <!-- Activity Timeline -->
+          <div class="glass rounded-2xl p-6 slide-up" style="animation-delay: 0.5s">
+            <h3 class="text-lg font-bold mb-4 flex items-center gap-2">
+              <span>📍</span>
+              Activity Timeline
+            </h3>
+            <div class="space-y-4">
+              {% for event in timeline_events %}
+              <div class="relative pl-8 pb-4 {% if not forloop.last %}border-l-2 border-white/20{% endif %}">
+                <div class="absolute left-0 top-0 w-8 h-8 rounded-full bg-gradient-to-r from-violet-600 to-purple-600 flex items-center justify-center text-sm -translate-x-[15px]">
+                  {{ event.icon }}
+                </div>
+                <div>
+                  <div class="font-semibold text-white">{{ event.title }}</div>
+                  <div class="text-sm text-gray-400 mt-1">{{ event.description }}</div>
+                  <div class="text-xs text-gray-500 mt-1">
+                    {{ event.date|date:"M d, Y - h:i A" }}
+                  </div>
+                </div>
+              </div>
+              {% empty %}
+              <p class="text-sm text-gray-400 text-center py-4">No activity yet</p>
+              {% endfor %}
+            </div>
+          </div>
+
+          <!-- Payment Transactions -->
+          {% if payment_transactions %}
+          <div class="glass rounded-2xl p-6 slide-up" style="animation-delay: 0.55s">
+            <h3 class="text-lg font-bold mb-4 flex items-center gap-2">
+              <span>💳</span>
+              Payment Transactions
+            </h3>
+            <div class="space-y-3">
+              {% for transaction in payment_transactions %}
+              <div class="p-4 bg-white/5 rounded-xl border border-white/10">
+                <div class="flex items-center justify-between mb-2">
+                  <span class="font-semibold text-white">{{ transaction.currency }} {{ transaction.amount }}</span>
+                  <span class="text-xs px-2 py-1 rounded-full 
+                    {% if transaction.status == 'success' %}bg-green-500/20 text-green-300
+                    {% elif transaction.status == 'pending' %}bg-yellow-500/20 text-yellow-300
+                    {% else %}bg-red-500/20 text-red-300{% endif %}">
+                    {{ transaction.get_status_display }}
+                  </span>
+                </div>
+                <div class="text-sm text-gray-400">
+                  <div>Ref: {{ transaction.transaction_reference }}</div>
+                  <div>{{ transaction.payment_method|title }}</div>
+                  <div class="text-xs text-gray-500 mt-1">{{ transaction.created_at|date:"M d, Y" }}</div>
+                </div>
+              </div>
+              {% endfor %}
+            </div>
+          </div>
+          {% endif %}
+
           <!-- Send via Email -->
           <div class="action-card rounded-2xl p-6 slide-up" style="animation-delay: 0.5s">
             <h3 class="text-lg font-bold mb-4 flex items-center gap-2">

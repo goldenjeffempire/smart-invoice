@@ -349,6 +349,117 @@
             </div>
         </div>
 
+        <!-- Revenue Metrics -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8 slide-up" style="animation-delay: 0.25s">
+            <div class="stat-card p-6 rounded-2xl">
+                <div class="flex items-center justify-between mb-3">
+                    <span class="text-gray-400 text-sm font-medium uppercase tracking-wider">Total Revenue</span>
+                    <span class="text-3xl">💰</span>
+                </div>
+                <div class="text-4xl font-black gradient-text mb-2">${{ revenue_metrics.total_revenue|floatformat:2 }}</div>
+                <p class="text-xs text-gray-500">From paid invoices</p>
+            </div>
+            <div class="stat-card p-6 rounded-2xl">
+                <div class="flex items-center justify-between mb-3">
+                    <span class="text-gray-400 text-sm font-medium uppercase tracking-wider">Pending Revenue</span>
+                    <span class="text-3xl">⏳</span>
+                </div>
+                <div class="text-4xl font-black text-yellow-400 mb-2">${{ revenue_metrics.pending_revenue|floatformat:2 }}</div>
+                <p class="text-xs text-gray-500">Awaiting payment</p>
+            </div>
+            <div class="stat-card p-6 rounded-2xl">
+                <div class="flex items-center justify-between mb-3">
+                    <span class="text-gray-400 text-sm font-medium uppercase tracking-wider">Overdue Revenue</span>
+                    <span class="text-3xl">🚨</span>
+                </div>
+                <div class="text-4xl font-black text-red-400 mb-2">${{ revenue_metrics.overdue_revenue|floatformat:2 }}</div>
+                <p class="text-xs text-gray-500">Requires attention</p>
+            </div>
+        </div>
+
+        <!-- Quick Actions & Recent Invoices -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8 slide-up" style="animation-delay: 0.3s">
+            <!-- Quick Actions Panel -->
+            <div class="glass p-6 rounded-2xl">
+                <h3 class="text-xl font-bold mb-4 flex items-center gap-2">
+                    <span class="text-2xl">⚡</span>
+                    Quick Actions
+                </h3>
+                <div class="space-y-3">
+                    <a href="{% url 'create_invoice' %}" class="block p-4 bg-gradient-to-r from-violet-600 to-purple-600 hover:from-violet-700 hover:to-purple-700 rounded-xl transition transform hover:scale-105 shadow-lg">
+                        <div class="flex items-center gap-3">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+                            </svg>
+                            <div>
+                                <div class="font-bold">New Invoice</div>
+                                <div class="text-xs text-violet-200">Create invoice now</div>
+                            </div>
+                        </div>
+                    </a>
+                    <a href="{% url 'client_list' %}" class="block p-4 bg-white/5 hover:bg-white/10 rounded-xl transition border border-white/10 hover:border-white/20">
+                        <div class="flex items-center gap-3">
+                            <svg class="w-6 h-6 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                            </svg>
+                            <div>
+                                <div class="font-bold">Manage Clients</div>
+                                <div class="text-xs text-gray-400">View all clients</div>
+                            </div>
+                        </div>
+                    </a>
+                    <a href="{% url 'analytics_dashboard' %}" class="block p-4 bg-white/5 hover:bg-white/10 rounded-xl transition border border-white/10 hover:border-white/20">
+                        <div class="flex items-center gap-3">
+                            <svg class="w-6 h-6 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                            </svg>
+                            <div>
+                                <div class="font-bold">Analytics</div>
+                                <div class="text-xs text-gray-400">View reports</div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Recent Invoices Widget -->
+            <div class="glass p-6 rounded-2xl lg:col-span-2">
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="text-xl font-bold flex items-center gap-2">
+                        <span class="text-2xl">📋</span>
+                        Recent Invoices
+                    </h3>
+                    <a href="{% url 'invoice_list' %}" class="text-sm text-violet-400 hover:text-violet-300 font-semibold">View All →</a>
+                </div>
+                {% if recent_invoices %}
+                <div class="space-y-3">
+                    {% for invoice in recent_invoices %}
+                    <a href="{% url 'invoice_detail' invoice.pk %}" class="block p-4 bg-white/5 hover:bg-white/10 rounded-xl transition border border-white/10 hover:border-violet-500/30 group">
+                        <div class="flex items-center justify-between">
+                            <div class="flex-1">
+                                <div class="flex items-center gap-3 mb-2">
+                                    <span class="font-bold text-violet-400 group-hover:text-violet-300">{{ invoice.invoice_id }}</span>
+                                    <span class="status-badge status-{{ invoice.status }} text-xs">{{ invoice.get_status_display }}</span>
+                                </div>
+                                <div class="text-sm text-gray-400">{{ invoice.client_name }}</div>
+                            </div>
+                            <div class="text-right">
+                                <div class="font-bold text-lg gradient-text">{{ invoice.currency }} {{ invoice.total_amount|floatformat:2 }}</div>
+                                <div class="text-xs text-gray-500">{{ invoice.issue_date|date:"M d, Y" }}</div>
+                            </div>
+                        </div>
+                    </a>
+                    {% endfor %}
+                </div>
+                {% else %}
+                <div class="text-center py-8 text-gray-400">
+                    <div class="text-4xl mb-2">📭</div>
+                    <p>No recent invoices</p>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+
         <!-- Search and Filter Bar -->
         <div class="glass p-6 rounded-2xl mb-6 slide-up" style="animation-delay: 0.3s">
             <form method="get" action="{% url 'invoice_list' %}" class="flex flex-col md:flex-row gap-4">

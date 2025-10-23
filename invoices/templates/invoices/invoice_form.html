@@ -739,7 +739,27 @@
   <script>
     let currentStep = 1;
 
+    function validateCurrentStep() {
+      const currentStepElement = document.getElementById('step' + currentStep);
+      const requiredFields = currentStepElement.querySelectorAll('input[required], textarea[required], select[required]');
+      let isValid = true;
+
+      requiredFields.forEach(field => {
+        if (!field.value.trim()) {
+          isValid = false;
+          field.style.borderColor = 'rgba(239, 68, 68, 0.6)';
+          setTimeout(() => {
+            field.style.borderColor = '';
+          }, 2000);
+        }
+      });
+
+      return isValid;
+    }
+
     function nextStep(step) {
+      updateProgressBar(step);
+      
       document.getElementById('step' + currentStep).classList.remove('active');
       document.querySelector(`.step[data-step="${currentStep}"]`).classList.remove('active');
       document.querySelector(`.step[data-step="${currentStep}"]`).classList.add('completed');
@@ -753,6 +773,8 @@
     }
 
     function prevStep(step) {
+      updateProgressBar(step);
+      
       document.getElementById('step' + currentStep).classList.remove('active');
       document.querySelector(`.step[data-step="${currentStep}"]`).classList.remove('active');
       
@@ -763,6 +785,11 @@
       document.querySelector(`.step[data-step="${currentStep}"]`).classList.remove('completed');
       
       window.scrollTo({top: 0, behavior: 'smooth'});
+    }
+
+    function updateProgressBar(step) {
+      const progress = (step / 4) * 100;
+      document.getElementById('progressFill').style.width = progress + '%';
     }
 
     // Real-time calculations

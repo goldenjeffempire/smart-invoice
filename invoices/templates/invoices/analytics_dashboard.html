@@ -73,8 +73,35 @@
             </div>
         </div>
 
+        <!-- Interactive Charts -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+            <!-- Revenue Trend Chart -->
+            <div class="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border border-white/20">
+                <h2 class="text-2xl font-bold text-white mb-6">Revenue Trend (Last 6 Months)</h2>
+                <canvas id="revenueTrendChart"></canvas>
+            </div>
+
+            <!-- Invoice Status Distribution -->
+            <div class="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border border-white/20">
+                <h2 class="text-2xl font-bold text-white mb-6">Invoice Status Distribution</h2>
+                <canvas id="statusChart"></canvas>
+            </div>
+
+            <!-- Top Clients Chart -->
+            <div class="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border border-white/20">
+                <h2 class="text-2xl font-bold text-white mb-6">Top 5 Clients by Revenue</h2>
+                <canvas id="clientsChart"></canvas>
+            </div>
+
+            <!-- Payment Methods Chart -->
+            <div class="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border border-white/20">
+                <h2 class="text-2xl font-bold text-white mb-6">Payment Methods</h2>
+                <canvas id="paymentMethodsChart"></canvas>
+            </div>
+        </div>
+
         <!-- Export Actions -->
-        <div class="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border border-white/20">
+        <div class="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border border-white/20 mb-8">
             <h2 class="text-2xl font-bold text-white mb-6">Export Data</h2>
             <div class="flex flex-wrap gap-4">
                 <a href="{% url 'export_invoices' %}" class="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition">
@@ -89,5 +116,171 @@
             </div>
         </div>
     </div>
+
+    <script>
+        // Revenue Trend Chart
+        const revenueTrendCtx = document.getElementById('revenueTrendChart').getContext('2d');
+        const monthlyTrend = {{ monthly_trend_json|safe }};
+        
+        new Chart(revenueTrendCtx, {
+            type: 'line',
+            data: {
+                labels: monthlyTrend.map(m => m.month_name || m.month),
+                datasets: [{
+                    label: 'Revenue ($)',
+                    data: monthlyTrend.map(m => parseFloat(m.revenue || 0)),
+                    borderColor: 'rgb(139, 92, 246)',
+                    backgroundColor: 'rgba(139, 92, 246, 0.1)',
+                    tension: 0.4,
+                    fill: true
+                }, {
+                    label: 'Invoice Count',
+                    data: monthlyTrend.map(m => m.invoice_count || 0),
+                    borderColor: 'rgb(236, 72, 153)',
+                    backgroundColor: 'rgba(236, 72, 153, 0.1)',
+                    tension: 0.4,
+                    fill: true,
+                    yAxisID: 'y1'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: true,
+                plugins: {
+                    legend: {
+                        labels: { color: '#fff' }
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: { color: '#9ca3af' },
+                        grid: { color: 'rgba(255, 255, 255, 0.1)' }
+                    },
+                    y1: {
+                        beginAtZero: true,
+                        position: 'right',
+                        ticks: { color: '#9ca3af' },
+                        grid: { display: false }
+                    },
+                    x: {
+                        ticks: { color: '#9ca3af' },
+                        grid: { color: 'rgba(255, 255, 255, 0.1)' }
+                    }
+                }
+            }
+        });
+
+        // Invoice Status Distribution Chart
+        const statusCtx = document.getElementById('statusChart').getContext('2d');
+        const stats = {{ invoice_stats_json|safe }};
+        
+        new Chart(statusCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Draft', 'Sent', 'Paid', 'Overdue', 'Cancelled'],
+                datasets: [{
+                    data: [
+                        stats.draft_count || 0,
+                        stats.sent_count || 0,
+                        stats.paid_count || 0,
+                        stats.overdue_count || 0,
+                        stats.cancelled_count || 0
+                    ],
+                    backgroundColor: [
+                        'rgba(156, 163, 175, 0.8)',
+                        'rgba(59, 130, 246, 0.8)',
+                        'rgba(34, 197, 94, 0.8)',
+                        'rgba(239, 68, 68, 0.8)',
+                        'rgba(107, 114, 128, 0.8)'
+                    ],
+                    borderWidth: 2,
+                    borderColor: '#1e293b'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: true,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: { color: '#fff', padding: 15 }
+                    }
+                }
+            }
+        });
+
+        // Top Clients Chart
+        const clientsCtx = document.getElementById('clientsChart').getContext('2d');
+        const topClients = {{ top_clients_json|safe }};
+        
+        new Chart(clientsCtx, {
+            type: 'bar',
+            data: {
+                labels: topClients.slice(0, 5).map(c => c.name),
+                datasets: [{
+                    label: 'Revenue ($)',
+                    data: topClients.slice(0, 5).map(c => parseFloat(c.total_revenue || 0)),
+                    backgroundColor: 'rgba(139, 92, 246, 0.8)',
+                    borderColor: 'rgb(139, 92, 246)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: true,
+                indexAxis: 'y',
+                plugins: {
+                    legend: {
+                        labels: { color: '#fff' }
+                    }
+                },
+                scales: {
+                    x: {
+                        beginAtZero: true,
+                        ticks: { color: '#9ca3af' },
+                        grid: { color: 'rgba(255, 255, 255, 0.1)' }
+                    },
+                    y: {
+                        ticks: { color: '#9ca3af' },
+                        grid: { color: 'rgba(255, 255, 255, 0.1)' }
+                    }
+                }
+            }
+        });
+
+        // Payment Methods Chart
+        const paymentMethodsCtx = document.getElementById('paymentMethodsChart').getContext('2d');
+        const paymentMethods = {{ payment_methods_json|safe }};
+        
+        new Chart(paymentMethodsCtx, {
+            type: 'pie',
+            data: {
+                labels: paymentMethods.map(p => p.method || 'Unknown'),
+                datasets: [{
+                    data: paymentMethods.map(p => parseFloat(p.total_amount || 0)),
+                    backgroundColor: [
+                        'rgba(139, 92, 246, 0.8)',
+                        'rgba(236, 72, 153, 0.8)',
+                        'rgba(59, 130, 246, 0.8)',
+                        'rgba(34, 197, 94, 0.8)',
+                        'rgba(251, 191, 36, 0.8)'
+                    ],
+                    borderWidth: 2,
+                    borderColor: '#1e293b'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: true,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: { color: '#fff', padding: 15 }
+                    }
+                }
+            }
+        });
+    </script>
 </body>
 </html>

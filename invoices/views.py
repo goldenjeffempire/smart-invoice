@@ -50,7 +50,10 @@ def landing_page(request):
 @login_required
 def invoice_list(request):
     """Display all invoices with filtering and search capabilities."""
-    invoices = Invoice.objects.filter(user=request.user)
+    from django.core.paginator import Paginator
+    from .analytics import AnalyticsService
+    
+    invoices = Invoice.objects.filter(user=request.user).select_related('client').order_by('-created_at')
     
     status_filter = request.GET.get('status')
     if status_filter:
@@ -64,13 +67,26 @@ def invoice_list(request):
             Q(business_name__icontains=search_query)
         )
     
+    paginator = Paginator(invoices, 12)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    
+    analytics = AnalyticsService(request.user)
+    revenue_metrics = analytics.get_revenue_metrics()
+    recent_invoices = Invoice.objects.filter(user=request.user).select_related('client').order_by('-created_at')[:6]
+    
+    all_invoices = Invoice.objects.filter(user=request.user)
+    
     context = {
-        'invoices': invoices,
-        'total_invoices': Invoice.objects.filter(user=request.user).count(),
-        'draft_count': Invoice.objects.filter(user=request.user, status='draft').count(),
-        'sent_count': Invoice.objects.filter(user=request.user, status='sent').count(),
-        'paid_count': Invoice.objects.filter(user=request.user, status='paid').count(),
-        'overdue_count': Invoice.objects.filter(user=request.user, status='overdue').count(),
+        'invoices': page_obj,
+        'page_obj': page_obj,
+        'total_invoices': all_invoices.count(),
+        'draft_count': all_invoices.filter(status='draft').count(),
+        'sent_count': all_invoices.filter(status='sent').count(),
+        'paid_count': all_invoices.filter(status='paid').count(),
+        'overdue_count': all_invoices.filter(status='overdue').count(),
+        'revenue_metrics': revenue_metrics,
+        'recent_invoices': recent_invoices,
     }
     return render(request, 'invoices/invoice_list.html', context)
 
@@ -124,8 +140,66 @@ def create_invoice(request):
 @login_required
 def invoice_detail(request, pk):
     """View full invoice details with actions."""
+    from .models import PaymentTransaction
+    
     invoice = get_object_or_404(Invoice, pk=pk, user=request.user)
-    return render(request, 'invoices/invoice_detail.html', {'invoice': invoice})
+    payment_transactions = PaymentTransaction.objects.filter(invoice=invoice).order_by('-created_at')
+    
+    timeline_events = [
+        {
+            'date': invoice.created_at,
+            'title': 'Invoice Created',
+            'description': f'Invoice {invoice.invoice_id} was created',
+            'icon': '📝',
+            'type': 'created'
+        },
+    ]
+    
+    if invoice.status == 'sent' or invoice.status in ['paid', 'overdue', 'cancelled']:
+        timeline_events.append({
+            'date': invoice.updated_at if invoice.updated_at != invoice.created_at else invoice.created_at,
+            'title': 'Invoice Sent',
+            'description': f'Invoice sent to {invoice.client_name}',
+            'icon': '📧',
+            'type': 'sent'
+        })
+    
+    if invoice.paid_date:
+        timeline_events.append({
+            'date': invoice.paid_date,
+            'title': 'Payment Received',
+            'description': f'Invoice marked as paid',
+            'icon': '✅',
+            'type': 'paid'
+        })
+    elif invoice.status == 'overdue' and invoice.due_date:
+        from datetime import datetime
+        timeline_events.append({
+            'date': datetime.combine(invoice.due_date, datetime.min.time()),
+            'title': 'Invoice Overdue',
+            'description': 'Payment is overdue',
+            'icon': '⚠️',
+            'type': 'overdue'
+        })
+    
+    for transaction in payment_transactions:
+        timeline_events.append({
+            'date': transaction.created_at,
+            'title': f'Payment {transaction.status.title()}',
+            'description': f'{transaction.currency} {transaction.amount} via {transaction.payment_method}',
+            'icon': '💳',
+            'type': 'payment'
+        })
+    
+    timeline_events.sort(key=lambda x: x['date'])
+    
+    context = {
+        'invoice': invoice,
+        'payment_transactions': payment_transactions,
+        'timeline_events': timeline_events,
+    }
+    
+    return render(request, 'invoices/invoice_detail.html', context)
 
 
 # ----------------------------
@@ -646,13 +720,29 @@ def logout_view(request):
 @login_required
 def analytics_dashboard(request):
     """Display analytics dashboard with revenue metrics and insights."""
+    import json
+    from decimal import Decimal
     from .analytics import AnalyticsService
+    
+    def decimal_default(obj):
+        if isinstance(obj, Decimal):
+            return float(obj)
+        raise TypeError
     
     analytics = AnalyticsService(request.user)
     dashboard_data = analytics.get_dashboard_summary()
     
+    monthly_trend_json = json.dumps(dashboard_data.get('monthly_trend', []), default=decimal_default)
+    invoice_stats_json = json.dumps(dashboard_data.get('invoice_statistics', {}), default=decimal_default)
+    top_clients_json = json.dumps(dashboard_data.get('top_clients', []), default=decimal_default)
+    payment_methods_json = json.dumps(dashboard_data.get('payment_methods', []), default=decimal_default)
+    
     return render(request, 'invoices/analytics_dashboard.html', {
-        'analytics': dashboard_data
+        'analytics': dashboard_data,
+        'monthly_trend_json': monthly_trend_json,
+        'invoice_stats_json': invoice_stats_json,
+        'top_clients_json': top_clients_json,
+        'payment_methods_json': payment_methods_json,
     })
 
 
