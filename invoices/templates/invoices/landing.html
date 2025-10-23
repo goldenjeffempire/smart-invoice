@@ -159,23 +159,23 @@
               <!-- Glow Effect -->
               <div class="absolute inset-0 bg-gradient-primary opacity-20 blur-[100px] rounded-full"></div>
               
-              <!-- Mock Invoice Card -->
-              <div class="relative glass-card p-8 hover-lift">
-                <div class="flex items-center justify-between mb-6">
-                  <div class="text-3xl">📄</div>
-                  <span class="badge-success">Paid</span>
-                </div>
-                <div class="space-y-4 mb-6">
-                  <div class="skeleton h-4 w-3/4 rounded-lg"></div>
-                  <div class="skeleton h-4 w-1/2 rounded-lg"></div>
-                  <div class="h-px bg-white/10 my-4"></div>
-                  <div class="skeleton h-3 w-full rounded-lg"></div>
-                  <div class="skeleton h-3 w-5/6 rounded-lg"></div>
-                  <div class="skeleton h-3 w-4/5 rounded-lg"></div>
-                </div>
-                <div class="flex items-center justify-between pt-4 border-t border-white/10">
-                  <span class="text-gray-400 text-sm">Total</span>
-                  <span class="text-2xl font-bold gradient-text">$1,250</span>
+              <!-- Professional Invoice Preview -->
+              <div class="relative glass-card p-4 hover-lift overflow-hidden">
+                <div class="absolute top-4 right-4 badge-success z-10">Live Preview</div>
+                <img 
+                  src="{% static 'images/Professional_invoice_document_mockup_a674a143.png' %}" 
+                  alt="Professional Invoice Document Preview showing itemized services and payment details"
+                  class="w-full h-auto rounded-xl shadow-2xl"
+                  width="600"
+                  height="800"
+                  fetchpriority="high"
+                />
+                <div class="absolute inset-0 bg-gradient-to-t from-[#0a0118]/80 via-transparent to-transparent"></div>
+                <div class="absolute bottom-6 left-6 right-6">
+                  <div class="flex items-center justify-between">
+                    <span class="text-white font-semibold">Ready to Send</span>
+                    <span class="text-2xl font-black gradient-text">$1,250</span>
+                  </div>
                 </div>
               </div>
             </div>
@@ -187,24 +187,59 @@
     <!-- Stats Section -->
     <section class="section scroll-reveal">
       <div class="container-custom">
-        <div class="glass-card p-8 lg:p-12 hover-glow">
-          <div class="grid grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12 text-center">
-            <div class="hover-lift cursor-pointer">
+        <div class="glass-card p-8 lg:p-12 hover-glow relative overflow-hidden">
+          <!-- Animated Background Glow -->
+          <div class="absolute inset-0 bg-gradient-to-br from-primary-500/10 via-secondary-500/10 to-blue-500/10 animate-gradient-xy"></div>
+          
+          <div class="relative z-10 grid grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12 text-center">
+            <div class="hover-lift cursor-pointer group">
+              <div class="text-5xl mb-3 transition-transform group-hover:scale-110">📊</div>
               <div class="text-4xl lg:text-6xl font-black gradient-text mb-2">50K+</div>
               <div class="text-sm text-gray-400">Invoices Generated</div>
             </div>
-            <div class="hover-lift cursor-pointer">
+            <div class="hover-lift cursor-pointer group">
+              <div class="text-5xl mb-3 transition-transform group-hover:scale-110">💰</div>
               <div class="text-4xl lg:text-6xl font-black gradient-text mb-2">$50M+</div>
               <div class="text-sm text-gray-400">Revenue Processed</div>
             </div>
-            <div class="hover-lift cursor-pointer">
+            <div class="hover-lift cursor-pointer group">
+              <div class="text-5xl mb-3 transition-transform group-hover:scale-110">🌍</div>
               <div class="text-4xl lg:text-6xl font-black gradient-text mb-2">150+</div>
               <div class="text-sm text-gray-400">Countries</div>
             </div>
-            <div class="hover-lift cursor-pointer">
+            <div class="hover-lift cursor-pointer group">
+              <div class="text-5xl mb-3 transition-transform group-hover:scale-110">🛡️</div>
               <div class="text-4xl lg:text-6xl font-black gradient-text mb-2">24/7</div>
               <div class="text-sm text-gray-400">Support</div>
             </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Trust Badges Section -->
+    <section class="section-sm scroll-reveal">
+      <div class="container-custom">
+        <div class="text-center mb-12">
+          <p class="text-sm text-gray-400 uppercase tracking-wider mb-6">Trusted by Leading Businesses Worldwide</p>
+        </div>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-8 items-center justify-items-center opacity-50">
+          <!-- Trust Badge Icons -->
+          <div class="glass-subtle px-8 py-4 rounded-2xl hover-lift">
+            <div class="text-3xl">🔒</div>
+            <div class="text-xs text-gray-400 mt-2">SSL Secure</div>
+          </div>
+          <div class="glass-subtle px-8 py-4 rounded-2xl hover-lift">
+            <div class="text-3xl">✅</div>
+            <div class="text-xs text-gray-400 mt-2">GDPR Compliant</div>
+          </div>
+          <div class="glass-subtle px-8 py-4 rounded-2xl hover-lift">
+            <div class="text-3xl">⚡</div>
+            <div class="text-xs text-gray-400 mt-2">99.9% Uptime</div>
+          </div>
+          <div class="glass-subtle px-8 py-4 rounded-2xl hover-lift">
+            <div class="text-3xl">💳</div>
+            <div class="text-xs text-gray-400 mt-2">Secure Payments</div>
           </div>
         </div>
       </div>
@@ -305,16 +340,16 @@
         <div class="relative max-w-5xl mx-auto mb-12">
           <div class="glass-card p-8 lg:p-12" id="demoCarousel">
             <!-- Demo Step Indicator -->
-            <div class="flex items-center justify-center gap-2 mb-8">
-              <button class="demo-dot active" data-step="0" aria-label="Step 1: Fill Details"></button>
-              <button class="demo-dot" data-step="1" aria-label="Step 2: Generate Invoice"></button>
-              <button class="demo-dot" data-step="2" aria-label="Step 3: Send & Get Paid"></button>
+            <div class="flex items-center justify-center gap-2 mb-8" role="tablist" aria-label="Invoice creation steps">
+              <button id="demo-step-0" class="demo-dot active" data-step="0" role="tab" aria-label="Step 1: Fill Details" aria-selected="true" tabindex="0"></button>
+              <button id="demo-step-1" class="demo-dot" data-step="1" role="tab" aria-label="Step 2: Generate Invoice" aria-selected="false" tabindex="-1"></button>
+              <button id="demo-step-2" class="demo-dot" data-step="2" role="tab" aria-label="Step 3: Send & Get Paid" aria-selected="false" tabindex="-1"></button>
             </div>
 
             <!-- Demo Slides -->
-            <div class="demo-slides-container relative min-h-[400px]">
+            <div class="demo-slides-container relative min-h-[400px]" role="tabpanel" aria-live="polite">
               <!-- Slide 1: Fill Details -->
-              <div class="demo-slide active" data-slide="0">
+              <div class="demo-slide active" data-slide="0" role="tabpanel" aria-labelledby="demo-step-0">
                 <div class="grid lg:grid-cols-2 gap-8 items-center">
                   <div class="order-2 lg:order-1">
                     <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-primary-500 to-purple-600 flex items-center justify-center text-3xl mb-6 shadow-glow">
@@ -340,41 +375,18 @@
                     </ul>
                   </div>
                   <div class="order-1 lg:order-2">
-                    <!-- Mockup Form -->
-                    <div class="glass-strong p-6 rounded-2xl">
-                      <div class="space-y-4">
-                        <div>
-                          <div class="skeleton h-3 w-24 rounded mb-2"></div>
-                          <div class="glass-input p-3 rounded-xl">
-                            <div class="skeleton h-4 w-3/4 rounded"></div>
-                          </div>
-                        </div>
-                        <div>
-                          <div class="skeleton h-3 w-32 rounded mb-2"></div>
-                          <div class="glass-input p-3 rounded-xl">
-                            <div class="skeleton h-4 w-1/2 rounded"></div>
-                          </div>
-                        </div>
-                        <div class="grid grid-cols-2 gap-4">
-                          <div>
-                            <div class="skeleton h-3 w-20 rounded mb-2"></div>
-                            <div class="glass-input p-3 rounded-xl">
-                              <div class="skeleton h-4 w-16 rounded"></div>
-                            </div>
-                          </div>
-                          <div>
-                            <div class="skeleton h-3 w-20 rounded mb-2"></div>
-                            <div class="glass-input p-3 rounded-xl">
-                              <div class="skeleton h-4 w-20 rounded"></div>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="pt-4">
-                          <div class="btn-primary w-full opacity-60 pointer-events-none flex items-center justify-center gap-2">
-                            <span class="spinner-sm"></span>
-                            <span>Processing...</span>
-                          </div>
-                        </div>
+                    <!-- Dashboard Interface Preview -->
+                    <div class="glass-strong p-4 rounded-2xl relative overflow-hidden hover-glow">
+                      <img 
+                        src="{% static 'images/Invoice_dashboard_interface_mockup_afd0a16c.png' %}" 
+                        alt="Invoice dashboard showing form fields for client details, pricing, and payment terms"
+                        class="w-full h-auto rounded-xl shadow-2xl"
+                        width="600"
+                        height="500"
+                        loading="lazy"
+                      />
+                      <div class="absolute top-4 right-4">
+                        <span class="badge-info animate-pulse-glow">Interactive</span>
                       </div>
                     </div>
                   </div>
@@ -382,7 +394,7 @@
               </div>
 
               <!-- Slide 2: Generate Invoice -->
-              <div class="demo-slide" data-slide="1">
+              <div class="demo-slide" data-slide="1" role="tabpanel" aria-labelledby="demo-step-1">
                 <div class="grid lg:grid-cols-2 gap-8 items-center">
                   <div class="order-2 lg:order-1">
                     <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-secondary-500 to-pink-600 flex items-center justify-center text-3xl mb-6 shadow-glow-pink">
@@ -408,33 +420,25 @@
                     </ul>
                   </div>
                   <div class="order-1 lg:order-2">
-                    <!-- Mockup Invoice Preview -->
-                    <div class="glass-strong p-6 rounded-2xl relative overflow-hidden">
-                      <div class="absolute top-4 right-4 badge-success">Ready</div>
-                      <div class="space-y-4">
-                        <div class="flex items-center gap-3 pb-4 border-b border-white/10">
-                          <div class="text-3xl">📄</div>
-                          <div>
-                            <div class="skeleton h-4 w-32 rounded mb-1"></div>
-                            <div class="skeleton h-3 w-24 rounded"></div>
-                          </div>
-                        </div>
-                        <div class="space-y-2">
-                          <div class="skeleton h-3 w-full rounded"></div>
-                          <div class="skeleton h-3 w-5/6 rounded"></div>
-                          <div class="skeleton h-3 w-4/5 rounded"></div>
-                        </div>
-                        <div class="h-px bg-white/10"></div>
-                        <div class="flex items-center justify-between pt-2">
-                          <span class="text-gray-400 text-sm">Total Amount</span>
-                          <span class="text-2xl font-bold gradient-text">$1,250.00</span>
-                        </div>
-                        <div class="grid grid-cols-2 gap-3 pt-4">
-                          <button class="btn-outline btn-sm">
+                    <!-- Professional Invoice Document Preview -->
+                    <div class="glass-strong p-4 rounded-2xl relative overflow-hidden hover-glow">
+                      <div class="absolute top-4 right-4 badge-success z-10 animate-pulse-glow">Ready</div>
+                      <img 
+                        src="{% static 'images/Professional_invoice_document_mockup_a674a143.png' %}" 
+                        alt="Generated professional invoice PDF ready for download and sending"
+                        class="w-full h-auto rounded-xl shadow-2xl"
+                        width="600"
+                        height="800"
+                        loading="lazy"
+                      />
+                      <div class="absolute inset-0 bg-gradient-to-t from-[#0a0118]/70 via-transparent to-transparent"></div>
+                      <div class="absolute bottom-6 left-6 right-6 z-10">
+                        <div class="grid grid-cols-2 gap-3">
+                          <button class="btn-outline btn-sm backdrop-blur-xl">
                             👁️ Preview
                           </button>
                           <button class="btn-primary btn-sm">
-                            📥 Download
+                            📥 Download PDF
                           </button>
                         </div>
                       </div>
@@ -444,7 +448,7 @@
               </div>
 
               <!-- Slide 3: Send & Get Paid -->
-              <div class="demo-slide" data-slide="2">
+              <div class="demo-slide" data-slide="2" role="tabpanel" aria-labelledby="demo-step-2">
                 <div class="grid lg:grid-cols-2 gap-8 items-center">
                   <div class="order-2 lg:order-1">
                     <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-orange-500 to-red-600 flex items-center justify-center text-3xl mb-6 shadow-glow">
@@ -711,6 +715,34 @@
 
   {% include "invoices/includes/footer.html" %}
 
+  <!-- Floating Help Button -->
+  <div class="fixed bottom-6 right-6 z-50">
+    <button id="helpButton" 
+            class="btn-primary btn-icon w-14 h-14 rounded-full shadow-glow-xl hover:scale-110 transition-transform group" 
+            aria-label="Open help menu"
+            aria-expanded="false"
+            aria-controls="helpTooltip">
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+      </svg>
+      <span class="sr-only">Get Help</span>
+    </button>
+    
+    <!-- Help Tooltip -->
+    <div id="helpTooltip" 
+         class="hidden absolute bottom-full right-0 mb-3 w-64 glass-card p-4 shadow-glass-xl"
+         role="menu"
+         aria-label="Help menu">
+      <div class="text-sm font-semibold text-white mb-2">Need Help?</div>
+      <p class="text-xs text-gray-300 mb-3">We're here to assist you with any questions!</p>
+      <div class="space-y-2" role="group">
+        <a href="{% url 'faq' %}" class="block text-xs text-primary-300 hover:text-primary-200 transition-colors focus:outline-none focus:ring-2 focus:ring-primary-500 rounded p-1" role="menuitem">📖 View FAQ</a>
+        <a href="{% url 'support' %}" class="block text-xs text-primary-300 hover:text-primary-200 transition-colors focus:outline-none focus:ring-2 focus:ring-primary-500 rounded p-1" role="menuitem">💬 Contact Support</a>
+        <a href="https://onome-portfolio-ten.vercel.app/" target="_blank" rel="noopener noreferrer" class="block text-xs text-primary-300 hover:text-primary-200 transition-colors focus:outline-none focus:ring-2 focus:ring-primary-500 rounded p-1" role="menuitem">👨‍💻 About Developer</a>
+      </div>
+    </div>
+  </div>
+
   <!-- JavaScript -->
   <script>
     // Progress Bar
@@ -818,7 +850,10 @@
       });
       
       dots.forEach((dot, index) => {
-        dot.classList.toggle('active', index === currentSlide);
+        const isActive = index === currentSlide;
+        dot.classList.toggle('active', isActive);
+        dot.setAttribute('aria-selected', isActive);
+        dot.setAttribute('tabindex', isActive ? '0' : '-1');
       });
       
       if (currentSlide === totalSlides - 1) {
@@ -861,6 +896,50 @@
       document.addEventListener('keydown', (e) => {
         if (e.key === 'ArrowLeft') prevSlide();
         if (e.key === 'ArrowRight') nextSlide();
+      });
+    }
+
+    // Help Button Tooltip
+    const helpButton = document.getElementById('helpButton');
+    const helpTooltip = document.getElementById('helpTooltip');
+    
+    if (helpButton && helpTooltip) {
+      function toggleHelp(show) {
+        const isVisible = !helpTooltip.classList.contains('hidden');
+        if (show === undefined) show = !isVisible;
+        
+        helpTooltip.classList.toggle('hidden', !show);
+        helpButton.setAttribute('aria-expanded', show);
+        
+        if (show) {
+          const firstLink = helpTooltip.querySelector('a');
+          if (firstLink) firstLink.focus();
+        }
+      }
+
+      helpButton.addEventListener('click', (e) => {
+        e.stopPropagation();
+        toggleHelp();
+      });
+
+      helpButton.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          toggleHelp();
+        }
+      });
+
+      document.addEventListener('click', (e) => {
+        if (!helpButton.contains(e.target) && !helpTooltip.contains(e.target)) {
+          toggleHelp(false);
+        }
+      });
+
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && !helpTooltip.classList.contains('hidden')) {
+          toggleHelp(false);
+          helpButton.focus();
+        }
       });
     }
   </script>

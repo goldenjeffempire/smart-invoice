@@ -20,12 +20,5 @@ pip install -r requirements.txt
 echo "Collecting static files..."
 python manage.py collectstatic --no-input --clear
 
-# Run database migrations
-echo "Running database migrations..."
-python manage.py migrate --no-input
-
-# Create cache table for production
-echo "Creating cache table..."
-python manage.py createcachetable || echo "Cache table may already exist"
-
 echo "===== Build Process Complete ====="
+echo "Note: Database migrations will run during pre-deploy phase"

@@ -532,6 +532,10 @@
     @apply py-20 px-6;
   }
 
+  .section-sm {
+    @apply py-12 px-6;
+  }
+
   .section-lg {
     @apply py-32 px-6;
   }
