@@ -55,6 +55,10 @@ localPort = 38397
 externalPort = 3002
 
 [[ports]]
+localPort = 41561
+externalPort = 6000
+
+[[ports]]
 localPort = 41871
 externalPort = 3003
 
@@ -63,6 +67,6 @@ localPort = 42211
 externalPort = 5000
 
 [deployment]
-deploymentTarget = "autoscale"
-run = ["gunicorn", "--bind", "0.0.0.0:5000", "--reuse-port", "--workers", "4", "smart_invoice.wsgi:application"]
-build = ["python3.11", "-m", "pip", "install", "-r", "requirements.txt"]
+deploymentTarget = "vm"
+run = ["gunicorn", "--bind=0.0.0.0:5000", "--reuse-port", "--workers=4", "smart_invoice.wsgi:application"]
+build = ["bash", "build.sh"]
