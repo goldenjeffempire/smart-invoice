@@ -1,0 +1,101 @@
+{% comment %}
+Reusable Empty State Component
+Usage: {% include "invoices/includes/empty_state.html" with icon="📋" title="No Invoices Yet" description="Create your first professional invoice in seconds" primary_action_url="..." primary_action_text="Create Invoice" secondary_action_url="..." secondary_action_text="View Tutorial" %}
+{% endcomment %}
+
+<div class="relative">
+  <!-- Animated Background Gradient -->
+  <div class="absolute inset-0 bg-gradient-to-br from-violet-500/5 via-fuchsia-500/5 to-violet-500/5 rounded-3xl blur-3xl animate-pulse-slow"></div>
+  
+  <!-- Empty State Card -->
+  <div class="relative glass-card p-12 md:p-16 text-center overflow-hidden group">
+    <!-- Animated Background Orbs -->
+    <div class="absolute top-0 right-0 w-64 h-64 bg-gradient-to-br from-violet-500/10 to-fuchsia-500/10 rounded-full blur-3xl transform translate-x-1/2 -translate-y-1/2 group-hover:scale-110 transition-transform duration-700"></div>
+    <div class="absolute bottom-0 left-0 w-64 h-64 bg-gradient-to-tr from-fuchsia-500/10 to-violet-500/10 rounded-full blur-3xl transform -translate-x-1/2 translate-y-1/2 group-hover:scale-110 transition-transform duration-700"></div>
+    
+    <!-- Content -->
+    <div class="relative z-10">
+      <!-- Icon with Animation -->
+      <div class="inline-flex items-center justify-center mb-6">
+        <div class="relative">
+          <div class="absolute inset-0 bg-gradient-to-br from-violet-500 to-fuchsia-500 rounded-3xl blur-xl opacity-50 animate-pulse-glow"></div>
+          <div class="relative w-24 h-24 bg-gradient-to-br from-violet-500/20 to-fuchsia-500/20 rounded-3xl flex items-center justify-center text-6xl backdrop-blur-sm border border-white/10 transform group-hover:scale-110 group-hover:rotate-3 transition-all duration-500">
+            {{ icon|default:"📋" }}
+          </div>
+        </div>
+      </div>
+      
+      <!-- Title -->
+      <h3 class="text-3xl md:text-4xl font-black mb-3">
+        <span class="gradient-text">{{ title|default:"No Data Yet" }}</span>
+      </h3>
+      
+      <!-- Description -->
+      <p class="text-gray-400 text-lg mb-8 max-w-md mx-auto leading-relaxed">
+        {{ description|default:"Get started by creating your first item" }}
+      </p>
+      
+      <!-- Quick Actions -->
+      <div class="flex flex-col sm:flex-row gap-4 justify-center mb-6">
+        {% if primary_action_url %}
+          <a href="{% url primary_action_url %}" class="btn-primary btn-lg ripple-effect shadow-glow hover:shadow-glow-xl transform hover:scale-105 transition-all">
+            <span class="mr-2">✨</span>
+            {{ primary_action_text|default:"Get Started" }}
+          </a>
+        {% endif %}
+        
+        {% if secondary_action_url %}
+          <a href="{% url secondary_action_url %}" class="btn-outline btn-lg hover-lift">
+            <span class="mr-2">{% if secondary_action_icon %}{{ secondary_action_icon }}{% else %}📖{% endif %}</span>
+            {{ secondary_action_text|default:"Learn More" }}
+          </a>
+        {% endif %}
+      </div>
+      
+      <!-- Additional Quick Links (Optional) -->
+      {% if quick_links %}
+        <div class="pt-6 border-t border-white/10">
+          <p class="text-sm text-gray-500 mb-4">Quick Actions</p>
+          <div class="flex flex-wrap gap-3 justify-center">
+            {% for link in quick_links %}
+              <a href="{{ link.url }}" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 hover:border-violet-500/50 text-sm text-gray-300 hover:text-violet-400 transition-all transform hover:scale-105">
+                {% if link.icon %}<span>{{ link.icon }}</span>{% endif %}
+                {{ link.text }}
+              </a>
+            {% endfor %}
+          </div>
+        </div>
+      {% endif %}
+      
+      <!-- Help Text -->
+      {% if help_text %}
+        <div class="mt-8 inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-500/10 border border-blue-500/20 text-sm text-blue-300">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+          </svg>
+          {{ help_text }}
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+<style>
+  @keyframes pulse-slow {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 0.6; }
+  }
+  
+  .animate-pulse-slow {
+    animation: pulse-slow 4s ease-in-out infinite;
+  }
+  
+  @keyframes pulse-glow {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 0.6; }
+  }
+  
+  .animate-pulse-glow {
+    animation: pulse-glow 2s ease-in-out infinite;
+  }
+</style>

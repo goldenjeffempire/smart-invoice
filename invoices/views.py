@@ -754,7 +754,8 @@ def export_invoices(request):
     """Export invoices to CSV."""
     from .export_service import ExportService
     
-    invoices = Invoice.objects.filter(user=request.user).order_by('-created_at')
+    # Optimized: select_related for client to avoid N+1 queries during export
+    invoices = Invoice.objects.filter(user=request.user).select_related('client').order_by('-created_at')
     
     status_filter = request.GET.get('status')
     if status_filter:
@@ -769,9 +770,10 @@ def export_payments(request):
     from .export_service import ExportService
     from .models import PaymentTransaction
     
+    # Optimized: select_related for invoice to avoid N+1 queries during export
     payments = PaymentTransaction.objects.filter(
         invoice__user=request.user
-    ).order_by('-created_at')
+    ).select_related('invoice', 'invoice__client').order_by('-created_at')
     
     return ExportService.export_payments_csv(payments)
 
@@ -856,17 +858,26 @@ def client_update(request, pk):
 def client_detail(request, pk):
     """Display client details with related invoices."""
     from .models import Client
+    from django.db.models import Sum, Count, Q
     
     client = get_object_or_404(Client, pk=pk, user=request.user)
     invoices = Invoice.objects.filter(client=client).order_by('-created_at')
     
+    # Optimized: Use aggregation instead of iterating through querysets
+    invoice_stats = invoices.aggregate(
+        total_invoices=Count('id'),
+        paid_invoices=Count('id', filter=Q(status='paid')),
+        pending_revenue=Sum('total_amount', filter=Q(status='sent')),
+        total_revenue=Sum('total_amount', filter=Q(status='paid'))
+    )
+    
     context = {
         'client': client,
         'invoices': invoices,
-        'total_invoices': invoices.count(),
-        'paid_invoices': invoices.filter(status='paid').count(),
-        'pending_revenue': sum(inv.total_amount for inv in invoices.filter(status='sent')),
-        'total_revenue': sum(inv.total_amount for inv in invoices.filter(status='paid')),
+        'total_invoices': invoice_stats['total_invoices'],
+        'paid_invoices': invoice_stats['paid_invoices'],
+        'pending_revenue': invoice_stats['pending_revenue'] or 0,
+        'total_revenue': invoice_stats['total_revenue'] or 0,
     }
     return render(request, 'invoices/client_detail.html', context)
 

@@ -1,0 +1,59 @@
+{% comment %}
+Empty State for Search/Filter Results
+Usage: {% include "invoices/includes/empty_state_search.html" with search_query="..." %}
+{% endcomment %}
+
+<div class="glass-card p-12 text-center">
+  <!-- Icon -->
+  <div class="inline-flex items-center justify-center mb-6">
+    <div class="w-20 h-20 bg-gradient-to-br from-yellow-500/20 to-orange-500/20 rounded-2xl flex items-center justify-center text-5xl backdrop-blur-sm border border-white/10">
+      🔍
+    </div>
+  </div>
+  
+  <!-- Title -->
+  <h3 class="text-2xl font-bold text-white mb-2">
+    No Results Found
+  </h3>
+  
+  <!-- Description -->
+  <p class="text-gray-400 mb-6">
+    {% if search_query %}
+      We couldn't find any results for "<span class="text-violet-400 font-medium">{{ search_query }}</span>"
+    {% else %}
+      No items match your current filters
+    {% endif %}
+  </p>
+  
+  <!-- Suggestions -->
+  <div class="max-w-md mx-auto mb-6">
+    <p class="text-sm text-gray-500 mb-3">Try:</p>
+    <ul class="text-sm text-gray-400 space-y-2 text-left">
+      <li class="flex items-start gap-2">
+        <span class="text-violet-400 mt-1">•</span>
+        <span>Checking your spelling or using different keywords</span>
+      </li>
+      <li class="flex items-start gap-2">
+        <span class="text-violet-400 mt-1">•</span>
+        <span>Removing some filters to broaden your search</span>
+      </li>
+      <li class="flex items-start gap-2">
+        <span class="text-violet-400 mt-1">•</span>
+        <span>Searching for a different term or category</span>
+      </li>
+    </ul>
+  </div>
+  
+  <!-- Actions -->
+  <div class="flex flex-col sm:flex-row gap-3 justify-center">
+    <a href="{% url clear_url %}" class="btn-outline">
+      Clear Filters
+    </a>
+    {% if create_url %}
+      <a href="{% url create_url %}" class="btn-primary">
+        <span class="mr-2">➕</span>
+        Create New
+      </a>
+    {% endif %}
+  </div>
+</div>

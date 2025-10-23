@@ -1,0 +1,173 @@
+{% comment %}
+Toast Notification System
+Include this in your base template or pages where you want toast notifications
+{% endcomment %}
+
+<!-- Toast Container -->
+<div id="toast-container" class="fixed top-6 right-6 z-50 flex flex-col gap-3 max-w-md pointer-events-none">
+    <!-- Toasts will be injected here by JavaScript -->
+</div>
+
+<style>
+    .toast {
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(16px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 12px;
+        padding: 16px 20px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        pointer-events: auto;
+        animation: slideInRight 0.3s ease-out, fadeOut 0.3s ease-out 4.7s;
+        min-width: 320px;
+        max-width: 400px;
+    }
+    
+    .toast-success {
+        border-left: 4px solid #10B981;
+        background: linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
+    }
+    
+    .toast-error {
+        border-left: 4px solid #EF4444;
+        background: linear-gradient(135deg, rgba(239, 68, 68, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
+    }
+    
+    .toast-warning {
+        border-left: 4px solid #F59E0B;
+        background: linear-gradient(135deg, rgba(245, 158, 11, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
+    }
+    
+    .toast-info {
+        border-left: 4px solid #3B82F6;
+        background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
+    }
+    
+    @keyframes slideInRight {
+        from {
+            transform: translateX(400px);
+            opacity: 0;
+        }
+        to {
+            transform: translateX(0);
+            opacity: 1;
+        }
+    }
+    
+    @keyframes fadeOut {
+        from {
+            opacity: 1;
+        }
+        to {
+            opacity: 0;
+            transform: translateX(400px);
+        }
+    }
+    
+    .toast-progress {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        height: 3px;
+        background: currentColor;
+        animation: progress 5s linear;
+    }
+    
+    @keyframes progress {
+        from { width: 100%; }
+        to { width: 0%; }
+    }
+</style>
+
+<script>
+// Toast Notification System
+const ToastNotification = {
+    container: null,
+    
+    init() {
+        this.container = document.getElementById('toast-container');
+        if (!this.container) {
+            console.error('Toast container not found');
+        }
+    },
+    
+    show(message, type = 'info', duration = 5000) {
+        if (!this.container) this.init();
+        
+        const icons = {
+            success: '✅',
+            error: '❌',
+            warning: '⚠️',
+            info: 'ℹ️'
+        };
+        
+        const colors = {
+            success: '#10B981',
+            error: '#EF4444',
+            warning: '#F59E0B',
+            info: '#3B82F6'
+        };
+        
+        const toast = document.createElement('div');
+        toast.className = `toast toast-${type}`;
+        toast.innerHTML = `
+            <div class="flex items-start gap-3">
+                <div class="text-2xl flex-shrink-0">${icons[type] || icons.info}</div>
+                <div class="flex-1 min-w-0">
+                    <p class="text-white text-sm font-medium leading-relaxed break-words">${message}</p>
+                </div>
+                <button onclick="this.closest('.toast').remove()" class="text-gray-400 hover:text-white transition-colors flex-shrink-0">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                    </svg>
+                </button>
+            </div>
+            <div class="toast-progress" style="color: ${colors[type] || colors.info}"></div>
+        `;
+        
+        this.container.appendChild(toast);
+        
+        // Auto remove after duration
+        setTimeout(() => {
+            if (toast.parentElement) {
+                toast.remove();
+            }
+        }, duration);
+        
+        return toast;
+    },
+    
+    success(message, duration) {
+        return this.show(message, 'success', duration);
+    },
+    
+    error(message, duration) {
+        return this.show(message, 'error', duration);
+    },
+    
+    warning(message, duration) {
+        return this.show(message, 'warning', duration);
+    },
+    
+    info(message, duration) {
+        return this.show(message, 'info', duration);
+    }
+};
+
+// Initialize on page load
+document.addEventListener('DOMContentLoaded', () => {
+    ToastNotification.init();
+    
+    // Make it globally accessible
+    window.toast = ToastNotification;
+    
+    // Auto-show Django messages as toasts
+    const djangoMessages = document.querySelectorAll('[data-toast-message]');
+    djangoMessages.forEach(msg => {
+        const type = msg.getAttribute('data-toast-type') || 'info';
+        const message = msg.getAttribute('data-toast-message');
+        if (message) {
+            ToastNotification.show(message, type);
+        }
+    });
+});
+</script>

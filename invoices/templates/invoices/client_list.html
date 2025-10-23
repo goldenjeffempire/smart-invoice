@@ -63,12 +63,13 @@
         {% endfor %}
       </div>
     {% else %}
-      <div class="glass-card p-12 text-center">
-        <div class="text-6xl mb-4">👥</div>
-        <h3 class="text-2xl font-bold text-white mb-2">No Clients Yet</h3>
-        <p class="text-gray-400 mb-6">Start by adding your first client</p>
-        <a href="{% url 'client_create' %}" class="btn-primary">➕ Add Your First Client</a>
-      </div>
+      {% if request.GET.q %}
+        {% include "invoices/includes/empty_state_search.html" with search_query=request.GET.q clear_url="client_list" create_url="client_create" %}
+      {% else %}
+        {% with primary_url="client_create" secondary_url="create_invoice" %}
+          {% include "invoices/includes/empty_state.html" with icon="👥" title="Build Your Client Database" description="Start adding clients to create invoices faster and track customer relationships effectively" primary_action_url=primary_url primary_action_text="Add Your First Client" secondary_action_url=secondary_url secondary_action_text="Create Invoice" secondary_action_icon="📄" help_text="Tip: Add client details once and reuse them for all future invoices" %}
+        {% endwith %}
+      {% endif %}
     {% endif %}
   </div>
 </body>

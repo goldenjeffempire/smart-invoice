@@ -1,0 +1,185 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 - Page Not Found | Smart Invoice</title>
+    <link rel="stylesheet" href="{% static 'css/output.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #0F172A 0%, #1E1B4B 50%, #0F172A 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .bg-orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.3;
+            animation: float 20s ease-in-out infinite;
+        }
+        
+        .orb-1 {
+            width: 500px;
+            height: 500px;
+            background: linear-gradient(135deg, #A855F7 0%, #EC4899 100%);
+            top: -250px;
+            left: -250px;
+        }
+        
+        .orb-2 {
+            width: 400px;
+            height: 400px;
+            background: linear-gradient(135deg, #EC4899 0%, #A855F7 100%);
+            bottom: -200px;
+            right: -200px;
+            animation-delay: -10s;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(30px, -30px) scale(1.1); }
+            66% { transform: translate(-20px, 20px) scale(0.9); }
+        }
+        
+        .error-code {
+            font-size: 12rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #A855F7 0%, #EC4899 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1;
+            animation: glow-pulse 2s ease-in-out infinite;
+        }
+        
+        @keyframes glow-pulse {
+            0%, 100% { filter: drop-shadow(0 0 20px rgba(168, 85, 247, 0.5)); }
+            50% { filter: drop-shadow(0 0 40px rgba(236, 72, 153, 0.8)); }
+        }
+        
+        .glass-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #A855F7 0%, #EC4899 100%);
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 20px 40px rgba(168, 85, 247, 0.4);
+        }
+        
+        .btn-outline {
+            border: 2px solid rgba(168, 85, 247, 0.3);
+            transition: all 0.3s ease;
+        }
+        
+        .btn-outline:hover {
+            border-color: rgba(168, 85, 247, 0.6);
+            background: rgba(168, 85, 247, 0.1);
+        }
+    </style>
+</head>
+<body class="text-white">
+    <!-- Background Orbs -->
+    <div class="bg-orb orb-1"></div>
+    <div class="bg-orb orb-2"></div>
+    
+    <!-- Content -->
+    <div class="relative z-10 container mx-auto px-4 py-8 max-w-4xl">
+        <div class="text-center">
+            <!-- Error Code -->
+            <div class="error-code mb-6">404</div>
+            
+            <!-- Card -->
+            <div class="glass-card p-8 md:p-12">
+                <!-- Icon -->
+                <div class="inline-flex items-center justify-center mb-6">
+                    <div class="w-24 h-24 bg-gradient-to-br from-violet-500/20 to-fuchsia-500/20 rounded-full flex items-center justify-center text-6xl backdrop-blur-sm border border-white/10">
+                        🔍
+                    </div>
+                </div>
+                
+                <!-- Title -->
+                <h1 class="text-4xl md:text-5xl font-black mb-4">
+                    Page Not Found
+                </h1>
+                
+                <!-- Description -->
+                <p class="text-gray-300 text-lg mb-8 max-w-2xl mx-auto leading-relaxed">
+                    Oops! The page you're looking for seems to have wandered off into the digital void. 
+                    Let's get you back on track.
+                </p>
+                
+                <!-- Possible Reasons -->
+                <div class="mb-8 max-w-md mx-auto text-left">
+                    <p class="text-sm text-gray-400 mb-3 text-center font-semibold">This might have happened because:</p>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li class="flex items-start gap-2">
+                            <span class="text-violet-400 mt-1">•</span>
+                            <span>The page was moved or deleted</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <span class="text-violet-400 mt-1">•</span>
+                            <span>The URL was mistyped</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <span class="text-violet-400 mt-1">•</span>
+                            <span>You followed an outdated link</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <!-- Actions -->
+                <div class="flex flex-col sm:flex-row gap-4 justify-center mb-6">
+                    <a href="/" class="btn-primary px-8 py-4 rounded-xl font-semibold text-white flex items-center justify-center gap-2 hover:scale-105 transform transition">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+                        </svg>
+                        Go to Homepage
+                    </a>
+                    <button onclick="history.back()" class="btn-outline px-8 py-4 rounded-xl font-semibold text-white flex items-center justify-center gap-2">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+                        </svg>
+                        Go Back
+                    </button>
+                </div>
+                
+                <!-- Quick Links -->
+                <div class="pt-6 border-t border-white/10">
+                    <p class="text-sm text-gray-500 mb-4">Popular Pages</p>
+                    <div class="flex flex-wrap gap-3 justify-center">
+                        <a href="/invoices/" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 hover:border-violet-500/50 text-sm text-gray-300 hover:text-violet-400 transition-all">
+                            📊 Dashboard
+                        </a>
+                        <a href="/invoices/create/" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 hover:border-violet-500/50 text-sm text-gray-300 hover:text-violet-400 transition-all">
+                            ✨ Create Invoice
+                        </a>
+                        <a href="/clients/" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 hover:border-violet-500/50 text-sm text-gray-300 hover:text-violet-400 transition-all">
+                            👥 Clients
+                        </a>
+                        <a href="/support/" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 hover:border-violet-500/50 text-sm text-gray-300 hover:text-violet-400 transition-all">
+                            💬 Support
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

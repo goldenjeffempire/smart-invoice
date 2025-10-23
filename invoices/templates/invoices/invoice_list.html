@@ -562,22 +562,14 @@
             </p>
         </div>
         {% else %}
-        <div class="glass p-12 md:p-20 rounded-3xl text-center slide-up" style="animation-delay: 0.4s">
-            <div class="text-7xl mb-6 empty-icon">📄</div>
-            <h2 class="text-3xl font-bold mb-4">No Invoices Found</h2>
-            <p class="text-gray-400 mb-8 max-w-md mx-auto">
-                {% if request.GET.q or request.GET.status %}
-                    No invoices match your search criteria. Try adjusting your filters or search terms.
-                {% else %}
-                    You haven't created any invoices yet. Get started by creating your first invoice!
-                {% endif %}
-            </p>
-            <a href="{% url 'create_invoice' %}" class="btn-primary inline-flex items-center gap-2 px-8 py-4 rounded-xl text-lg">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
-                </svg>
-                Create Your First Invoice
-            </a>
+        <div class="slide-up" style="animation-delay: 0.4s">
+            {% if request.GET.q or request.GET.status %}
+                {% include "invoices/includes/empty_state_search.html" with search_query=request.GET.q clear_url="invoice_list" create_url="create_invoice" %}
+            {% else %}
+                {% with primary_url="create_invoice" secondary_url="client_create" %}
+                  {% include "invoices/includes/empty_state.html" with icon="📄" title="Create Your First Invoice" description="Transform your billing workflow with professional invoices. Get paid faster and track everything in one place." primary_action_url=primary_url primary_action_text="Create Invoice Now" secondary_action_url=secondary_url secondary_action_text="Add Client First" secondary_action_icon="👥" help_text="Tip: Create professional invoices in under 60 seconds" %}
+                {% endwith %}
+            {% endif %}
         </div>
         {% endif %}
     </div>
