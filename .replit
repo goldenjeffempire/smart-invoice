@@ -4,7 +4,7 @@ expertMode = true
 
 [nix]
 channel = "stable-25_05"
-packages = ["cacert", "cairo", "cargo", "freetype", "gdk-pixbuf", "glibcLocales", "lcms2", "libffi", "libiconv", "libimagequant", "libjpeg", "libtiff", "libwebp", "libxcrypt", "openjpeg", "openssl", "pango", "pgadmin4", "pkg-config", "postgresql", "rustc", "tcl", "tk", "xcodebuild", "zlib", "libpng"]
+packages = ["cacert", "cairo", "cargo", "freetype", "gdk-pixbuf", "glibcLocales", "lcms2", "libffi", "libiconv", "libimagequant", "libjpeg", "libpng", "libtiff", "libwebp", "libxcrypt", "openjpeg", "openssl", "pango", "pgadmin4", "pkg-config", "postgresql", "rustc", "tcl", "tk", "xcodebuild", "zlib"]
 
 [workflows]
 runButton = "Project"
@@ -57,6 +57,10 @@ externalPort = 3003
 [[ports]]
 localPort = 42211
 externalPort = 5000
+
+[[ports]]
+localPort = 43973
+externalPort = 4200
 
 [[ports]]
 localPort = 45849
