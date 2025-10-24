@@ -25,7 +25,6 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'whitenoise',
     'invoices',
     'crispy_forms',
     'widget_tweaks',
@@ -120,7 +119,7 @@ SESSION_SAVE_EVERY_REQUEST = False
 SESSION_COOKIE_HTTPONLY = True
 
 # CSRF Configuration
-CSRF_COOKIE_HTTPONLY = False  # Allow JavaScript access for AJAX
+CSRF_COOKIE_HTTPONLY = True
 CSRF_USE_SESSIONS = False
 
 # Rate Limiting Configuration
