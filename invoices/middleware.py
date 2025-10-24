@@ -1,4 +1,4 @@
-from django.core.cache import cache
+from django.core.cache import cache, caches
 from django.http import HttpResponseForbidden
 from django.conf import settings
 from django.utils.deprecation import MiddlewareMixin
@@ -29,7 +29,7 @@ class RateLimitMiddleware(MiddlewareMixin):
         cache_key = f'rate_limit_{hashlib.md5(ip_address.encode()).hexdigest()}_{request.path}'
         
         cache_backend = getattr(settings, 'RATE_LIMIT_CACHE', 'default')
-        rate_cache = cache.caches[cache_backend] if hasattr(cache, 'caches') else cache
+        rate_cache = caches[cache_backend]
         
         requests_count = rate_cache.get(cache_key, 0)
         
