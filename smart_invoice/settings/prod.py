@@ -4,9 +4,44 @@ Production settings for smart_invoice project.
 
 from .base import *
 import dj_database_url
+import logging
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
+
+# Validate environment variables on startup (skip for management commands)
+import sys
+logger = logging.getLogger(__name__)
+
+# Only validate when actually running the server (not during collectstatic, migrate, etc.)
+is_management_command = 'manage.py' in sys.argv[0] if sys.argv else False
+should_validate = not is_management_command or (is_management_command and any(cmd in sys.argv for cmd in ['runserver', 'gunicorn']))
+
+if should_validate:
+    try:
+        from invoices.env_validator import EnvironmentValidator
+        is_valid, errors, warnings = EnvironmentValidator.validate_all('production')
+        
+        if errors:
+            logger.error("=" * 60)
+            logger.error("ENVIRONMENT VALIDATION ERRORS:")
+            for error in errors:
+                logger.error(f"  {error}")
+            logger.error("=" * 60)
+            # Only raise error in actual deployment, not during checks
+            if 'check' not in sys.argv:
+                raise RuntimeError(
+                    "Environment validation failed. Fix the errors above before deploying to production."
+                )
+        
+        if warnings:
+            logger.warning("=" * 60)
+            logger.warning("ENVIRONMENT VALIDATION WARNINGS:")
+            for warning in warnings:
+                logger.warning(f"  {warning}")
+            logger.warning("=" * 60)
+    except ImportError:
+        logger.warning("Environment validator not available - skipping validation")
 
 # Allowed hosts - should be set via environment variable
 ALLOWED_HOSTS = os.environ.get(

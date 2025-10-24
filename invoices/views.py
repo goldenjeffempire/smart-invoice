@@ -51,7 +51,9 @@ def invoice_list(request):
     """Display all invoices with filtering and search capabilities."""
     from django.core.paginator import Paginator
     from .analytics import AnalyticsService
+    from django.db.models import Count, Q
     
+    # Optimized: Single queryset with select_related for client foreign key
     invoices = Invoice.objects.filter(user=request.user).select_related('client').order_by('-created_at')
     
     status_filter = request.GET.get('status')
@@ -70,20 +72,30 @@ def invoice_list(request):
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
     
+    # Optimized: Use aggregation instead of multiple count queries
+    base_invoices = Invoice.objects.filter(user=request.user)
+    invoice_stats = base_invoices.aggregate(
+        total=Count('id'),
+        draft=Count('id', filter=Q(status='draft')),
+        sent=Count('id', filter=Q(status='sent')),
+        paid=Count('id', filter=Q(status='paid')),
+        overdue=Count('id', filter=Q(status='overdue'))
+    )
+    
     analytics = AnalyticsService(request.user)
     revenue_metrics = analytics.get_revenue_metrics()
-    recent_invoices = Invoice.objects.filter(user=request.user).select_related('client').order_by('-created_at')[:6]
     
-    all_invoices = Invoice.objects.filter(user=request.user)
+    # Optimized: Reuse queryset with slicing
+    recent_invoices = base_invoices.select_related('client').order_by('-created_at')[:6]
     
     context = {
         'invoices': page_obj,
         'page_obj': page_obj,
-        'total_invoices': all_invoices.count(),
-        'draft_count': all_invoices.filter(status='draft').count(),
-        'sent_count': all_invoices.filter(status='sent').count(),
-        'paid_count': all_invoices.filter(status='paid').count(),
-        'overdue_count': all_invoices.filter(status='overdue').count(),
+        'total_invoices': invoice_stats['total'],
+        'draft_count': invoice_stats['draft'],
+        'sent_count': invoice_stats['sent'],
+        'paid_count': invoice_stats['paid'],
+        'overdue_count': invoice_stats['overdue'],
         'revenue_metrics': revenue_metrics,
         'recent_invoices': recent_invoices,
     }
