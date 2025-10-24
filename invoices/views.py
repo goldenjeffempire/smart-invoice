@@ -16,7 +16,6 @@ from django.db.models import Q
 from io import BytesIO
 from xhtml2pdf import pisa
 from decimal import Decimal
-import base64
 import re
 
 from .forms import InvoiceForm, SupportInquiryForm, ClientForm
