@@ -17,6 +17,7 @@ class PaystackService:
     def __init__(self):
         self.secret_key = settings.PAYSTACK_SECRET_KEY
         self.public_key = settings.PAYSTACK_PUBLIC_KEY
+        self.webhook_secret = settings.PAYSTACK_WEBHOOK_SECRET
     
     def get_headers(self):
         return {
@@ -157,16 +158,19 @@ class PaystackService:
             }
     
     def verify_webhook_signature(self, payload, signature):
-        if not self.secret_key:
+        """Verify Paystack webhook signature using webhook secret."""
+        secret_to_use = self.webhook_secret or self.secret_key
+        if not secret_to_use:
+            logger.error('No webhook secret configured')
             return False
         
         hash_value = hmac.new(
-            self.secret_key.encode('utf-8'),
+            secret_to_use.encode('utf-8'),
             payload.encode('utf-8'),
             hashlib.sha512
         ).hexdigest()
         
-        return hash_value == signature
+        return hmac.compare_digest(hash_value, signature)
     
     def process_payment_success(self, payment_data):
         from django.db import transaction as db_transaction

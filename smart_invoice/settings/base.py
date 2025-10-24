@@ -111,7 +111,14 @@ TWILIO_WHATSAPP_NUMBER = os.environ.get('TWILIO_WHATSAPP_NUMBER', '')
 # Paystack configuration (for payments)
 PAYSTACK_PUBLIC_KEY = os.environ.get('PAYSTACK_PUBLIC_KEY', '')
 PAYSTACK_SECRET_KEY = os.environ.get('PAYSTACK_SECRET_KEY', '')
+PAYSTACK_WEBHOOK_SECRET = os.environ.get('PAYSTACK_WEBHOOK_SECRET', os.environ.get('PAYSTACK_SECRET_KEY', ''))
 PAYSTACK_CALLBACK_URL = os.environ.get('PAYSTACK_CALLBACK_URL', '')
+
+# WhatsApp Configuration
+WHATSAPP_NUMBER = os.environ.get('WHATSAPP_NUMBER', '2348000000000')
+
+# Site Configuration
+SITE_URL = os.environ.get('SITE_URL', 'http://localhost:5000')
 
 # Session Configuration
 SESSION_COOKIE_AGE = 1209600  # 2 weeks

@@ -20,7 +20,10 @@ urlpatterns = [
     path('invoice/<int:pk>/pay/', views.initialize_paystack_payment, name='initialize_payment'),
     path('invoice/<int:pk>/whatsapp-pay/', views.send_whatsapp_payment_link, name='whatsapp_payment_link'),
     path('payment/callback/', views.payment_callback, name='payment_callback'),
-    path('payment/webhook/', views.paystack_webhook, name='paystack_webhook'),
+    
+    # API Endpoints
+    path('api/invoices/<int:pk>/create-paystack-checkout/', views.create_paystack_checkout_api, name='create_paystack_checkout'),
+    path('api/paystack/webhook/', views.paystack_webhook, name='paystack_webhook'),
     
     # Client Management
     path('clients/', views.client_list, name='client_list'),

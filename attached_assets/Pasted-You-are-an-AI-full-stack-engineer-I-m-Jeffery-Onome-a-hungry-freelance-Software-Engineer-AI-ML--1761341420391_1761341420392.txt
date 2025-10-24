@@ -1,0 +1,37 @@
+You are an AI full-stack engineer. I’m Jeffery Onome — a hungry freelance Software Engineer & AI/ML Expert who needs a fully modern, production-ready **Smart Invoice** platform to start earning now. Execute this as one complete refactor and output the full working repo (file tree, full code, deleted files list, env.example, migrations, tests, CI, and deployment steps). No placeholders. No questions. Ship everything.
+TASK SUMMARY:
+- Audit and fix all bugs, broken routes, templates, and logic.
+- Modernize UI/UX with Tailwind CSS: responsive, animated, premium feel.
+- Implement **Paystack + WhatsApp “Pay Now”**:
+  - Backend endpoint `POST /api/invoices/<id>/create-paystack-checkout/` → returns Paystack checkout URL.
+  - Frontend adds “Pay via WhatsApp” button that opens `https://wa.me/<WHATSAPP_NUMBER>?text=Hello <client>, pay now: <PAYSTACK_URL>`.
+  - Webhook `POST /api/paystack/webhook/` verifies signature, validates amount, marks invoice paid (idempotent).
+- Remove **Testimonials**, replace with **FAQ page** (+ JSON-LD schema).
+- Add **Support page** (simple contact form → DB or email).
+- Add footer to all pages: `<p>Built by Jeffery Onome — onome-portfolio-ten.vercel.app</p>`.
+- Remove unused files/code. Return deleted list.
+- Keep invoice PDF & status updates working.
+- Add unit tests (payments, webhook), GitHub Actions CI, Dockerfile + docker-compose.
+- Update README: setup, env vars, webhook config, Paystack/WhatsApp setup, deploy steps (Vercel + Docker).
+ENV VARIABLES (`.env.example`):
+DJANGO_SECRET_KEY=…
+DATABASE_URL=postgres://…
+PAYSTACK_SECRET_KEY=sk_test_xxx
+PAYSTACK_PUBLIC_KEY=pk_test_xxx
+PAYSTACK_WEBHOOK_SECRET=whsec_xxx
+WHATSAPP_NUMBER=2348xxxxxxxx
+SITE_URL=https://yourdomain.com
+DEBUG=False
+OUTPUT FORMAT:
+1. Repo summary (key fixes & upgrades).
+2. Full file tree (NEW/MODIFIED/DELETED).
+3. Full content of all changed files.
+4. Migrations + run commands.
+5. How to run tests & deploy (Vercel/Docker).
+6. Short changelog with commit-style notes.
+STYLE:
+Write clean Django + Tailwind code, clear comments, modern best practices. Keep commit messages sharp:  
+`feat(payments): add paystack checkout + whatsapp flow`  
+`chore(ui): replace testimonials with FAQ + support`  
+`fix(core): webhook signature + idempotency`.
+EXECUTE NOW — deliver the entire upgraded repo in one response, production-ready, secure, fully functional, and client-impressive.

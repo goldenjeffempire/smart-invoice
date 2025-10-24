@@ -613,21 +613,26 @@ from django.http import JsonResponse
 
 @csrf_exempt
 def paystack_webhook(request):
-    """Handle Paystack webhook notifications."""
+    """Handle Paystack webhook notifications with signature verification and idempotency."""
     from .payment_service import PaystackService
     import json
+    import logging
+    
+    logger = logging.getLogger(__name__)
     
     if request.method != 'POST':
         return JsonResponse({'error': 'Method not allowed'}, status=405)
     
     signature = request.META.get('HTTP_X_PAYSTACK_SIGNATURE')
     if not signature:
+        logger.warning('Webhook received without signature')
         return JsonResponse({'error': 'No signature'}, status=400)
     
     payload = request.body.decode('utf-8')
     
     paystack = PaystackService()
     if not paystack.verify_webhook_signature(payload, signature):
+        logger.error('Webhook signature verification failed')
         return JsonResponse({'error': 'Invalid signature'}, status=400)
     
     try:
@@ -635,25 +640,85 @@ def paystack_webhook(request):
         event = data.get('event')
         event_data = data.get('data', {})
         
+        logger.info(f'Webhook event received: {event}')
+        
         if event == 'charge.success':
             result = paystack.process_payment_success(event_data)
             if result['success']:
+                logger.info(f'Payment processed successfully: {event_data.get("reference")}')
                 return JsonResponse({'status': 'success'})
             else:
+                logger.error(f'Payment processing failed: {result.get("message")}')
                 return JsonResponse({'error': result.get('message')}, status=500)
         
         elif event == 'charge.failed':
             result = paystack.process_payment_failure(event_data)
             if result['success']:
+                logger.info(f'Payment failure acknowledged: {event_data.get("reference")}')
                 return JsonResponse({'status': 'acknowledged'})
             else:
+                logger.error(f'Payment failure processing error: {result.get("message")}')
                 return JsonResponse({'error': result.get('message')}, status=500)
         
+        logger.info(f'Unhandled event type: {event}')
         return JsonResponse({'status': 'event_not_handled'})
         
     except json.JSONDecodeError:
+        logger.error('Invalid JSON in webhook payload')
         return JsonResponse({'error': 'Invalid JSON'}, status=400)
     except Exception as e:
+        logger.exception(f'Unexpected error in webhook handler: {str(e)}')
+        return JsonResponse({'error': str(e)}, status=500)
+
+
+def create_paystack_checkout_api(request, pk):
+    """
+    API endpoint to create Paystack checkout link.
+    POST /api/invoices/<id>/create-paystack-checkout/
+    Returns JSON with Paystack checkout URL for WhatsApp or direct payment.
+    """
+    from .payment_service import PaystackService
+    import logging
+    
+    logger = logging.getLogger(__name__)
+    
+    if request.method != 'POST':
+        return JsonResponse({'error': 'Method not allowed'}, status=405)
+    
+    try:
+        invoice = get_object_or_404(Invoice, pk=pk)
+        
+        if not settings.PAYSTACK_SECRET_KEY:
+            logger.error('Paystack not configured')
+            return JsonResponse({'error': 'Payment system not configured'}, status=500)
+        
+        paystack = PaystackService()
+        callback_url = request.build_absolute_uri(reverse('payment_callback'))
+        
+        result = paystack.initialize_transaction(invoice, callback_url)
+        
+        if result['success']:
+            response_data = {
+                'success': True,
+                'checkout_url': result['authorization_url'],
+                'reference': result['reference'],
+                'invoice_id': invoice.invoice_id,
+                'amount': float(invoice.total_amount),
+                'currency': invoice.currency,
+            }
+            logger.info(f'Checkout created for invoice {invoice.invoice_id}')
+            return JsonResponse(response_data)
+        else:
+            logger.error(f'Checkout creation failed: {result.get("message")}')
+            return JsonResponse({
+                'success': False,
+                'error': result.get('message', 'Failed to create checkout')
+            }, status=500)
+            
+    except Invoice.DoesNotExist:
+        return JsonResponse({'error': 'Invoice not found'}, status=404)
+    except Exception as e:
+        logger.exception(f'Unexpected error creating checkout: {str(e)}')
         return JsonResponse({'error': str(e)}, status=500)
 
 

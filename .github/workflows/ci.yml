@@ -1,0 +1,94 @@
+name: Smart Invoice CI/CD
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    
+    services:
+      postgres:
+        image: postgres:15
+        env:
+          POSTGRES_DB: test_smart_invoice
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+        cache: 'pip'
+    
+    - name: Install system dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y libpq-dev libcairo2-dev pkg-config
+    
+    - name: Install Python dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+        pip install pytest pytest-django pytest-cov
+    
+    - name: Run migrations
+      env:
+        DATABASE_URL: postgres://postgres:postgres@localhost:5432/test_smart_invoice
+        DJANGO_SECRET_KEY: test-secret-key-for-ci
+        DJANGO_ENV: development
+      run: |
+        python manage.py migrate
+    
+    - name: Run tests
+      env:
+        DATABASE_URL: postgres://postgres:postgres@localhost:5432/test_smart_invoice
+        DJANGO_SECRET_KEY: test-secret-key-for-ci
+        DJANGO_ENV: development
+        PAYSTACK_SECRET_KEY: sk_test_dummy
+        PAYSTACK_PUBLIC_KEY: pk_test_dummy
+      run: |
+        pytest --cov=invoices --cov-report=xml --cov-report=html
+    
+    - name: Upload coverage reports
+      uses: codecov/codecov-action@v3
+      with:
+        files: ./coverage.xml
+        fail_ci_if_error: false
+    
+    - name: Check code quality
+      run: |
+        pip install flake8
+        flake8 invoices --count --select=E9,F63,F7,F82 --show-source --statistics
+        flake8 invoices --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+
+  build:
+    runs-on: ubuntu-latest
+    needs: test
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v2
+    
+    - name: Build Docker image
+      run: |
+        docker build -t smart-invoice:latest .
+    
+    - name: Test Docker image
+      run: |
+        docker run --rm smart-invoice:latest python manage.py check

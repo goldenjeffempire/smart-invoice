@@ -1,0 +1,1 @@
+# Smart Invoice Test Suite
