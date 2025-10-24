@@ -4,8 +4,9 @@ services:
     runtime: python
     plan: starter
     buildCommand: "./build.sh"
-    startCommand: "gunicorn smart_invoice.wsgi:application --bind 0.0.0.0:$PORT --workers 4 --threads 2 --worker-class gthread --worker-tmp-dir /dev/shm --log-file - --access-logfile - --error-logfile -"
-    preDeployCommand: "python manage.py migrate --no-input && python manage.py createcachetable"
+    startCommand: "gunicorn smart_invoice.wsgi:application --bind 0.0.0.0:$PORT --workers 4 --threads 2 --worker-class gthread --worker-tmp-dir /dev/shm --log-file - --access-logfile - --error-logfile - --timeout 120 --keep-alive 5"
+    preDeployCommand: "python manage.py migrate --no-input && python manage.py createcachetable && python manage.py check_overdue_invoices"
+    healthCheckPath: /health/
     envVars:
       - key: PYTHON_VERSION
         value: 3.11.0

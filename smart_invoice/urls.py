@@ -17,9 +17,12 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from invoices.views import landing_page
+from invoices.views_health import health_check, readiness_check
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('health/', health_check, name='health_check'),
+    path('readiness/', readiness_check, name='readiness_check'),
     path('', landing_page, name='landing'),
     path('', include('invoices.urls')),
 ]

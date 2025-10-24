@@ -40,6 +40,9 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'invoices.middleware.SecurityHeadersMiddleware',
+    'invoices.middleware.RateLimitMiddleware',
+    'invoices.middleware.AuditLogMiddleware',
 ]
 
 ROOT_URLCONF = 'smart_invoice.urls'
@@ -119,3 +122,20 @@ SESSION_COOKIE_HTTPONLY = True
 # CSRF Configuration
 CSRF_COOKIE_HTTPONLY = False  # Allow JavaScript access for AJAX
 CSRF_USE_SESSIONS = False
+
+# Rate Limiting Configuration
+RATE_LIMIT_MAX_REQUESTS = 60  # Maximum requests per window
+RATE_LIMIT_WINDOW = 60  # Time window in seconds
+RATE_LIMIT_CACHE = 'default'  # Which cache to use for rate limiting (can be 'redis' in production)
+
+# Cache Configuration (default - can be overridden in environment settings)
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.db.DatabaseCache',
+        'LOCATION': 'cache_table',
+        'OPTIONS': {
+            'MAX_ENTRIES': 5000,
+            'CULL_FREQUENCY': 3,
+        }
+    }
+}

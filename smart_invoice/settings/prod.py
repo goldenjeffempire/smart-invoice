@@ -111,18 +111,38 @@ LOGGING = {
     },
 }
 
-# Production-specific cache (Redis recommended)
-# Fallback to database cache if Redis not configured
+# Cache Configuration for Production
+# Database cache is always the default (required for Django admin, sessions, etc.)
+# Redis is configured as a separate 'redis' cache for rate limiting if available
+REDIS_URL = os.environ.get('REDIS_URL')
+
 CACHES = {
     'default': {
         'BACKEND': 'django.core.cache.backends.db.DatabaseCache',
         'LOCATION': 'cache_table',
         'OPTIONS': {
-            'MAX_ENTRIES': 1000,
-            'CULL_FREQUENCY': 4,
+            'MAX_ENTRIES': 5000,
+            'CULL_FREQUENCY': 3,
         }
     }
 }
+
+# Add Redis cache as separate alias if available (used for rate limiting)
+if REDIS_URL:
+    try:
+        CACHES['redis'] = {
+            'BACKEND': 'django.core.cache.backends.redis.RedisCache',
+            'LOCATION': REDIS_URL,
+            'KEY_PREFIX': 'smart_invoice',
+            'TIMEOUT': 300,
+        }
+        # Use Redis for rate limiting (better for multi-worker scenarios)
+        RATE_LIMIT_CACHE = 'redis'
+    except ImportError:
+        # Redis library not installed, fall back to default cache
+        RATE_LIMIT_CACHE = 'default'
+else:
+    RATE_LIMIT_CACHE = 'default'
 
 # Create logs directory if it doesn't exist
 os.makedirs(BASE_DIR / 'logs', exist_ok=True)
