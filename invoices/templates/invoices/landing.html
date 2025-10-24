@@ -105,7 +105,7 @@
       <div class="container-custom">
         <div class="grid lg:grid-cols-2 gap-16 items-center">
           <!-- Left Column -->
-          <div class="scroll-reveal">
+          <div data-reveal data-delay="0">
             <!-- Trust Badge -->
             <div class="inline-flex items-center gap-2 px-4 py-2 glass-subtle rounded-full mb-6 animate-fade-in-down">
               <span class="flex h-2 w-2 relative">
@@ -117,8 +117,8 @@
 
             <!-- Headline -->
             <h1 class="text-5xl sm:text-6xl lg:text-7xl font-black leading-tight mb-6 animate-fade-in-up">
-              <span class="gradient-text-animated">Smart, Simple</span><br>
-              <span class="text-white">Invoicing</span>
+              <span class="gradient-text-animated" data-parallax="0.1">Smart, Simple</span><br>
+              <span class="text-white" data-parallax="0.05">Invoicing</span>
             </h1>
 
             <!-- Description -->
@@ -128,25 +128,25 @@
 
             <!-- CTA Buttons -->
             <div class="flex flex-col sm:flex-row gap-4 mb-12 animate-fade-in-up" style="animation-delay: 0.2s">
-              <a href="{% url 'signup' %}" class="btn-primary btn-lg ripple-effect shadow-glow hover:shadow-glow-xl">
+              <a href="{% url 'signup' %}" class="btn-primary btn-lg ripple-effect shadow-glow hover:shadow-glow-xl" data-magnetic data-ripple>
                 🚀 Start Free Trial
               </a>
-              <a href="#features" class="btn-outline btn-lg hover-lift">
+              <a href="#features" class="btn-outline btn-lg hover-lift" data-magnetic>
                 👀 Explore Features
               </a>
             </div>
 
             <!-- Quick Stats -->
             <div class="flex items-center gap-8 flex-wrap animate-fade-in-up" style="animation-delay: 0.3s">
-              <div class="hover-lift cursor-pointer">
-                <div class="text-4xl font-black gradient-text">10K+</div>
+              <div class="hover-lift cursor-pointer" data-metric>
+                <div class="text-4xl font-black gradient-text" data-count="10000" data-duration="2000">0</div>
                 <div class="text-sm text-gray-400">Active Users</div>
               </div>
-              <div class="hover-lift cursor-pointer">
-                <div class="text-4xl font-black gradient-text">99%</div>
+              <div class="hover-lift cursor-pointer" data-metric>
+                <div class="text-4xl font-black gradient-text" data-count="99" data-duration="1500">0</div>
                 <div class="text-sm text-gray-400">Satisfaction</div>
               </div>
-              <div class="hover-lift cursor-pointer">
+              <div class="hover-lift cursor-pointer floating-3d" data-metric>
                 <div class="text-4xl font-black">⚡</div>
                 <div class="text-sm text-gray-400">Lightning Fast</div>
               </div>
@@ -154,14 +154,14 @@
           </div>
 
           <!-- Right Column - Preview -->
-          <div class="scroll-reveal hidden lg:block" style="animation-delay: 0.2s">
-            <div class="relative">
+          <div data-reveal data-delay="200" class="hidden lg:block">
+            <div class="relative" data-parallax="0.15">
               <!-- Glow Effect -->
-              <div class="absolute inset-0 bg-gradient-primary opacity-20 blur-[100px] rounded-full"></div>
+              <div class="absolute inset-0 bg-gradient-primary opacity-20 blur-[100px] rounded-full morphing-blob"></div>
               
               <!-- Professional Invoice Preview -->
-              <div class="relative glass-card p-4 hover-lift overflow-hidden">
-                <div class="absolute top-4 right-4 badge-success z-10">Live Preview</div>
+              <div class="relative glass-card p-4 hover-lift overflow-hidden perspective-1000" data-card-3d>
+                <div class="absolute top-4 right-4 badge-success z-10 animate-pulse">Live Preview</div>
                 <img 
                   src="{% static 'images/Professional_invoice_document_mockup_a674a143.png' %}" 
                   alt="Professional Invoice Document Preview showing itemized services and payment details"
@@ -170,11 +170,11 @@
                   height="800"
                   fetchpriority="high"
                 />
-                <div class="absolute inset-0 bg-gradient-to-t from-[#0a0118]/80 via-transparent to-transparent"></div>
+                <div class="absolute inset-0 bg-gradient-to-t from-[#0a0118]/80 via-transparent to-transparent spotlight-effect"></div>
                 <div class="absolute bottom-6 left-6 right-6">
                   <div class="flex items-center justify-between">
                     <span class="text-white font-semibold">Ready to Send</span>
-                    <span class="text-2xl font-black gradient-text">$1,250</span>
+                    <span class="text-2xl font-black gradient-text" data-count="1250" data-duration="2000">$0</span>
                   </div>
                 </div>
               </div>
@@ -185,21 +185,21 @@
     </section>
 
     <!-- Stats Section -->
-    <section class="section scroll-reveal">
+    <section class="section" data-reveal>
       <div class="container-custom">
-        <div class="glass-card p-8 lg:p-12 hover-glow relative overflow-hidden">
+        <div class="glass-card p-8 lg:p-12 hover-glow relative overflow-hidden glow-on-hover">
           <!-- Animated Background Glow -->
           <div class="absolute inset-0 bg-gradient-to-br from-primary-500/10 via-secondary-500/10 to-blue-500/10 animate-gradient-xy"></div>
           
           <div class="relative z-10 grid grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12 text-center">
-            <div class="hover-lift cursor-pointer group">
-              <div class="text-5xl mb-3 transition-transform group-hover:scale-110">📊</div>
-              <div class="text-4xl lg:text-6xl font-black gradient-text mb-2">50K+</div>
+            <div class="hover-lift cursor-pointer group" data-stat-card data-metric>
+              <div class="text-5xl mb-3 transition-transform group-hover:scale-110 hover-bounce">📊</div>
+              <div class="text-4xl lg:text-6xl font-black gradient-text mb-2" data-value="50000" data-count="50000" data-duration="2500">0</div>
               <div class="text-sm text-gray-400">Invoices Generated</div>
             </div>
-            <div class="hover-lift cursor-pointer group">
-              <div class="text-5xl mb-3 transition-transform group-hover:scale-110">💰</div>
-              <div class="text-4xl lg:text-6xl font-black gradient-text mb-2">$50M+</div>
+            <div class="hover-lift cursor-pointer group" data-stat-card data-metric>
+              <div class="text-5xl mb-3 transition-transform group-hover:scale-110 hover-bounce">💰</div>
+              <div class="text-4xl lg:text-6xl font-black gradient-text mb-2" data-value="50000000" data-count="50000000" data-duration="2500" data-currency="true">$0</div>
               <div class="text-sm text-gray-400">Revenue Processed</div>
             </div>
             <div class="hover-lift cursor-pointer group">
@@ -1013,5 +1013,9 @@
       }
     }
   </style>
+
+  <!-- Animation Scripts -->
+  <script src="{% static 'js/animations.js' %}"></script>
+  <script src="{% static 'js/charts.js' %}"></script>
 </body>
 </html>

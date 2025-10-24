@@ -319,60 +319,60 @@
 
         <!-- Stats Cards -->
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8 slide-up" style="animation-delay: 0.2s">
-            <div class="stat-card p-6 rounded-2xl">
+            <div class="stat-card p-6 rounded-2xl hover-scale-sm" data-stat-card data-metric>
                 <div class="flex items-center justify-between mb-2">
                     <span class="text-gray-400 text-sm font-medium">Total Invoices</span>
-                    <span class="text-3xl">📊</span>
+                    <span class="text-3xl hover-bounce">📊</span>
                 </div>
-                <div class="text-3xl font-black gradient-text">{{ total_invoices }}</div>
+                <div class="text-3xl font-black gradient-text" data-count="{{ total_invoices }}" data-duration="1500">0</div>
             </div>
-            <div class="stat-card p-6 rounded-2xl">
+            <div class="stat-card p-6 rounded-2xl hover-scale-sm" data-stat-card data-metric>
                 <div class="flex items-center justify-between mb-2">
                     <span class="text-gray-400 text-sm font-medium">Draft</span>
-                    <span class="text-3xl">📝</span>
+                    <span class="text-3xl hover-bounce">📝</span>
                 </div>
-                <div class="text-3xl font-black text-gray-300">{{ draft_count }}</div>
+                <div class="text-3xl font-black text-gray-300" data-count="{{ draft_count }}" data-duration="1200">0</div>
             </div>
-            <div class="stat-card p-6 rounded-2xl">
+            <div class="stat-card p-6 rounded-2xl hover-scale-sm" data-stat-card data-metric>
                 <div class="flex items-center justify-between mb-2">
                     <span class="text-gray-400 text-sm font-medium">Paid</span>
-                    <span class="text-3xl">✅</span>
+                    <span class="text-3xl hover-bounce">✅</span>
                 </div>
-                <div class="text-3xl font-black text-green-400">{{ paid_count }}</div>
+                <div class="text-3xl font-black text-green-400" data-count="{{ paid_count }}" data-duration="1200">0</div>
             </div>
-            <div class="stat-card p-6 rounded-2xl">
+            <div class="stat-card p-6 rounded-2xl hover-scale-sm" data-stat-card data-metric>
                 <div class="flex items-center justify-between mb-2">
                     <span class="text-gray-400 text-sm font-medium">Overdue</span>
-                    <span class="text-3xl">⚠️</span>
+                    <span class="text-3xl hover-bounce">⚠️</span>
                 </div>
-                <div class="text-3xl font-black text-red-400">{{ overdue_count }}</div>
+                <div class="text-3xl font-black text-red-400" data-count="{{ overdue_count }}" data-duration="1200">0</div>
             </div>
         </div>
 
         <!-- Revenue Metrics -->
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8 slide-up" style="animation-delay: 0.25s">
-            <div class="stat-card p-6 rounded-2xl">
+            <div class="stat-card p-6 rounded-2xl hover-scale-sm glow-on-hover" data-stat-card data-metric>
                 <div class="flex items-center justify-between mb-3">
                     <span class="text-gray-400 text-sm font-medium uppercase tracking-wider">Total Revenue</span>
-                    <span class="text-3xl">💰</span>
+                    <span class="text-3xl floating-3d">💰</span>
                 </div>
-                <div class="text-4xl font-black gradient-text mb-2">${{ revenue_metrics.total_revenue|floatformat:2 }}</div>
+                <div class="text-4xl font-black gradient-text mb-2" data-value="{{ revenue_metrics.total_revenue }}" data-count="{{ revenue_metrics.total_revenue }}" data-currency="true" data-duration="2000">$0</div>
                 <p class="text-xs text-gray-500">From paid invoices</p>
             </div>
-            <div class="stat-card p-6 rounded-2xl">
+            <div class="stat-card p-6 rounded-2xl hover-scale-sm glow-on-hover" data-stat-card data-metric>
                 <div class="flex items-center justify-between mb-3">
                     <span class="text-gray-400 text-sm font-medium uppercase tracking-wider">Pending Revenue</span>
-                    <span class="text-3xl">⏳</span>
+                    <span class="text-3xl floating-3d">⏳</span>
                 </div>
-                <div class="text-4xl font-black text-yellow-400 mb-2">${{ revenue_metrics.pending_revenue|floatformat:2 }}</div>
+                <div class="text-4xl font-black text-yellow-400 mb-2" data-value="{{ revenue_metrics.pending_revenue }}" data-count="{{ revenue_metrics.pending_revenue }}" data-currency="true" data-duration="2000">$0</div>
                 <p class="text-xs text-gray-500">Awaiting payment</p>
             </div>
-            <div class="stat-card p-6 rounded-2xl">
+            <div class="stat-card p-6 rounded-2xl hover-scale-sm glow-on-hover" data-stat-card data-metric>
                 <div class="flex items-center justify-between mb-3">
                     <span class="text-gray-400 text-sm font-medium uppercase tracking-wider">Overdue Revenue</span>
-                    <span class="text-3xl">🚨</span>
+                    <span class="text-3xl floating-3d">🚨</span>
                 </div>
-                <div class="text-4xl font-black text-red-400 mb-2">${{ revenue_metrics.overdue_revenue|floatformat:2 }}</div>
+                <div class="text-4xl font-black text-red-400 mb-2" data-value="{{ revenue_metrics.overdue_revenue }}" data-count="{{ revenue_metrics.overdue_revenue }}" data-currency="true" data-duration="2000">$0</div>
                 <p class="text-xs text-gray-500">Requires attention</p>
             </div>
         </div>
@@ -615,6 +615,10 @@
         `;
         document.head.appendChild(style);
     </script>
+
+    <!-- Enhanced Animation Scripts -->
+    <script src="{% static 'js/animations.js' %}"></script>
+    <script src="{% static 'js/charts.js' %}"></script>
 
     {% include "invoices/includes/footer.html" %}
 </body>
