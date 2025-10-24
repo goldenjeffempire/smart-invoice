@@ -10,6 +10,80 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  
+  <!-- JSON-LD Schema for FAQ SEO -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "How do I create my first invoice?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Creating your first invoice is simple! Navigate to the Dashboard and click 'Create Invoice'. Fill in your business details, client information, and itemize your products or services. You can add tax, discounts, and payment terms. Once complete, you can download as PDF, email directly to your client, or share via WhatsApp."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What payment methods are supported?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Smart Invoice integrates with Paystack to accept payments via credit/debit cards, bank transfers, USSD, and mobile money. Each invoice includes a secure payment link that your clients can use to pay instantly. You can also add custom payment instructions for wire transfers or other payment methods."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can I send invoices via WhatsApp?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes! Smart Invoice supports WhatsApp integration via Twilio. You can send professional invoice PDFs directly to your clients' WhatsApp numbers with a single click. The message includes invoice details, payment links, and the PDF attachment."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What currencies are supported?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "We support multiple currencies including USD (US Dollar), EUR (Euro), GBP (British Pound), NGN (Nigerian Naira), CAD (Canadian Dollar), and AUD (Australian Dollar). You can select your preferred currency for each invoice."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How do I track invoice status?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Every invoice has a status: Draft, Sent, Paid, Overdue, or Cancelled. Your dashboard displays real-time stats for each status. You can filter and search invoices, and the system automatically marks invoices as overdue when they pass their due date."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can I customize my invoices?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Absolutely! You can add your business logo, customize payment terms, include notes, add tax rates, apply discounts, and provide custom payment instructions. Each invoice is professionally designed and mobile-responsive."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is my data secure?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes, security is our top priority. All data is encrypted in transit and at rest. Payment processing is handled by Paystack, a PCI-DSS compliant payment gateway. We never store your payment card details. Our platform follows industry-standard security best practices."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What if I need help or have issues?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Our support team is here to help! Visit our Support page to submit an inquiry. We typically respond within 24 hours during business days. For urgent issues, please include 'URGENT' in your subject line."
+        }
+      }
+    ]
+  }
+  </script>
 
   <style>
     :root { color-scheme: dark; }
