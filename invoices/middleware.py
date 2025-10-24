@@ -44,8 +44,8 @@ class RateLimitMiddleware(MiddlewareMixin):
         
         return None
     
-    @staticmethod
-    def get_client_ip(request):
+    def get_client_ip(self, request):
+        """Get client IP address from request."""
         x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
         if x_forwarded_for:
             ip = x_forwarded_for.split(',')[0]
@@ -79,9 +79,11 @@ class AuditLogMiddleware(MiddlewareMixin):
             is_sensitive = any(request.path.startswith(path) for path in sensitive_paths)
             
             if is_sensitive and request.method in ['POST', 'PUT', 'DELETE', 'PATCH']:
+                x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+                ip_address = x_forwarded_for.split(',')[0] if x_forwarded_for else request.META.get('REMOTE_ADDR')
                 logger.info(
                     f'Audit: User {request.user.username} performed {request.method} on {request.path} '
-                    f'from IP {RateLimitMiddleware.get_client_ip(request)}'
+                    f'from IP {ip_address}'
                 )
         
         return None

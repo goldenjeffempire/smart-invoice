@@ -960,3 +960,165 @@ def client_delete(request, pk):
         return redirect('client_list')
     
     return render(request, 'invoices/client_confirm_delete.html', {'client': client})
+
+
+# ----------------------------
+# Production Features
+# ----------------------------
+
+def health_check(request):
+    """
+    Health check endpoint for load balancers and monitoring systems.
+    GET /health/ returns JSON with system status.
+    """
+    from django.http import JsonResponse
+    from .health_check import run_all_health_checks
+    import logging
+    
+    logger = logging.getLogger(__name__)
+    
+    try:
+        health_status = run_all_health_checks()
+        status_code = 200 if health_status['status'] == 'healthy' else 503
+        
+        return JsonResponse(health_status, status=status_code)
+    except Exception as e:
+        logger.error(f'Health check failed: {str(e)}')
+        return JsonResponse({
+            'status': 'error',
+            'error': str(e)
+        }, status=500)
+
+
+@login_required
+def bulk_send_invoices(request):
+    """Bulk send invoices via email."""
+    from django.http import JsonResponse
+    import json
+    
+    if request.method != 'POST':
+        return JsonResponse({'error': 'Method not allowed'}, status=405)
+    
+    try:
+        data = json.loads(request.body)
+        invoice_ids = data.get('invoice_ids', [])
+        
+        if not invoice_ids:
+            return JsonResponse({'error': 'No invoices selected'}, status=400)
+        
+        invoices = Invoice.objects.filter(
+            pk__in=invoice_ids,
+            user=request.user
+        )
+        
+        success_count = 0
+        errors = []
+        
+        for invoice in invoices:
+            try:
+                pdf_bytes = _render_invoice_pdf(invoice)
+                if pdf_bytes:
+                    email = EmailMessage(
+                        subject=f'Invoice {invoice.invoice_id} from {invoice.business_name}',
+                        body=f'Please find attached invoice {invoice.invoice_id}.',
+                        from_email=settings.DEFAULT_FROM_EMAIL,
+                        to=[invoice.client_email],
+                    )
+                    email.attach(f'Invoice_{invoice.invoice_id}.pdf', pdf_bytes, 'application/pdf')
+                    email.send()
+                    
+                    invoice.status = 'sent'
+                    invoice.save()
+                    success_count += 1
+                else:
+                    errors.append(f'{invoice.invoice_id}: PDF generation failed')
+            except Exception as e:
+                errors.append(f'{invoice.invoice_id}: {str(e)}')
+        
+        return JsonResponse({
+            'success': True,
+            'sent': success_count,
+            'total': len(invoice_ids),
+            'errors': errors
+        })
+    
+    except Exception as e:
+        return JsonResponse({'error': str(e)}, status=500)
+
+
+@login_required
+def bulk_update_status(request):
+    """Bulk update invoice status."""
+    from django.http import JsonResponse
+    import json
+    
+    if request.method != 'POST':
+        return JsonResponse({'error': 'Method not allowed'}, status=405)
+    
+    try:
+        data = json.loads(request.body)
+        invoice_ids = data.get('invoice_ids', [])
+        new_status = data.get('status')
+        
+        if not invoice_ids or not new_status:
+            return JsonResponse({'error': 'Missing invoice_ids or status'}, status=400)
+        
+        valid_statuses = ['draft', 'sent', 'paid', 'overdue', 'cancelled']
+        if new_status not in valid_statuses:
+            return JsonResponse({'error': f'Invalid status. Must be one of: {", ".join(valid_statuses)}'}, status=400)
+        
+        updated = Invoice.objects.filter(
+            pk__in=invoice_ids,
+            user=request.user
+        ).update(status=new_status)
+        
+        return JsonResponse({
+            'success': True,
+            'updated': updated,
+            'status': new_status
+        })
+    
+    except Exception as e:
+        return JsonResponse({'error': str(e)}, status=500)
+
+
+@login_required
+def invoice_statistics_api(request):
+    """
+    API endpoint for dashboard statistics.
+    GET /api/statistics/ returns JSON with invoice metrics.
+    """
+    from django.http import JsonResponse
+    from django.db.models import Sum, Count, Q, Avg
+    from decimal import Decimal
+    
+    invoices = Invoice.objects.filter(user=request.user)
+    
+    stats = invoices.aggregate(
+        total_invoices=Count('id'),
+        total_revenue=Sum('total_amount', filter=Q(status='paid')),
+        pending_revenue=Sum('total_amount', filter=Q(status='sent')),
+        overdue_revenue=Sum('total_amount', filter=Q(status='overdue')),
+        paid_count=Count('id', filter=Q(status='paid')),
+        sent_count=Count('id', filter=Q(status='sent')),
+        overdue_count=Count('id', filter=Q(status='overdue')),
+        draft_count=Count('id', filter=Q(status='draft')),
+        average_invoice=Avg('total_amount')
+    )
+    
+    payment_rate = 0
+    if stats['total_invoices'] > 0:
+        payment_rate = (stats['paid_count'] / stats['total_invoices']) * 100
+    
+    return JsonResponse({
+        'total_invoices': stats['total_invoices'],
+        'total_revenue': float(stats['total_revenue'] or 0),
+        'pending_revenue': float(stats['pending_revenue'] or 0),
+        'overdue_revenue': float(stats['overdue_revenue'] or 0),
+        'paid_count': stats['paid_count'],
+        'sent_count': stats['sent_count'],
+        'overdue_count': stats['overdue_count'],
+        'draft_count': stats['draft_count'],
+        'average_invoice': float(stats['average_invoice'] or 0),
+        'payment_rate': round(payment_rate, 2)
+    })

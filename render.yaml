@@ -5,7 +5,7 @@ services:
     plan: starter
     buildCommand: "./build.sh"
     startCommand: "gunicorn smart_invoice.wsgi:application --bind 0.0.0.0:$PORT --workers 4 --threads 2 --worker-class gthread --worker-tmp-dir /dev/shm --log-file - --access-logfile - --error-logfile - --timeout 120 --keep-alive 5"
-    preDeployCommand: "python manage.py migrate --no-input && python manage.py createcachetable && python manage.py check_overdue_invoices"
+    preDeployCommand: "python manage.py migrate --no-input && python manage.py createcachetable"
     healthCheckPath: /health/
     envVars:
       - key: PYTHON_VERSION
@@ -37,6 +37,12 @@ services:
       - key: TWILIO_AUTH_TOKEN
         sync: false
       - key: TWILIO_WHATSAPP_NUMBER
+        sync: false
+      - key: PAYSTACK_WEBHOOK_SECRET
+        sync: false
+      - key: WHATSAPP_NUMBER
+        sync: false
+      - key: SITE_URL
         sync: false
 
 databases:

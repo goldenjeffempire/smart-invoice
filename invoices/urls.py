@@ -24,6 +24,12 @@ urlpatterns = [
     # API Endpoints
     path('api/invoices/<int:pk>/create-paystack-checkout/', views.create_paystack_checkout_api, name='create_paystack_checkout'),
     path('api/paystack/webhook/', views.paystack_webhook, name='paystack_webhook'),
+    path('api/statistics/', views.invoice_statistics_api, name='invoice_statistics_api'),
+    path('api/bulk/send/', views.bulk_send_invoices, name='bulk_send_invoices'),
+    path('api/bulk/update-status/', views.bulk_update_status, name='bulk_update_status'),
+    
+    # System
+    path('health/', views.health_check, name='health_check'),
     
     # Client Management
     path('clients/', views.client_list, name='client_list'),

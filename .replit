@@ -4,7 +4,7 @@ expertMode = true
 
 [nix]
 channel = "stable-25_05"
-packages = ["cacert", "cairo", "cargo", "freetype", "gdk-pixbuf", "glibcLocales", "lcms2", "libffi", "libiconv", "libimagequant", "libjpeg", "libtiff", "libwebp", "libxcrypt", "openjpeg", "openssl", "pango", "pgadmin4", "pkg-config", "postgresql", "rustc", "tcl", "tk", "xcodebuild", "zlib"]
+packages = ["cacert", "cairo", "cargo", "freetype", "gdk-pixbuf", "glibcLocales", "lcms2", "libffi", "libiconv", "libimagequant", "libjpeg", "libtiff", "libwebp", "libxcrypt", "openjpeg", "openssl", "pango", "pgadmin4", "pkg-config", "postgresql", "rustc", "tcl", "tk", "xcodebuild", "zlib", "libpng"]
 
 [workflows]
 runButton = "Project"
