@@ -211,6 +211,7 @@ class Invoice(models.Model):
             models.Index(fields=['invoice_id']),
             models.Index(fields=['created_at']),
             models.Index(fields=['paystack_reference']),
+            models.Index(fields=['client']),
         ]
 
 
