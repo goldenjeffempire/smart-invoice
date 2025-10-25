@@ -94,7 +94,7 @@ Add these in Render Dashboard:
 
 ```env
 # Django Core
-DJANGO_SECRET_KEY=<generate-with-python>
+DJANGO_SECRET_KEY=k26_a32fv18p@dau9l)hfu3dn%++(-d@%*1+^rjc&bdevr_v5!
 DJANGO_ENV=production
 DEBUG=False
 DJANGO_ALLOWED_HOSTS=.onrender.com
@@ -113,7 +113,7 @@ EMAIL_HOST_USER=your-email@gmail.com
 EMAIL_HOST_PASSWORD=your-app-password
 
 # WhatsApp
-WHATSAPP_NUMBER=2348xxxxxxxxx
+WHATSAPP_NUMBER=+2349017048791
 
 # Site
 SITE_URL=https://your-app.onrender.com
