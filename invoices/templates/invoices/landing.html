@@ -609,73 +609,399 @@
       </div>
     </section>
 
-    <!-- Testimonials Section -->
+    <!-- Testimonials Carousel Section -->
     <section id="testimonials" class="section scroll-reveal">
       <div class="container-custom">
         <!-- Section Header -->
         <div class="text-center mb-16">
           <div class="inline-block px-4 py-2 glass-subtle rounded-full mb-4">
-            <span class="text-sm font-semibold text-secondary-400 uppercase tracking-wider">Testimonials</span>
+            <span class="text-sm font-semibold text-secondary-400 uppercase tracking-wider">💬 Testimonials</span>
           </div>
           <h2 class="text-4xl lg:text-6xl font-black mb-4">
-            <span class="gradient-text">Loved by Businesses</span>
+            <span class="gradient-text">Loved by Businesses Worldwide</span>
           </h2>
           <p class="text-lg text-gray-400 max-w-2xl mx-auto">
-            See what our customers say about their experience
+            See what our customers say about their experience with Smart Invoice
           </p>
         </div>
 
-        <!-- Testimonials Grid -->
-        <div class="grid md:grid-cols-3 gap-6">
-          <!-- Testimonial 1 -->
-          <div class="card-hover scroll-reveal" style="animation-delay: 0.1s">
-            <div class="flex gap-1 mb-4">
-              <span class="text-yellow-400 text-xl">⭐⭐⭐⭐⭐</span>
-            </div>
-            <p class="text-gray-300 mb-6 leading-relaxed">
-              "Smart Invoice transformed how we bill our clients. We've reduced billing time by 80% and get paid 3x faster. Absolutely game-changing!"
-            </p>
-            <div class="flex items-center gap-3">
-              <div class="w-12 h-12 rounded-full bg-gradient-to-br from-primary-500 to-purple-600 flex items-center justify-center text-white font-bold shadow-glow">JD</div>
-              <div>
-                <div class="font-semibold text-white">James Davidson</div>
-                <div class="text-sm text-gray-400">CEO, TechStart Inc.</div>
+        <!-- Interactive Testimonials Carousel -->
+        <div class="relative max-w-5xl mx-auto" id="testimonials-carousel">
+          <!-- Carousel Container -->
+          <div class="overflow-hidden">
+            <div class="relative min-h-[320px]">
+              <!-- Testimonial Slide 1 -->
+              <div class="testimonial-slide active" data-testimonial-slide="0">
+                <div class="glass-card p-8 lg:p-12 max-w-4xl mx-auto hover-glow">
+                  <div class="flex gap-2 mb-6 justify-center">
+                    <span class="text-yellow-400 text-3xl">⭐⭐⭐⭐⭐</span>
+                  </div>
+                  <blockquote class="text-2xl lg:text-3xl font-semibold text-white text-center mb-8 leading-relaxed">
+                    "Smart Invoice transformed how we bill our clients. We've reduced billing time by <span class="gradient-text">80%</span> and get paid <span class="gradient-text">3x faster</span>. Absolutely game-changing!"
+                  </blockquote>
+                  <div class="flex items-center justify-center gap-4">
+                    <div class="w-16 h-16 rounded-full bg-gradient-to-br from-primary-500 to-purple-600 flex items-center justify-center text-white text-xl font-bold shadow-glow-lg">
+                      JD
+                    </div>
+                    <div class="text-left">
+                      <div class="font-bold text-xl text-white">James Davidson</div>
+                      <div class="text-gray-400">CEO, TechStart Inc.</div>
+                      <div class="text-sm text-primary-400 mt-1">🇺🇸 San Francisco, CA</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Testimonial Slide 2 -->
+              <div class="testimonial-slide" data-testimonial-slide="1">
+                <div class="glass-card p-8 lg:p-12 max-w-4xl mx-auto hover-glow">
+                  <div class="flex gap-2 mb-6 justify-center">
+                    <span class="text-yellow-400 text-3xl">⭐⭐⭐⭐⭐</span>
+                  </div>
+                  <blockquote class="text-2xl lg:text-3xl font-semibold text-white text-center mb-8 leading-relaxed">
+                    "As a freelance designer, this platform has made my invoicing <span class="gradient-text">effortless</span>. Professional invoices in seconds, and my clients love it too!"
+                  </blockquote>
+                  <div class="flex items-center justify-center gap-4">
+                    <div class="w-16 h-16 rounded-full bg-gradient-to-br from-secondary-500 to-pink-600 flex items-center justify-center text-white text-xl font-bold shadow-glow-pink-lg">
+                      SM
+                    </div>
+                    <div class="text-left">
+                      <div class="font-bold text-xl text-white">Sarah Martinez</div>
+                      <div class="text-gray-400">Freelance Designer</div>
+                      <div class="text-sm text-secondary-400 mt-1">🇪🇸 Barcelona, Spain</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Testimonial Slide 3 -->
+              <div class="testimonial-slide" data-testimonial-slide="2">
+                <div class="glass-card p-8 lg:p-12 max-w-4xl mx-auto hover-glow">
+                  <div class="flex gap-2 mb-6 justify-center">
+                    <span class="text-yellow-400 text-3xl">⭐⭐⭐⭐⭐</span>
+                  </div>
+                  <blockquote class="text-2xl lg:text-3xl font-semibold text-white text-center mb-8 leading-relaxed">
+                    "The WhatsApp integration is <span class="gradient-text">brilliant</span>! I can send invoices directly to clients' phones and they can pay me instantly. Love it!"
+                  </blockquote>
+                  <div class="flex items-center justify-center gap-4">
+                    <div class="w-16 h-16 rounded-full bg-gradient-to-br from-orange-500 to-red-600 flex items-center justify-center text-white text-xl font-bold shadow-glow">
+                      AP
+                    </div>
+                    <div class="text-left">
+                      <div class="font-bold text-xl text-white">Ahmed Patel</div>
+                      <div class="text-gray-400">Founder, Digital Solutions</div>
+                      <div class="text-sm text-orange-400 mt-1">🇦🇪 Dubai, UAE</div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
 
-          <!-- Testimonial 2 -->
-          <div class="card-hover scroll-reveal" style="animation-delay: 0.2s">
-            <div class="flex gap-1 mb-4">
-              <span class="text-yellow-400 text-xl">⭐⭐⭐⭐⭐</span>
-            </div>
-            <p class="text-gray-300 mb-6 leading-relaxed">
-              "As a freelance designer, this platform has made my invoicing so smooth. Professional invoices in seconds, and my clients love it too!"
+          <!-- Navigation Arrows -->
+          <button id="testimonial-prev" class="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 lg:-translate-x-12 glass-card w-12 h-12 rounded-full flex items-center justify-center hover:bg-primary-500/20 transition-all group" aria-label="Previous testimonial">
+            <svg class="w-6 h-6 text-white group-hover:text-primary-400 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+            </svg>
+          </button>
+          <button id="testimonial-next" class="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 lg:translate-x-12 glass-card w-12 h-12 rounded-full flex items-center justify-center hover:bg-primary-500/20 transition-all group" aria-label="Next testimonial">
+            <svg class="w-6 h-6 text-white group-hover:text-primary-400 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+            </svg>
+          </button>
+
+          <!-- Dots Navigation -->
+          <div class="flex items-center justify-center gap-3 mt-8">
+            <button class="testimonial-dot active" data-testimonial-dot="0" aria-label="Go to testimonial 1"></button>
+            <button class="testimonial-dot" data-testimonial-dot="1" aria-label="Go to testimonial 2"></button>
+            <button class="testimonial-dot" data-testimonial-dot="2" aria-label="Go to testimonial 3"></button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Newsletter Subscription Section -->
+    <section class="section scroll-reveal">
+      <div class="container-custom max-w-4xl">
+        <div class="glass-card p-12 lg:p-16 text-center relative overflow-hidden hover-glow">
+          <!-- Animated Background -->
+          <div class="absolute inset-0 gradient-mesh opacity-20"></div>
+          
+          <!-- Content -->
+          <div class="relative z-10">
+            <div class="text-5xl mb-4">📧</div>
+            <h2 class="text-3xl lg:text-4xl font-black mb-4">
+              <span class="gradient-text">Stay Updated</span>
+            </h2>
+            <p class="text-lg text-gray-300 max-w-2xl mx-auto mb-8">
+              Get the latest invoicing tips, product updates, and exclusive insights delivered to your inbox
             </p>
-            <div class="flex items-center gap-3">
-              <div class="w-12 h-12 rounded-full bg-gradient-to-br from-secondary-500 to-pink-600 flex items-center justify-center text-white font-bold shadow-glow-pink">SM</div>
+
+            <!-- Newsletter Form -->
+            <form id="newsletter-form" class="max-w-md mx-auto" data-loading>
+              <div class="flex flex-col sm:flex-row gap-3">
+                <div class="flex-1 relative">
+                  <input 
+                    type="email" 
+                    id="newsletter-email" 
+                    placeholder="Enter your email..." 
+                    required
+                    data-validate="email"
+                    class="w-full px-6 py-4 rounded-xl glass-strong text-white placeholder-gray-400 border border-white/10 focus:border-primary-500 focus:ring-2 focus:ring-primary-500/30 outline-none transition-all"
+                    aria-label="Email address for newsletter"
+                  />
+                </div>
+                <button 
+                  type="submit" 
+                  class="btn-primary px-8 py-4 whitespace-nowrap ripple-effect shadow-glow"
+                  data-confetti
+                >
+                  Subscribe 🚀
+                </button>
+              </div>
+              <p class="text-xs text-gray-500 mt-4">
+                No spam, unsubscribe anytime. We respect your privacy.
+              </p>
+              <div id="newsletter-success" class="hidden mt-4 p-4 glass-card rounded-xl border border-success-500/30">
+                <p class="text-success-400 font-semibold">✓ Thank you for subscribing! Check your inbox for confirmation.</p>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ Accordion Section -->
+    <section id="faq" class="section scroll-reveal">
+      <div class="container-custom max-w-4xl">
+        <!-- Section Header -->
+        <div class="text-center mb-16">
+          <div class="inline-block px-4 py-2 glass-subtle rounded-full mb-4">
+            <span class="text-sm font-semibold text-blue-400 uppercase tracking-wider">❓ FAQ</span>
+          </div>
+          <h2 class="text-4xl lg:text-6xl font-black mb-4">
+            <span class="gradient-text">Frequently Asked Questions</span>
+          </h2>
+          <p class="text-lg text-gray-400">
+            Everything you need to know about Smart Invoice
+          </p>
+        </div>
+
+        <!-- Search and Filter Controls -->
+        <div class="mb-8">
+          <!-- Search Input -->
+          <div class="glass-card p-2 mb-6">
+            <div class="relative">
+              <svg class="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+              </svg>
+              <input 
+                type="text" 
+                id="faq-search" 
+                placeholder="Search questions..." 
+                class="w-full bg-transparent border-0 outline-none pl-12 pr-4 py-3 text-white placeholder-gray-400 focus:ring-2 focus:ring-primary-500/30 rounded-xl transition-all"
+                aria-label="Search FAQ questions"
+              />
+            </div>
+          </div>
+
+          <!-- Category Filters -->
+          <div class="flex flex-wrap gap-2 justify-center" role="group" aria-label="FAQ categories">
+            <button class="faq-category-btn active px-4 py-2 rounded-full text-sm font-semibold transition-all glass-subtle hover:bg-primary-500/20" data-category="all">
+              All Questions
+            </button>
+            <button class="faq-category-btn px-4 py-2 rounded-full text-sm font-semibold transition-all glass-subtle hover:bg-primary-500/20" data-category="getting-started">
+              Getting Started
+            </button>
+            <button class="faq-category-btn px-4 py-2 rounded-full text-sm font-semibold transition-all glass-subtle hover:bg-primary-500/20" data-category="features">
+              Features
+            </button>
+            <button class="faq-category-btn px-4 py-2 rounded-full text-sm font-semibold transition-all glass-subtle hover:bg-primary-500/20" data-category="billing">
+              Billing
+            </button>
+            <button class="faq-category-btn px-4 py-2 rounded-full text-sm font-semibold transition-all glass-subtle hover:bg-primary-500/20" data-category="security">
+              Security
+            </button>
+          </div>
+        </div>
+
+        <!-- FAQ Items -->
+        <div class="space-y-4" id="faq-list">
+          <!-- FAQ 1 -->
+          <div class="glass-card p-6 cursor-pointer hover-glow transition-all duration-300" data-faq-item data-category="getting-started">
+            <button class="w-full flex items-center justify-between text-left" data-faq-trigger>
+              <h3 class="text-xl font-bold text-white pr-4" data-faq-question>How do I create my first invoice?</h3>
+              <svg class="w-6 h-6 text-primary-400 transition-transform duration-300 flex-shrink-0" data-faq-icon fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+              </svg>
+            </button>
+            <div class="overflow-hidden transition-all duration-300 max-h-0" data-faq-content>
+              <p class="text-gray-300 leading-relaxed mt-4 pt-4 border-t border-white/10">
+                Creating your first invoice is simple! After signing up, click "Create Invoice" from your dashboard. Our step-by-step form will guide you through entering your business details, client information, and invoice items. Once complete, click "Generate PDF" and your professional invoice will be ready to send in seconds.
+              </p>
+            </div>
+          </div>
+
+          <!-- FAQ 2 -->
+          <div class="glass-card p-6 cursor-pointer hover-glow transition-all duration-300" data-faq-item data-category="features">
+            <button class="w-full flex items-center justify-between text-left" data-faq-trigger>
+              <h3 class="text-xl font-bold text-white pr-4" data-faq-question>Can I customize the invoice template?</h3>
+              <svg class="w-6 h-6 text-primary-400 transition-transform duration-300 flex-shrink-0" data-faq-icon fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+              </svg>
+            </button>
+            <div class="overflow-hidden transition-all duration-300 max-h-0" data-faq-content>
+              <p class="text-gray-300 leading-relaxed mt-4 pt-4 border-t border-white/10">
+                Yes! Pro and Enterprise plans offer advanced customization options. You can add your company logo, customize colors to match your brand, adjust layout preferences, and even create custom invoice templates. The free plan includes our professional default template which works great for most businesses.
+              </p>
+            </div>
+          </div>
+
+          <!-- FAQ 3 -->
+          <div class="glass-card p-6 cursor-pointer hover-glow transition-all duration-300" data-faq-item data-category="features">
+            <button class="w-full flex items-center justify-between text-left" data-faq-trigger>
+              <h3 class="text-xl font-bold text-white pr-4" data-faq-question>How does the WhatsApp integration work?</h3>
+              <svg class="w-6 h-6 text-primary-400 transition-transform duration-300 flex-shrink-0" data-faq-icon fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+              </svg>
+            </button>
+            <div class="overflow-hidden transition-all duration-300 max-h-0" data-faq-content>
+              <p class="text-gray-300 leading-relaxed mt-4 pt-4 border-t border-white/10">
+                Our WhatsApp integration powered by Twilio allows you to send invoices directly to your clients' WhatsApp numbers. Simply enter the client's phone number when creating an invoice, and they'll receive a message with a link to view and download their invoice. It's instant, convenient, and clients love it!
+              </p>
+            </div>
+          </div>
+
+          <!-- FAQ 4 -->
+          <div class="glass-card p-6 cursor-pointer hover-glow transition-all duration-300" data-faq-item data-category="features">
+            <button class="w-full flex items-center justify-between text-left" data-faq-trigger>
+              <h3 class="text-xl font-bold text-white pr-4" data-faq-question>Which currencies are supported?</h3>
+              <svg class="w-6 h-6 text-primary-400 transition-transform duration-300 flex-shrink-0" data-faq-icon fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+              </svg>
+            </button>
+            <div class="overflow-hidden transition-all duration-300 max-h-0" data-faq-content>
+              <p class="text-gray-300 leading-relaxed mt-4 pt-4 border-t border-white/10">
+                Smart Invoice supports multiple currencies including USD, EUR, GBP, NGN, CAD, and AUD. You can select your preferred currency when creating each invoice, making it perfect for businesses working with international clients. All currency conversions and formatting are handled automatically.
+              </p>
+            </div>
+          </div>
+
+          <!-- FAQ 5 -->
+          <div class="glass-card p-6 cursor-pointer hover-glow transition-all duration-300" data-faq-item data-category="security">
+            <button class="w-full flex items-center justify-between text-left" data-faq-trigger>
+              <h3 class="text-xl font-bold text-white pr-4" data-faq-question>Is my data secure?</h3>
+              <svg class="w-6 h-6 text-primary-400 transition-transform duration-300 flex-shrink-0" data-faq-icon fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+              </svg>
+            </button>
+            <div class="overflow-hidden transition-all duration-300 max-h-0" data-faq-content>
+              <p class="text-gray-300 leading-relaxed mt-4 pt-4 border-t border-white/10">
+                Absolutely! Security is our top priority. All data is encrypted in transit and at rest using industry-standard SSL/TLS encryption. We're GDPR compliant, regularly perform security audits, and never share your data with third parties. Your invoices and client information are completely safe with us.
+              </p>
+            </div>
+          </div>
+
+          <!-- FAQ 6 -->
+          <div class="glass-card p-6 cursor-pointer hover-glow transition-all duration-300" data-faq-item data-category="billing">
+            <button class="w-full flex items-center justify-between text-left" data-faq-trigger>
+              <h3 class="text-xl font-bold text-white pr-4" data-faq-question>Can I upgrade or downgrade my plan anytime?</h3>
+              <svg class="w-6 h-6 text-primary-400 transition-transform duration-300 flex-shrink-0" data-faq-icon fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+              </svg>
+            </button>
+            <div class="overflow-hidden transition-all duration-300 max-h-0" data-faq-content>
+              <p class="text-gray-300 leading-relaxed mt-4 pt-4 border-t border-white/10">
+                Yes! You have complete flexibility. Upgrade to Pro anytime to unlock unlimited invoices and advanced features. If you need to downgrade, you can do so from your account settings and changes take effect at the end of your billing cycle. There are no long-term contracts or cancellation fees.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Bento Grid Platform Showcase -->
+    <section class="section scroll-reveal">
+      <div class="container-custom">
+        <!-- Section Header -->
+        <div class="text-center mb-16">
+          <div class="inline-block px-4 py-2 glass-subtle rounded-full mb-4">
+            <span class="text-sm font-semibold gradient-text uppercase tracking-wider">✨ Platform Features</span>
+          </div>
+          <h2 class="text-4xl lg:text-6xl font-black mb-4">
+            <span class="gradient-text">Everything You Need, All in One Place</span>
+          </h2>
+          <p class="text-lg text-gray-400 max-w-2xl mx-auto">
+            Powerful tools designed to streamline your invoicing workflow
+          </p>
+        </div>
+
+        <!-- Bento Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4 max-w-7xl mx-auto">
+          <!-- Large Card - Analytics -->
+          <div class="md:col-span-2 md:row-span-2 card-hover group relative overflow-hidden scroll-reveal" style="animation-delay: 0.1s">
+            <div class="absolute inset-0 gradient-mesh opacity-30"></div>
+            <div class="relative z-10 h-full flex flex-col justify-between min-h-[300px]">
               <div>
-                <div class="font-semibold text-white">Sarah Martinez</div>
-                <div class="text-sm text-gray-400">Freelance Designer</div>
+                <div class="text-6xl mb-4 group-hover:scale-110 transition-transform">📊</div>
+                <h3 class="text-3xl font-black mb-3 text-white">Real-Time Analytics</h3>
+                <p class="text-gray-300 leading-relaxed mb-4">
+                  Track revenue, payment status, and client insights with interactive charts and detailed reports. Make data-driven decisions for your business.
+                </p>
+              </div>
+              <div class="flex items-center gap-2 text-primary-400 font-semibold group-hover:gap-4 transition-all">
+                <span>Explore Dashboard</span>
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                </svg>
               </div>
             </div>
           </div>
 
-          <!-- Testimonial 3 -->
-          <div class="card-hover scroll-reveal" style="animation-delay: 0.3s">
-            <div class="flex gap-1 mb-4">
-              <span class="text-yellow-400 text-xl">⭐⭐⭐⭐⭐</span>
-            </div>
-            <p class="text-gray-300 mb-6 leading-relaxed">
-              "The WhatsApp integration is brilliant! I can send invoices directly to clients' phones and they can pay me instantly. Love it!"
+          <!-- Medium Card - PDF Export -->
+          <div class="md:col-span-2 card-hover group scroll-reveal" style="animation-delay: 0.2s">
+            <div class="text-5xl mb-3 group-hover:scale-110 transition-transform">📄</div>
+            <h3 class="text-2xl font-bold mb-2 text-white">Instant PDF Export</h3>
+            <p class="text-gray-300 leading-relaxed">
+              Generate beautiful, professional PDFs in under 2 seconds with custom branding and layouts.
             </p>
-            <div class="flex items-center gap-3">
-              <div class="w-12 h-12 rounded-full bg-gradient-to-br from-orange-500 to-red-600 flex items-center justify-center text-white font-bold shadow-glow">AP</div>
-              <div>
-                <div class="font-semibold text-white">Ahmed Patel</div>
-                <div class="text-sm text-gray-400">Founder, Digital Solutions</div>
-              </div>
-            </div>
+          </div>
+
+          <!-- Small Card - Multi-Currency -->
+          <div class="card-hover group text-center scroll-reveal" style="animation-delay: 0.3s">
+            <div class="text-4xl mb-2 group-hover:scale-110 transition-transform">💱</div>
+            <h3 class="text-lg font-bold text-white">Multi-Currency</h3>
+            <p class="text-sm text-gray-400 mt-1">6+ currencies</p>
+          </div>
+
+          <!-- Small Card - Cloud Sync -->
+          <div class="card-hover group text-center scroll-reveal" style="animation-delay: 0.4s">
+            <div class="text-4xl mb-2 group-hover:scale-110 transition-transform">☁️</div>
+            <h3 class="text-lg font-bold text-white">Cloud Synced</h3>
+            <p class="text-sm text-gray-400 mt-1">Access anywhere</p>
+          </div>
+
+          <!-- Medium Card - Automation -->
+          <div class="md:col-span-2 card-hover group scroll-reveal" style="animation-delay: 0.5s">
+            <div class="text-5xl mb-3 group-hover:scale-110 transition-transform">🤖</div>
+            <h3 class="text-2xl font-bold mb-2 text-white">Smart Automation</h3>
+            <p class="text-gray-300 leading-relaxed">
+              Automated payment reminders, recurring invoices, and client follow-ups save you hours every week.
+            </p>
+          </div>
+
+          <!-- Small Card - Support -->
+          <div class="card-hover group text-center scroll-reveal" style="animation-delay: 0.6s">
+            <div class="text-4xl mb-2 group-hover:scale-110 transition-transform">🛡️</div>
+            <h3 class="text-lg font-bold text-white">24/7 Support</h3>
+            <p class="text-sm text-gray-400 mt-1">Always here</p>
+          </div>
+
+          <!-- Small Card - Secure -->
+          <div class="card-hover group text-center scroll-reveal" style="animation-delay: 0.7s">
+            <div class="text-4xl mb-2 group-hover:scale-110 transition-transform">🔒</div>
+            <h3 class="text-lg font-bold text-white">Bank-Level Security</h3>
+            <p class="text-sm text-gray-400 mt-1">SSL encrypted</p>
           </div>
         </div>
       </div>
@@ -1016,6 +1342,8 @@
 
   <!-- Animation Scripts -->
   <script src="{% static 'js/animations.js' %}"></script>
+  <script src="{% static 'js/cursor-effects.js' %}"></script>
+  <script src="{% static 'js/pricing-carousel.js' %}"></script>
   <script src="{% static 'js/charts.js' %}"></script>
 </body>
 </html>
