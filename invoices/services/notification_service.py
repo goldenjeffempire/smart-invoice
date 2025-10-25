@@ -3,6 +3,7 @@ from django.core.mail import EmailMessage
 from django.template.loader import render_to_string
 from django.conf import settings
 from twilio.rest import Client as TwilioClient
+from ..utils import format_whatsapp_number
 import logging
 
 logger = logging.getLogger(__name__)
@@ -91,16 +92,16 @@ class NotificationService:
                 settings.TWILIO_AUTH_TOKEN
             )
             
-            if not phone_number.startswith('whatsapp:'):
-                phone_number = f'whatsapp:{phone_number}'
+            # Normalize phone number for WhatsApp
+            phone_number = format_whatsapp_number(phone_number)
             
-            message = client.messages.create(
+            twilio_message = client.messages.create(
                 from_=settings.TWILIO_WHATSAPP_NUMBER,
                 body=message,
                 to=phone_number
             )
             
-            logger.info(f"WhatsApp message sent to {phone_number}: {message.sid}")
+            logger.info(f"WhatsApp message sent to {phone_number}: {twilio_message.sid}")
             return True
             
         except Exception as e:

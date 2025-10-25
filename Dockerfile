@@ -5,9 +5,10 @@ FROM python:3.11-slim as builder
 ENV PYTHONUNBUFFERED=1 \
     PYTHONDONTWRITEBYTECODE=1 \
     PIP_NO_CACHE_DIR=1 \
-    PIP_DISABLE_PIP_VERSION_CHECK=1
+    PIP_DISABLE_PIP_VERSION_CHECK=1 \
+    NODE_VERSION=20.x
 
-# Install system dependencies
+# Install system dependencies including Node.js
 RUN apt-get update && apt-get install -y \
     gcc \
     postgresql-client \
@@ -17,13 +18,25 @@ RUN apt-get update && apt-get install -y \
     libcairo2-dev \
     pkg-config \
     python3-dev \
+    && curl -fsSL https://deb.nodesource.com/setup_${NODE_VERSION} | bash - \
+    && apt-get install -y nodejs \
     && rm -rf /var/lib/apt/lists/*
 
 # Set work directory
 WORKDIR /app
 
+# Copy package files and install Node.js dependencies
+COPY package.json package-lock.json ./
+RUN npm ci
+
+# Copy entire application for Tailwind to scan all templates
+COPY . .
+
+# Build Tailwind CSS with all templates available for proper purging
+RUN npm run build:css
+
 # Install Python dependencies
-COPY requirements.txt .
+RUN pip install --upgrade pip
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Production stage
@@ -50,8 +63,8 @@ WORKDIR /app
 COPY --from=builder /usr/local/lib/python3.11/site-packages /usr/local/lib/python3.11/site-packages
 COPY --from=builder /usr/local/bin /usr/local/bin
 
-# Copy application code
-COPY --chown=appuser:appuser . .
+# Copy application code WITH built Tailwind CSS
+COPY --from=builder --chown=appuser:appuser /app /app
 
 # Create necessary directories
 RUN mkdir -p staticfiles media logs && \
@@ -60,7 +73,7 @@ RUN mkdir -p staticfiles media logs && \
 # Switch to app user
 USER appuser
 
-# Collect static files
+# Collect static files (includes built Tailwind CSS)
 RUN python manage.py collectstatic --noinput || true
 
 # Expose port

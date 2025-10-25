@@ -171,14 +171,30 @@ class Invoice(models.Model):
     payment_instructions = models.TextField(blank=True, verbose_name="Payment Instructions")
     paystack_reference = models.CharField(max_length=100, blank=True, null=True, verbose_name="Paystack Reference")
     
+    def calculate_totals(self):
+        """Calculate invoice totals from line items or legacy fields."""
+        # Use line items if they exist, otherwise use legacy single-item fields
+        if hasattr(self, 'line_items') and self.line_items.exists():
+            # Calculate subtotal from line items (quantity × unit_price)
+            self.subtotal = sum(
+                item.quantity * item.unit_price 
+                for item in self.line_items.all()
+            )
+        else:
+            # Use legacy single-item fields
+            self.subtotal = self.quantity * self.unit_price
+        
+        self.tax_amount = (self.subtotal * self.tax_rate) / Decimal('100')
+        self.total_amount = self.subtotal + self.tax_amount - self.discount_amount
+    
     def save(self, *args, **kwargs):
         if not self.invoice_id:
             self.invoice_id = f"INV-{uuid.uuid4().hex[:8].upper()}"
         
-        self.subtotal = self.quantity * self.unit_price
-        self.tax_amount = (self.subtotal * self.tax_rate) / Decimal('100')
-        self.total_amount = self.subtotal + self.tax_amount - self.discount_amount
+        # Auto-calculate totals on save
+        self.calculate_totals()
         
+        # Auto-update status to overdue if needed
         if self.due_date and self.status == 'sent':
             if timezone.now().date() > self.due_date and self.status != 'paid':
                 self.status = 'overdue'
@@ -233,6 +249,9 @@ class InvoiceLineItem(models.Model):
         ordering = ['order', 'id']
         verbose_name = "Invoice Line Item"
         verbose_name_plural = "Invoice Line Items"
+        indexes = [
+            models.Index(fields=['invoice', 'order']),
+        ]
     
     def __str__(self):
         return f"{self.description[:50]} - {self.quantity} x {self.unit_price}"

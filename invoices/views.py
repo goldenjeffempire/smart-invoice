@@ -422,20 +422,7 @@ def send_invoice_whatsapp(request, pk):
 # ----------------------------
 # Utility Functions
 # ----------------------------
-def _normalize_phone_number(phone):
-    """Normalize phone number to E.164 format."""
-    phone = re.sub(r'[^\d+]', '', phone)
-    
-    if phone.startswith('+'):
-        return phone
-    elif phone.startswith('00'):
-        return '+' + phone[2:]
-    elif len(phone) == 10:
-        return '+1' + phone
-    elif len(phone) == 11 and phone.startswith('1'):
-        return '+' + phone
-    else:
-        return '+' + phone
+from .utils import normalize_phone_number as _normalize_phone_number
 
 
 def _create_public_pdf_url(request, invoice, pdf_bytes):
