@@ -66,10 +66,6 @@ externalPort = 5000
 localPort = 45849
 externalPort = 3000
 
-[[ports]]
-localPort = 46625
-externalPort = 6800
-
 [deployment]
 deploymentTarget = "vm"
 run = ["gunicorn", "--bind=0.0.0.0:5000", "--reuse-port", "--workers=4", "smart_invoice.wsgi:application"]
