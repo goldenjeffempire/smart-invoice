@@ -1,18 +1,44 @@
+"""
+NotificationService handles all notification delivery (email, WhatsApp, SMS).
+Provides a centralized interface for sending invoices and payment reminders.
+"""
 from typing import Optional
 from django.core.mail import EmailMessage
 from django.template.loader import render_to_string
 from django.conf import settings
 from twilio.rest import Client as TwilioClient
 from ..utils import format_whatsapp_number
+from ..exceptions import EmailDeliveryError, WhatsAppDeliveryError
 import logging
 
 logger = logging.getLogger(__name__)
 
 
 class NotificationService:
+    """
+    Centralized service for handling all notification delivery.
+    
+    This service provides methods for sending invoices and payment reminders
+    via email and WhatsApp, with proper error handling and logging.
+    """
     
     @staticmethod
-    def send_invoice_email(invoice, recipient_email: Optional[str] = None, pdf_bytes: Optional[bytes] = None):
+    def send_invoice_email(invoice, recipient_email: Optional[str] = None, pdf_bytes: Optional[bytes] = None) -> bool:
+        """
+        Send an invoice via email with optional PDF attachment.
+        
+        Args:
+            invoice: The Invoice model instance to send.
+            recipient_email: Optional recipient email. If not provided, uses invoice.client_email.
+            pdf_bytes: Optional PDF file content as bytes. If provided, attached to email.
+            
+        Returns:
+            True if email was sent successfully.
+            
+        Raises:
+            EmailDeliveryError: If email delivery fails.
+            ValueError: If no recipient email is available.
+        """
         try:
             recipient = recipient_email or invoice.client_email
             if not recipient:
@@ -47,10 +73,23 @@ class NotificationService:
             
         except Exception as e:
             logger.error(f"Error sending invoice email: {str(e)}")
-            raise
+            raise EmailDeliveryError(f"Failed to send invoice email: {str(e)}") from e
     
     @staticmethod
-    def send_payment_reminder(invoice):
+    def send_payment_reminder(invoice) -> bool:
+        """
+        Send a payment reminder email for an invoice.
+        
+        Args:
+            invoice: The Invoice model instance for which to send a reminder.
+            
+        Returns:
+            True if reminder was sent successfully.
+            
+        Raises:
+            EmailDeliveryError: If email delivery fails.
+            ValueError: If no client email is available.
+        """
         try:
             if not invoice.client_email:
                 raise ValueError("No client email available")
@@ -75,10 +114,24 @@ class NotificationService:
             
         except Exception as e:
             logger.error(f"Error sending payment reminder: {str(e)}")
-            raise
+            raise EmailDeliveryError(f"Failed to send payment reminder: {str(e)}") from e
     
     @staticmethod
-    def send_whatsapp_message(phone_number: str, message: str):
+    def send_whatsapp_message(phone_number: str, message: str) -> bool:
+        """
+        Send a WhatsApp message using Twilio.
+        
+        Args:
+            phone_number: Recipient phone number (will be normalized to WhatsApp format).
+            message: Message content to send.
+            
+        Returns:
+            True if message was sent successfully.
+            
+        Raises:
+            WhatsAppDeliveryError: If message delivery fails.
+            ValueError: If Twilio credentials are not configured.
+        """
         try:
             if not all([
                 settings.TWILIO_ACCOUNT_SID,
@@ -106,10 +159,24 @@ class NotificationService:
             
         except Exception as e:
             logger.error(f"Error sending WhatsApp message: {str(e)}")
-            raise
+            raise WhatsAppDeliveryError(f"Failed to send WhatsApp message: {str(e)}") from e
     
     @staticmethod
-    def send_whatsapp_invoice(invoice, payment_link: Optional[str] = None):
+    def send_whatsapp_invoice(invoice, payment_link: Optional[str] = None) -> bool:
+        """
+        Send an invoice notification via WhatsApp.
+        
+        Args:
+            invoice: The Invoice model instance to send.
+            payment_link: Optional payment link to include in the message.
+            
+        Returns:
+            True if invoice was sent successfully.
+            
+        Raises:
+            WhatsAppDeliveryError: If WhatsApp delivery fails.
+            ValueError: If no client phone number is available.
+        """
         try:
             if not invoice.client_phone:
                 raise ValueError("No client phone number available")
@@ -135,4 +202,4 @@ Thank you for your business!
             
         except Exception as e:
             logger.error(f"Error sending WhatsApp invoice: {str(e)}")
-            raise
+            raise WhatsAppDeliveryError(f"Failed to send WhatsApp invoice: {str(e)}") from e

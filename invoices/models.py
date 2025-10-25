@@ -194,11 +194,6 @@ class Invoice(models.Model):
         # Auto-calculate totals on save
         self.calculate_totals()
         
-        # Auto-update status to overdue if needed
-        if self.due_date and self.status == 'sent':
-            if timezone.now().date() > self.due_date and self.status != 'paid':
-                self.status = 'overdue'
-        
         super().save(*args, **kwargs)
     
     @property

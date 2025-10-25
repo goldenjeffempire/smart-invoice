@@ -308,7 +308,7 @@ def invoice_pdf(request, pk):
 # ----------------------------
 @login_required
 def send_invoice_email(request, pk):
-    """Send invoice PDF via email."""
+    """Send invoice PDF via email using NotificationService."""
     invoice = get_object_or_404(Invoice, pk=pk, user=request.user)
 
     if request.method == 'POST':
@@ -323,29 +323,9 @@ def send_invoice_email(request, pk):
             messages.error(request, 'Could not generate PDF.')
             return redirect('invoice_detail', pk=pk)
 
-        subject = f"Invoice {invoice.invoice_id} from {invoice.business_name}"
-        body = f"""Hello {invoice.client_name},
-
-Please find attached Invoice {invoice.invoice_id} for the amount of {invoice.currency} {invoice.total_amount}.
-
-Invoice Details:
-- Issue Date: {invoice.issue_date}
-- Due Date: {invoice.due_date if invoice.due_date else 'Upon receipt'}
-- Amount: {invoice.currency} {invoice.total_amount}
-
-{invoice.payment_instructions if invoice.payment_instructions else ''}
-
-Thank you for your business!
-
-Best regards,
-{invoice.business_name}
-"""
-
-        email = EmailMessage(subject, body, settings.EMAIL_HOST_USER, [to_email])
-        email.attach(f"{invoice.invoice_id}.pdf", pdf_bytes, 'application/pdf')
-
         try:
-            email.send(fail_silently=False)
+            from .services.notification_service import NotificationService
+            NotificationService.send_invoice_email(invoice, to_email, pdf_bytes)
             invoice.status = 'sent'
             invoice.save()
             messages.success(request, f'Invoice sent successfully to {to_email}!')
@@ -428,11 +408,40 @@ from .utils import normalize_phone_number as _normalize_phone_number
 def _create_public_pdf_url(request, invoice, pdf_bytes):
     """
     Create a publicly accessible URL for the PDF.
-    In production, upload to cloud storage (S3, Cloudinary, etc.)
-    For now, we return the direct PDF URL.
+    Uses Cloudinary cloud storage when configured, otherwise falls back to direct URL.
+    
+    Args:
+        request: The HTTP request object.
+        invoice: The Invoice model instance.
+        pdf_bytes: The PDF file content as bytes.
+        
+    Returns:
+        str: The public URL to access the PDF.
     """
-    pdf_url = request.build_absolute_uri(reverse('invoice_pdf', args=[invoice.pk]))
-    return pdf_url
+    try:
+        from .services.storage_service import StorageService
+        
+        # Try to upload to Cloudinary if configured
+        if StorageService.is_cloudinary_configured():
+            filename = f"invoice_{invoice.invoice_id}"
+            secure_url, public_id = StorageService.upload_pdf(
+                pdf_bytes, 
+                filename,
+                folder='invoices'
+            )
+            return secure_url
+        else:
+            # Fallback to direct URL (requires public access to the PDF endpoint)
+            logger.warning(
+                "Cloudinary not configured. Using direct PDF URL. "
+                "This may not work with WhatsApp. Configure CLOUDINARY_URL for production."
+            )
+            return request.build_absolute_uri(reverse('invoice_pdf', args=[invoice.pk]))
+            
+    except Exception as e:
+        logger.error(f"Error creating public PDF URL: {str(e)}")
+        # Fallback to direct URL on error
+        return request.build_absolute_uri(reverse('invoice_pdf', args=[invoice.pk]))
 
 
 # ----------------------------

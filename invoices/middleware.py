@@ -1,3 +1,7 @@
+"""
+Custom middleware for security, rate limiting, and audit logging.
+Provides comprehensive protection and monitoring for the Django application.
+"""
 from django.core.cache import cache, caches
 from django.http import HttpResponseForbidden
 from django.conf import settings
@@ -9,6 +13,18 @@ logger = logging.getLogger(__name__)
 
 
 class RateLimitMiddleware(MiddlewareMixin):
+    """
+    Rate limiting middleware to prevent abuse and brute force attacks.
+    
+    Tracks requests by IP address and enforces configurable rate limits on
+    sensitive endpoints. Uses Redis cache when available for better performance
+    across multiple application instances.
+    
+    Settings:
+        RATE_LIMIT_MAX_REQUESTS: Max requests per window (default: 60)
+        RATE_LIMIT_WINDOW: Time window in seconds (default: 60)
+        RATE_LIMIT_CACHE: Cache backend to use (default: 'default')
+    """
     def process_request(self, request):
         if settings.DEBUG:
             return None
@@ -55,6 +71,19 @@ class RateLimitMiddleware(MiddlewareMixin):
 
 
 class SecurityHeadersMiddleware(MiddlewareMixin):
+    """
+    Security headers middleware for enhanced protection.
+    
+    Adds security headers to all responses in production mode to protect against
+    common web vulnerabilities like XSS, clickjacking, and MIME-type sniffing.
+    
+    Headers Added:
+        - X-Content-Type-Options: nosniff
+        - X-Frame-Options: DENY
+        - X-XSS-Protection: 1; mode=block
+        - Referrer-Policy: strict-origin-when-cross-origin
+        - Permissions-Policy: geolocation=(), microphone=(), camera=()
+    """
     def process_response(self, request, response):
         if not settings.DEBUG:
             response['X-Content-Type-Options'] = 'nosniff'
@@ -67,6 +96,19 @@ class SecurityHeadersMiddleware(MiddlewareMixin):
 
 
 class AuditLogMiddleware(MiddlewareMixin):
+    """
+    Audit logging middleware for tracking sensitive operations.
+    
+    Logs all POST, PUT, DELETE, and PATCH requests to sensitive endpoints,
+    capturing user information and IP addresses for security monitoring
+    and compliance purposes.
+    
+    Monitored Paths:
+        - /invoice/delete/
+        - /client/delete/
+        - /invoice/
+        - /admin/
+    """
     def process_request(self, request):
         if request.user.is_authenticated:
             sensitive_paths = [
