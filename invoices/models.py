@@ -255,3 +255,89 @@ class InvoiceLineItem(models.Model):
     
     def __str__(self):
         return f"{self.description[:50]} - {self.quantity} x {self.unit_price}"
+
+
+THEME_CHOICES = [
+    ('purple_pink', 'Purple & Pink (Default)'),
+    ('blue_cyan', 'Blue & Cyan'),
+    ('green_teal', 'Green & Teal'),
+    ('orange_red', 'Orange & Red'),
+    ('monochrome', 'Monochrome'),
+]
+
+EMAIL_PROVIDER_CHOICES = [
+    ('smtp', 'SMTP (Default)'),
+    ('sendgrid', 'SendGrid'),
+]
+
+
+class UserSettings(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='settings')
+    
+    business_name = models.CharField(max_length=200, blank=True, verbose_name="Business Name")
+    business_email = models.EmailField(max_length=200, blank=True, verbose_name="Business Email")
+    business_phone = models.CharField(max_length=50, blank=True, verbose_name="Business Phone")
+    business_address = models.TextField(blank=True, verbose_name="Business Address")
+    business_website = models.URLField(max_length=200, blank=True, verbose_name="Website")
+    business_tax_id = models.CharField(max_length=100, blank=True, verbose_name="Tax ID/VAT")
+    business_logo = models.ImageField(upload_to='logos/', blank=True, null=True, verbose_name="Business Logo")
+    
+    theme = models.CharField(max_length=20, choices=THEME_CHOICES, default='purple_pink', verbose_name="Color Theme")
+    custom_primary_color = models.CharField(max_length=7, blank=True, verbose_name="Custom Primary Color", help_text="Hex color code (e.g., #8b5cf6)")
+    custom_secondary_color = models.CharField(max_length=7, blank=True, verbose_name="Custom Secondary Color", help_text="Hex color code (e.g., #ec4899)")
+    
+    paystack_public_key = models.CharField(max_length=200, blank=True, verbose_name="Paystack Public Key")
+    paystack_secret_key = models.CharField(max_length=200, blank=True, verbose_name="Paystack Secret Key")
+    paystack_webhook_secret = models.CharField(max_length=200, blank=True, verbose_name="Paystack Webhook Secret")
+    
+    email_provider = models.CharField(max_length=20, choices=EMAIL_PROVIDER_CHOICES, default='smtp', verbose_name="Email Provider")
+    email_host = models.CharField(max_length=200, blank=True, default='smtp.gmail.com', verbose_name="Email Host")
+    email_port = models.IntegerField(default=587, verbose_name="Email Port")
+    email_username = models.CharField(max_length=200, blank=True, verbose_name="Email Username")
+    email_password = models.CharField(max_length=200, blank=True, verbose_name="Email Password")
+    email_use_tls = models.BooleanField(default=True, verbose_name="Use TLS")
+    sendgrid_api_key = models.CharField(max_length=200, blank=True, verbose_name="SendGrid API Key")
+    
+    twilio_account_sid = models.CharField(max_length=200, blank=True, verbose_name="Twilio Account SID")
+    twilio_auth_token = models.CharField(max_length=200, blank=True, verbose_name="Twilio Auth Token")
+    twilio_whatsapp_number = models.CharField(max_length=50, blank=True, verbose_name="Twilio WhatsApp Number", help_text="Format: whatsapp:+1234567890")
+    whatsapp_number = models.CharField(max_length=50, blank=True, verbose_name="WhatsApp Business Number", help_text="For Pay Now button")
+    
+    default_currency = models.CharField(max_length=3, choices=CURRENCY_CHOICES, default='USD', verbose_name="Default Currency")
+    default_payment_terms = models.CharField(max_length=20, choices=PAYMENT_TERMS_CHOICES, default='net_30', verbose_name="Default Payment Terms")
+    default_tax_rate = models.DecimalField(max_digits=5, decimal_places=2, default=0, verbose_name="Default Tax Rate (%)")
+    
+    enable_paystack = models.BooleanField(default=True, verbose_name="Enable Paystack Payments")
+    enable_email_notifications = models.BooleanField(default=True, verbose_name="Enable Email Notifications")
+    enable_whatsapp_notifications = models.BooleanField(default=False, verbose_name="Enable WhatsApp Notifications")
+    enable_sms_notifications = models.BooleanField(default=False, verbose_name="Enable SMS Notifications")
+    enable_payment_reminders = models.BooleanField(default=True, verbose_name="Enable Automatic Payment Reminders")
+    
+    reminder_days_before_due = models.IntegerField(default=3, verbose_name="Send Reminder (Days Before Due)")
+    reminder_days_after_overdue = models.IntegerField(default=3, verbose_name="Send Reminder (Days After Overdue)")
+    
+    invoice_footer_text = models.TextField(blank=True, verbose_name="Invoice Footer Text", help_text="Custom text to appear at the bottom of invoices")
+    
+    created_at = models.DateTimeField(default=timezone.now)
+    updated_at = models.DateTimeField(auto_now=True)
+    
+    class Meta:
+        verbose_name = "User Settings"
+        verbose_name_plural = "User Settings"
+    
+    def __str__(self):
+        return f"Settings for {self.user.username}"
+    
+    @property
+    def has_paystack_configured(self):
+        return bool(self.paystack_public_key and self.paystack_secret_key)
+    
+    @property
+    def has_email_configured(self):
+        if self.email_provider == 'sendgrid':
+            return bool(self.sendgrid_api_key)
+        return bool(self.email_username and self.email_password)
+    
+    @property
+    def has_whatsapp_configured(self):
+        return bool(self.twilio_account_sid and self.twilio_auth_token and self.twilio_whatsapp_number)
