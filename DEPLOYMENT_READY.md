@@ -106,7 +106,7 @@ DATABASE_URL=postgresql://...
 # Paystack
 PAYSTACK_PUBLIC_KEY=pk_live_xxxxx
 PAYSTACK_SECRET_KEY=sk_live_xxxxx
-PAYSTACK_WEBHOOK_SECRET=whsec_xxxxx
+PAYSTACK_WEBHOOK_SECRET=https://smart-invoice.onrender.com/api/paystack/webhook/
 
 # Email
 EMAIL_HOST_USER=your-email@gmail.com
