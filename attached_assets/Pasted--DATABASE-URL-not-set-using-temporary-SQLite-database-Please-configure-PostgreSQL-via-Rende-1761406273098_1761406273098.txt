@@ -1,0 +1,63 @@
+⚠️  DATABASE_URL not set - using temporary SQLite database
+    Please configure PostgreSQL via Render dashboard for production use
+============================================================
+ENVIRONMENT VALIDATION ERRORS:
+  ❌ REQUIRED: DJANGO_SECRET_KEY is not set
+  ❌ PRODUCTION REQUIRED: DATABASE_URL is not set
+  ❌ DATABASE_URL is required in production (use PostgreSQL)
+============================================================
+⚠️  Please set the required environment variables in your deployment dashboard!
+    The application may not function correctly until these are configured.
+============================================================
+ENVIRONMENT VALIDATION WARNINGS:
+  ℹ️  OPTIONAL: TWILIO_ACCOUNT_SID is not set - WhatsApp invoice delivery via Twilio will be disabled
+  ℹ️  OPTIONAL: TWILIO_AUTH_TOKEN is not set - WhatsApp invoice delivery via Twilio will be disabled
+============================================================
+⚠️  DATABASE_URL not set - using temporary SQLite database
+    Please configure PostgreSQL via Render dashboard for production use
+⚠️  DATABASE_URL not set - using temporary SQLite database
+    Please configure PostgreSQL via Render dashboard for production use
+============================================================
+ENVIRONMENT VALIDATION ERRORS:
+  ❌ REQUIRED: DJANGO_SECRET_KEY is not set
+  ❌ PRODUCTION REQUIRED: DATABASE_URL is not set
+  ❌ DATABASE_URL is required in production (use PostgreSQL)
+============================================================
+⚠️  Please set the required environment variables in your deployment dashboard!
+    The application may not function correctly until these are configured.
+============================================================
+ENVIRONMENT VALIDATION WARNINGS:
+  ℹ️  OPTIONAL: TWILIO_ACCOUNT_SID is not set - WhatsApp invoice delivery via Twilio will be disabled
+  ℹ️  OPTIONAL: TWILIO_AUTH_TOKEN is not set - WhatsApp invoice delivery via Twilio will be disabled
+============================================================
+============================================================
+ENVIRONMENT VALIDATION ERRORS:
+  ❌ REQUIRED: DJANGO_SECRET_KEY is not set
+  ❌ PRODUCTION REQUIRED: DATABASE_URL is not set
+  ❌ DATABASE_URL is required in production (use PostgreSQL)
+============================================================
+⚠️  Please set the required environment variables in your deployment dashboard!
+    The application may not function correctly until these are configured.
+============================================================
+ENVIRONMENT VALIDATION WARNINGS:
+  ℹ️  OPTIONAL: TWILIO_ACCOUNT_SID is not set - WhatsApp invoice delivery via Twilio will be disabled
+  ℹ️  OPTIONAL: TWILIO_AUTH_TOKEN is not set - WhatsApp invoice delivery via Twilio will be disabled
+============================================================
+⚠️  DATABASE_URL not set - using temporary SQLite database
+    Please configure PostgreSQL via Render dashboard for production use
+============================================================
+ENVIRONMENT VALIDATION ERRORS:
+  ❌ REQUIRED: DJANGO_SECRET_KEY is not set
+  ❌ PRODUCTION REQUIRED: DATABASE_URL is not set
+  ❌ DATABASE_URL is required in production (use PostgreSQL)
+============================================================
+⚠️  Please set the required environment variables in your deployment dashboard!
+    The application may not function correctly until these are configured.
+============================================================
+ENVIRONMENT VALIDATION WARNINGS:
+  ℹ️  OPTIONAL: TWILIO_ACCOUNT_SID is not set - WhatsApp invoice delivery via Twilio will be disabled
+  ℹ️  OPTIONAL: TWILIO_AUTH_TOKEN is not set - WhatsApp invoice delivery via Twilio will be disabled
+============================================================
+127.0.0.1 - - [25/Oct/2025:15:30:41 +0000] "HEAD / HTTP/1.1" 301 0 "-" "Go-http-client/1.1"
+127.0.0.1 - - [25/Oct/2025:15:30:41 +0000] "HEAD / HTTP/1.1" 301 0 "-" "Go-http-client/1.1"
+127.0.0.1 - - [25/Oct/2025:15:30:41 +0000] "HEAD / HTTP/1.1" 301 0 "-" "Go-http-client/1.1"
