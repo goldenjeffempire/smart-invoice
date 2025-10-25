@@ -7,9 +7,6 @@
 
 class InvoiceFormManager {
   constructor() {
-    this.debug = true; // Enable console logging
-    this.log('📝 Invoice Form Manager initializing...');
-    
     this.form = document.querySelector('form[data-invoice-form]');
     this.lineItems = [];
     this.totals = {
@@ -19,29 +16,17 @@ class InvoiceFormManager {
     };
     
     if (this.form) {
-      this.log('✅ Form found, setting up...');
       this.init();
-    } else {
-      this.log('⚠️ No invoice form found on this page');
-    }
-  }
-
-  log(message, data = null) {
-    if (this.debug) {
-      const timestamp = new Date().toLocaleTimeString();
-      console.log(`[${timestamp}] 📝 InvoiceForm:`, message, data || '');
     }
   }
 
   init() {
-    this.log('🚀 Initializing form features...');
     this.setupRealTimeCalculations();
     this.setupSmartValidation();
     this.setupDynamicLineItems();
     this.setupFormSubmission();
     this.setupAutoSave();
     this.showWelcomeAnimation();
-    this.log('✅ All form features ready');
   }
 
   setupRealTimeCalculations() {
@@ -111,8 +96,6 @@ class InvoiceFormManager {
     const total = subtotal + tax;
 
     this.totals = { subtotal, tax, total };
-    
-    this.log('💰 Totals calculated', { subtotal, tax, total });
 
     this.updateTotalDisplays();
   }

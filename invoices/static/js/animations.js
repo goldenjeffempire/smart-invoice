@@ -9,20 +9,10 @@ class AnimationEngine {
   constructor() {
     this.observers = new Map();
     this.animations = new Set();
-    this.debug = true; // Enable console logging
-    this.log('🎨 Animation Engine initialized');
     this.init();
   }
 
-  log(message, data = null) {
-    if (this.debug) {
-      const timestamp = new Date().toLocaleTimeString();
-      console.log(`[${timestamp}] 🎨 AnimationEngine:`, message, data || '');
-    }
-  }
-
   init() {
-    this.log('⚙️ Initializing Animation Engine...');
     if (document.readyState === 'loading') {
       document.addEventListener('DOMContentLoaded', () => this.setup());
     } else {
@@ -31,7 +21,6 @@ class AnimationEngine {
   }
 
   setup() {
-    this.log('🚀 Setting up all animation modules...');
     this.setupScrollReveal();
     this.setupParallax();
     this.setupCountUp();
@@ -43,16 +32,11 @@ class AnimationEngine {
     this.setupFormEnhancements();
     this.setupCardAnimations();
     this.setupMagneticButtons();
-    this.log('✅ All animation modules ready');
   }
 
   setupScrollReveal() {
-    const elements = document.querySelectorAll('[data-reveal]');
-    this.log('📜 Setting up Scroll Reveal', `${elements.length} elements found`);
-    
     if (this.prefersReducedMotion()) {
-      this.log('⚠️ Reduced motion preference detected - skipping animations');
-      elements.forEach(el => {
+      document.querySelectorAll('[data-reveal]').forEach(el => {
         el.style.opacity = '1';
         el.style.transform = 'none';
       });
@@ -69,7 +53,6 @@ class AnimationEngine {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           const delay = entry.target.dataset.delay || 0;
-          this.log('👁️ Element revealed', entry.target.className);
           setTimeout(() => {
             entry.target.classList.add('revealed');
             entry.target.style.opacity = '1';
@@ -80,7 +63,7 @@ class AnimationEngine {
       });
     }, options);
 
-    elements.forEach(el => {
+    document.querySelectorAll('[data-reveal]').forEach(el => {
       el.style.opacity = '0';
       el.style.transform = 'translateY(30px) scale(0.95)';
       el.style.transition = 'opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94), transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
@@ -95,8 +78,6 @@ class AnimationEngine {
 
     const parallaxElements = document.querySelectorAll('[data-parallax]');
     if (!parallaxElements.length) return;
-    
-    this.log('🌊 Setting up Parallax', `${parallaxElements.length} elements`);
 
     window.addEventListener('scroll', () => {
       const scrolled = window.pageYOffset;
@@ -401,7 +382,6 @@ class AnimationEngine {
   }
 
   showToast(message, type = 'success') {
-    this.log('🔔 Showing toast notification', { message, type });
     const toast = document.createElement('div');
     toast.className = `toast-notification toast-${type}`;
     toast.innerHTML = `

@@ -7,35 +7,20 @@
 
 class InteractivePricing {
   constructor() {
-    this.debug = true; // Enable console logging
-    this.log('💰 Interactive Pricing System initializing...');
     this.init();
   }
 
-  log(message, data = null) {
-    if (this.debug) {
-      const timestamp = new Date().toLocaleTimeString();
-      console.log(`[${timestamp}] 💰 Pricing:`, message, data || '');
-    }
-  }
-
   init() {
-    this.log('🚀 Setting up pricing features...');
     this.setupTestimonialsCarousel();
     this.setupFAQAccordion();
     this.setupConfettiEffect();
     this.setupNewsletterForm();
-    this.log('✅ All pricing features ready');
   }
 
   setupTestimonialsCarousel() {
     const carousel = document.getElementById('testimonials-carousel');
-    if (!carousel) {
-      this.log('⚠️ Testimonials carousel not found on this page');
-      return;
-    }
+    if (!carousel) return;
 
-    this.log('🎠 Setting up testimonials carousel...');
     const slides = carousel.querySelectorAll('[data-testimonial-slide]');
     const dots = carousel.querySelectorAll('[data-testimonial-dot]');
     const prevBtn = document.getElementById('testimonial-prev');
@@ -44,7 +29,6 @@ class InteractivePricing {
     let autoplayInterval = null;
 
     const showSlide = (index) => {
-      this.log('📍 Showing slide', index + 1);
       slides.forEach((slide, i) => {
         slide.classList.toggle('active', i === index);
       });
