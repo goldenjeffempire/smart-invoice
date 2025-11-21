@@ -130,12 +130,12 @@ class InvoiceViewTestCase(TestCase):
         )
 
     def test_dashboard_requires_login(self):
-        response = self.client.get("/invoices/", follow=True)
-        self.assertRedirects(response, "/login/?next=/invoices/")
+        response = self.client.get("/invoices/dashboard/", follow=True)
+        self.assertRedirects(response, "/login/?next=/invoices/dashboard/")
 
     def test_dashboard_loads_for_authenticated_user(self):
         self.client.login(username="testuser", password="testpass123")
-        response = self.client.get("/invoices/")
+        response = self.client.get("/invoices/dashboard/")
         self.assertEqual(response.status_code, 200)
         self.assertIn("invoices", response.context)
 
@@ -146,12 +146,12 @@ class InvoiceViewTestCase(TestCase):
             password="otherpass123",
         )
         self.client.login(username=other_user.username, password="otherpass123")
-        response = self.client.get(f"/invoices/{self.invoice.id}/")
+        response = self.client.get(f"/invoices/invoice/{self.invoice.id}/")
         self.assertEqual(response.status_code, 404)
 
     def test_invoice_detail_loads_for_owner(self):
         self.client.login(username="testuser", password="testpass123")
-        response = self.client.get(f"/invoices/{self.invoice.id}/")
+        response = self.client.get(f"/invoices/invoice/{self.invoice.id}/")
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.context["invoice"], self.invoice)
 
@@ -180,7 +180,7 @@ class PDFGenerationTestCase(TestCase):
 
     def test_pdf_generation_endpoint_exists(self):
         self.client.login(username="testuser", password="testpass123")
-        response = self.client.get(f"/invoices/{self.invoice.id}/pdf/")
+        response = self.client.get(f"/invoices/invoice/{self.invoice.id}/pdf/")
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response["Content-Type"], "application/pdf")
 
