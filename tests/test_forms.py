@@ -2,7 +2,7 @@ import pytest
 from decimal import Decimal
 from django.contrib.auth.models import User
 from invoices.forms import SignUpForm, InvoiceForm, LineItemForm
-from invoices.models import Invoice, LineItem
+from invoices.models import LineItem
 
 
 @pytest.mark.django_db

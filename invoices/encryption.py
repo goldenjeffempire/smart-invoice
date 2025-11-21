@@ -22,10 +22,14 @@ class FieldEncryption:
         Derive encryption key from Django SECRET_KEY using PBKDF2.
         This ensures the encryption key is derived securely.
         """
+        # Use environment variable for salt, with fallback for backwards compatibility
+        salt_str = getattr(settings, 'ENCRYPTION_SALT', 'smart_invoice_salt_v1')
+        salt = salt_str.encode() if isinstance(salt_str, str) else salt_str
+        
         kdf = PBKDF2(
             algorithm=hashes.SHA256(),
             length=32,
-            salt=b'smart_invoice_salt_v1',  # In production, use env variable
+            salt=salt,
             iterations=100000,
         )
         key = base64.urlsafe_b64encode(

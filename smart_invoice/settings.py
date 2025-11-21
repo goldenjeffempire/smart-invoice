@@ -14,10 +14,10 @@ environ.Env.read_env(os.path.join(BASE_DIR, ".env"))
 IS_REPLIT = os.environ.get("REPL_ID") is not None or os.environ.get("REPLIT") is not None
 
 # Default to True in Replit for development, False otherwise
-DEBUG = env.bool("DEBUG", default=IS_REPLIT)
+DEBUG = env.bool("DEBUG", default=IS_REPLIT)  # type: ignore
 
 # Get SECRET_KEY or generate a random one for Replit development
-SECRET_KEY = env("SECRET_KEY", default="django-insecure-dev-key-CHANGE-IN-PRODUCTION")
+SECRET_KEY = env("SECRET_KEY", default="django-insecure-dev-key-CHANGE-IN-PRODUCTION")  # type: ignore
 
 # PRODUCTION SAFETY GUARDS
 # Only enforce strict validation in non-Replit production environments
@@ -30,7 +30,7 @@ if not DEBUG and not IS_REPLIT:
         )
     
     # Enforce ALLOWED_HOSTS in production
-    allowed_hosts = env.list("ALLOWED_HOSTS", default=[])
+    allowed_hosts = env.list("ALLOWED_HOSTS", default=[])  # type: ignore
     if not allowed_hosts:
         raise ValueError(
             "PRODUCTION ERROR: You must set specific ALLOWED_HOSTS (comma-separated domains) in production! "
@@ -47,7 +47,7 @@ if not DEBUG and not IS_REPLIT:
     SECURE_HSTS_PRELOAD = True
 else:
     # Development or Replit: allow configured hosts or wildcard
-    ALLOWED_HOSTS = env.list("ALLOWED_HOSTS", default=["*"])
+    ALLOWED_HOSTS = env.list("ALLOWED_HOSTS", default=["*"])  # type: ignore
     SECURE_SSL_REDIRECT = False
     SESSION_COOKIE_SECURE = False
     CSRF_COOKIE_SECURE = False
@@ -60,7 +60,7 @@ CSRF_TRUSTED_ORIGINS = env.list(
         "https://*.onrender.com",
         "https://*.render.com",
     ],
-)
+)  # type: ignore
 
 INSTALLED_APPS = [
     "django.contrib.admin",
@@ -108,7 +108,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "smart_invoice.wsgi.application"
 
-if env("DATABASE_URL", default=None):
+if env("DATABASE_URL", default=None):  # type: ignore
     DATABASES = {"default": env.db()}
 else:
     DATABASES = {
@@ -157,12 +157,15 @@ LOGIN_REDIRECT_URL = "dashboard"
 LOGOUT_REDIRECT_URL = "home"
 
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
-EMAIL_HOST = env("EMAIL_HOST", default="smtp.gmail.com")
-EMAIL_PORT = env.int("EMAIL_PORT", default=587)
-EMAIL_USE_TLS = env.bool("EMAIL_USE_TLS", default=True)
-EMAIL_HOST_USER = env("EMAIL_HOST_USER", default="")
-EMAIL_HOST_PASSWORD = env("EMAIL_HOST_PASSWORD", default="")
-DEFAULT_FROM_EMAIL = env("DEFAULT_FROM_EMAIL", default="noreply@smartinvoice.com")
+EMAIL_HOST = env("EMAIL_HOST", default="smtp.gmail.com")  # type: ignore
+EMAIL_PORT = env.int("EMAIL_PORT", default=587)  # type: ignore
+EMAIL_USE_TLS = env.bool("EMAIL_USE_TLS", default=True)  # type: ignore
+EMAIL_HOST_USER = env("EMAIL_HOST_USER", default="")  # type: ignore
+EMAIL_HOST_PASSWORD = env("EMAIL_HOST_PASSWORD", default="")  # type: ignore
+DEFAULT_FROM_EMAIL = env("DEFAULT_FROM_EMAIL", default="noreply@smartinvoice.com")  # type: ignore
+
+# Encryption settings
+ENCRYPTION_SALT = env("ENCRYPTION_SALT", default="smart_invoice_salt_v1")  # type: ignore
 
 if not DEBUG:
     SECURE_SSL_REDIRECT = True
