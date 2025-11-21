@@ -125,49 +125,9 @@ Smart, Simple Invoicing for modern businesses. Create professional invoices in m
    - Homepage: http://localhost:5000/
    - Admin: http://localhost:5000/admin/
 
-## Render Deployment
+## Deployment
 
-### Prerequisites
-- Render account
-- PostgreSQL database on Render
-
-### Deployment Steps
-
-1. **Create a new Web Service on Render**
-
-2. **Configure build settings**
-   - **Build Command**: `./build.sh`
-   - **Start Command**: `gunicorn smart_invoice.wsgi:application --bind 0.0.0.0:$PORT`
-
-3. **Set environment variables**
-   ```
-   DEBUG=False
-   SECRET_KEY=<your-secure-secret-key>
-   DATABASE_URL=<your-postgresql-database-url>
-   ALLOWED_HOSTS=<your-render-domain>.onrender.com
-   EMAIL_HOST=smtp.gmail.com
-   EMAIL_PORT=587
-   EMAIL_USE_TLS=True
-   EMAIL_HOST_USER=<your-email>
-   EMAIL_HOST_PASSWORD=<your-email-password>
-   DEFAULT_FROM_EMAIL=<your-sender-email>
-   ```
-
-4. **Deploy**
-   - Push to your connected Git repository
-   - Render will automatically build and deploy
-
-### Post-Deployment
-
-1. **Create superuser** (via Render Shell)
-   ```bash
-   python manage.py createsuperuser
-   ```
-
-2. **Collect static files** (if not done in build)
-   ```bash
-   python manage.py collectstatic --noinput
-   ```
+For detailed deployment instructions to Render or other platforms, see [DEPLOYMENT.md](DEPLOYMENT.md).
 
 ## Configuration
 
