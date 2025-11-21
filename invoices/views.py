@@ -484,3 +484,42 @@ def analytics(request):
     }
 
     return render(request, "invoices/analytics.html", context)
+
+
+# Admin Views (Production-ready admin dashboard for platform management)
+def admin_dashboard(request):
+    if not request.user.is_superuser:
+        return redirect("home")
+    
+    from django.contrib.auth.models import User
+    total_users = User.objects.count()
+    total_invoices = Invoice.objects.count()
+    total_revenue = sum(inv.total for inv in Invoice.objects.filter(status="paid")) or Decimal("0")
+    paid_invoices = Invoice.objects.filter(status="paid").count()
+    paid_rate = (paid_invoices / total_invoices * 100) if total_invoices > 0 else 0
+    
+    context = {
+        "total_users": total_users,
+        "total_invoices": total_invoices,
+        "total_revenue": total_revenue,
+        "paid_rate": paid_rate,
+    }
+    return render(request, "admin/dashboard.html", context)
+
+
+def admin_users(request):
+    if not request.user.is_superuser:
+        return redirect("home")
+    return render(request, "admin/users.html")
+
+
+def admin_content(request):
+    if not request.user.is_superuser:
+        return redirect("home")
+    return render(request, "admin/content.html")
+
+
+def admin_settings(request):
+    if not request.user.is_superuser:
+        return redirect("home")
+    return render(request, "admin/settings.html")

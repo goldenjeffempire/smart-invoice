@@ -27,6 +27,11 @@ urlpatterns = [
     path("careers/", views.careers, name="careers"),
     path("status/", views.status, name="status"),
     path("changelog/", views.changelog, name="changelog"),
+    # Admin endpoints
+    path("admin-dashboard/", views.admin_dashboard, name="admin_dashboard"),
+    path("admin-users/", views.admin_users, name="admin_users"),
+    path("admin-content/", views.admin_content, name="admin_content"),
+    path("admin-settings/", views.admin_settings, name="admin_settings"),
     path(
         "password-reset/",
         auth_views.PasswordResetView.as_view(template_name="registration/password_reset_form.html"),
