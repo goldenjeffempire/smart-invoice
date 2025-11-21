@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Smart Invoice - Create professional invoices in minutes. Send via email or WhatsApp. Get paid faster.">
     <title>{% block title %}Smart Invoice - Professional Invoicing Made Simple{% endblock %}</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="{% static 'css/tailwind.output.css' %}">
     <link rel="stylesheet" href="{% static 'css/animations.css' %}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -20,19 +20,6 @@
             -moz-osx-font-smoothing: grayscale;
         }
     </style>
-    <script>
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {
-                    colors: {
-                        primary: '#6366f1',
-                        secondary: '#8b5cf6',
-                    }
-                }
-            }
-        }
-    </script>
     <script src="{% static 'js/dark-mode.js' %}"></script>
 </head>
 <body class="bg-gray-50 dark:bg-gray-900 transition-colors duration-200">

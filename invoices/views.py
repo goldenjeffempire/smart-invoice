@@ -214,20 +214,50 @@ def send_invoice_email(request, invoice_id):
 
     if request.method == "POST":
         recipient_email = request.POST.get("email", invoice.client_email)
-        subject = f"Invoice {invoice.invoice_id} from {invoice.business_name}"
-        message = f"Dear {invoice.client_name},\n\nPlease find attached your invoice {invoice.invoice_id}.\n\nThank you for your business!\n\nBest regards,\n{invoice.business_name}"
+        subject = f"Invoice #{invoice.invoice_id} from {invoice.business_name}"
+        
+        # Generate HTML email from template
+        html_message = render_to_string("emails/invoice_email.html", {"invoice": invoice})
+        
+        # Plain text fallback
+        payment_info = ""
+        if invoice.bank_name:
+            payment_info = f"\n\nPayment Information:\nBank: {invoice.bank_name}\nAccount Name: {invoice.account_name}\nAccount Number: {invoice.account_number}"
+        
+        notes_section = ""
+        if invoice.notes:
+            notes_section = f"\n\nNotes:\n{invoice.notes}"
+        
+        plain_message = f"""Dear {invoice.client_name},
 
-        html_string = render_to_string("invoices/invoice_pdf.html", {"invoice": invoice})
+Thank you for your business! Please find attached invoice #{invoice.invoice_id}.
+
+Invoice Details:
+- Invoice Number: {invoice.invoice_id}
+- Invoice Date: {invoice.invoice_date.strftime('%B %d, %Y')}
+- Total Amount: {invoice.currency} {invoice.total:.2f}
+- Status: {invoice.get_status_display()}{payment_info}{notes_section}
+
+If you have any questions, please contact us at {invoice.business_email}.
+
+Best regards,
+{invoice.business_name}
+"""
+
+        # Generate PDF
+        pdf_html_string = render_to_string("invoices/invoice_pdf.html", {"invoice": invoice})
         font_config = FontConfiguration()
-        html = HTML(string=html_string)
+        html = HTML(string=pdf_html_string)
         pdf = html.write_pdf(font_config=font_config)
 
         email = EmailMessage(
             subject,
-            message,
+            plain_message,
             invoice.business_email,
             [recipient_email],
         )
+        email.content_subtype = "html"  # Main content is now HTML
+        email.body = html_message
         email.attach(f"Invoice_{invoice.invoice_id}.pdf", pdf, "application/pdf")
 
         try:
@@ -245,18 +275,38 @@ def send_invoice_email(request, invoice_id):
 def whatsapp_share(request, invoice_id):
     invoice = get_object_or_404(Invoice, id=invoice_id, user=request.user)
 
-    message = f"""
-*Invoice {invoice.invoice_id}*
+    # Enhanced WhatsApp message with emojis and better formatting
+    phone_line = f"📞 {invoice.business_phone}" if invoice.business_phone else ""
+    due_line = f"⏰ Due: {invoice.due_date.strftime('%B %d, %Y')}" if invoice.due_date else ""
+    
+    payment_details = ""
+    if invoice.bank_name:
+        payment_details = f"\n\n🏦 *Payment Details:*\nBank: {invoice.bank_name}\nAccount: {invoice.account_name}\nAccount #: {invoice.account_number}"
+    
+    notes_line = ""
+    if invoice.notes:
+        notes_line = f"\n\n📝 Notes: {invoice.notes}"
+    
+    message = f"""📄 *Invoice #{invoice.invoice_id}*
 
-From: {invoice.business_name}
-To: {invoice.client_name}
+👔 From: *{invoice.business_name}*
+{invoice.business_email}
+{phone_line}
 
-Amount: {invoice.currency} {invoice.total:.2f}
+👤 To: *{invoice.client_name}*
 
-Thank you for your business!
+📅 Date: {invoice.invoice_date.strftime('%B %d, %Y')}
+{due_line}
+
+💰 *Total Amount: {invoice.currency} {invoice.total:.2f}*
+Status: {invoice.get_status_display().upper()}{payment_details}{notes_line}
+
+Thank you for your business! 🙏
+- {invoice.business_name}
     """.strip()
 
-    phone = invoice.client_phone.replace("+", "").replace(" ", "").replace("-", "")
+    # Clean phone number for WhatsApp
+    phone = invoice.client_phone.replace("+", "").replace(" ", "").replace("-", "").replace("(", "").replace(")", "")
 
     whatsapp_url = f"https://wa.me/{phone}?text={urllib.parse.quote(message)}"
 
@@ -266,6 +316,7 @@ Thank you for your business!
         {
             "invoice": invoice,
             "whatsapp_url": whatsapp_url,
+            "message_preview": message,
         },
     )
 

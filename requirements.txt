@@ -46,6 +46,7 @@ weasyprint==66.0
 webencodings==0.5.1
 whitenoise==6.11.0
 zopfli==0.4.0
+cryptography==46.0.3
 asgiref
 bandit
 black
@@ -94,3 +95,4 @@ weasyprint
 webencodings
 whitenoise
 zopfli
+cryptography

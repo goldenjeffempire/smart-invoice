@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invoice {{ invoice.invoice_id }}</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .email-container {
+            background-color: #ffffff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+        .header {
+            background: linear-gradient(135deg, {{ invoice.brand_color|default:'#6366f1' }} 0%, {{ invoice.brand_color|default:'#6366f1' }}dd 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 28px;
+            font-weight: 700;
+        }
+        .header p {
+            margin: 10px 0 0 0;
+            font-size: 16px;
+            opacity: 0.9;
+        }
+        .content {
+            padding: 40px 30px;
+        }
+        .greeting {
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+        .invoice-details {
+            background-color: #f8fafc;
+            border-left: 4px solid {{ invoice.brand_color|default:'#6366f1' }};
+            padding: 20px;
+            margin: 25px 0;
+            border-radius: 4px;
+        }
+        .invoice-details h3 {
+            margin: 0 0 15px 0;
+            color: {{ invoice.brand_color|default:'#6366f1' }};
+            font-size: 16px;
+        }
+        .invoice-details p {
+            margin: 8px 0;
+            font-size: 14px;
+        }
+        .invoice-details strong {
+            display: inline-block;
+            width: 120px;
+        }
+        .amount-box {
+            background-color: #f0f9ff;
+            border: 2px solid #0ea5e9;
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+            margin: 25px 0;
+        }
+        .amount-box .label {
+            font-size: 14px;
+            color: #0369a1;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .amount-box .amount {
+            font-size: 32px;
+            font-weight: 700;
+            color: #0369a1;
+        }
+        .cta-button {
+            display: inline-block;
+            background-color: {{ invoice.brand_color|default:'#6366f1' }};
+            color: white;
+            text-decoration: none;
+            padding: 14px 32px;
+            border-radius: 6px;
+            font-weight: 600;
+            margin: 20px 0;
+            transition: background-color 0.3s;
+        }
+        .cta-button:hover {
+            background-color: #4f46e5;
+        }
+        .note {
+            background-color: #fef3c7;
+            border-left: 4px solid #f59e0b;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 4px;
+            font-size: 14px;
+            color: #78350f;
+        }
+        .footer {
+            background-color: #f8fafc;
+            padding: 25px 30px;
+            text-align: center;
+            font-size: 13px;
+            color: #64748b;
+            border-top: 1px solid #e2e8f0;
+        }
+        .footer p {
+            margin: 5px 0;
+        }
+        .footer a {
+            color: {{ invoice.brand_color|default:'#6366f1' }};
+            text-decoration: none;
+        }
+        .divider {
+            height: 1px;
+            background-color: #e2e8f0;
+            margin: 25px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="email-container">
+        <div class="header">
+            <h1>Invoice {{ invoice.invoice_id }}</h1>
+            <p>from {{ invoice.business_name }}</p>
+        </div>
+        
+        <div class="content">
+            <p class="greeting">Dear {{ invoice.client_name }},</p>
+            
+            <p>Thank you for your business! Please find the details of your invoice below.</p>
+            
+            <div class="invoice-details">
+                <h3>Invoice Details</h3>
+                <p><strong>Invoice #:</strong> {{ invoice.invoice_id }}</p>
+                <p><strong>Date:</strong> {{ invoice.invoice_date|date:"F d, Y" }}</p>
+                {% if invoice.due_date %}
+                    <p><strong>Due Date:</strong> {{ invoice.due_date|date:"F d, Y" }}</p>
+                {% endif %}
+                <p><strong>Status:</strong> {{ invoice.get_status_display }}</p>
+            </div>
+            
+            <div class="amount-box">
+                <div class="label">Total Amount Due</div>
+                <div class="amount">{{ invoice.currency }} {{ invoice.total|floatformat:2 }}</div>
+            </div>
+            
+            {% if invoice.bank_name %}
+                <div class="invoice-details">
+                    <h3>💳 Payment Information</h3>
+                    <p><strong>Bank:</strong> {{ invoice.bank_name }}</p>
+                    <p><strong>Account Name:</strong> {{ invoice.account_name }}</p>
+                    <p><strong>Account Number:</strong> {{ invoice.account_number }}</p>
+                </div>
+            {% endif %}
+            
+            {% if invoice.notes %}
+                <div class="note">
+                    <strong>📝 Additional Notes:</strong><br>
+                    {{ invoice.notes|linebreaksbr }}
+                </div>
+            {% endif %}
+            
+            <div class="divider"></div>
+            
+            <p style="text-align: center;">
+                The complete invoice is attached to this email as a PDF document.
+            </p>
+            
+            <p style="margin-top: 30px;">If you have any questions about this invoice, please don't hesitate to contact us at {{ invoice.business_email }}.</p>
+            
+            <p style="margin-top: 20px;">Best regards,<br><strong>{{ invoice.business_name }}</strong></p>
+        </div>
+        
+        <div class="footer">
+            <p><strong>{{ invoice.business_name }}</strong></p>
+            <p>{{ invoice.business_email }} {% if invoice.business_phone %}• {{ invoice.business_phone }}{% endif %}</p>
+            <p style="margin-top: 15px; font-size: 11px;">
+                This is an automated message. Please do not reply directly to this email.
+            </p>
+            <p style="margin-top: 10px; font-size: 11px;">
+                Powered by Smart Invoice • Built by <a href="https://onome-portfolio-ten.vercel.app/">Jeffery Onome</a>
+            </p>
+        </div>
+    </div>
+</body>
+</html>

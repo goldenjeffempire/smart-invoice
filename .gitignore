@@ -41,6 +41,17 @@ htmlcov/
 .tox/
 *.cover
 
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+package-lock.json
+.npm/
+
+# Tailwind CSS
+static/css/tailwind.output.css
+
 # DO NOT IGNORE REPLIT CONFIG
 !.replit
 !replit.nix
