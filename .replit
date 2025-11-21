@@ -1,7 +1,7 @@
 modules = ["python-3.11"]
 [nix]
 channel = "stable-25_05"
-packages = ["awsebcli", "cairo", "fontconfig", "freetype", "gdk-pixbuf", "ghostscript", "glib", "harfbuzz", "lcms2", "libffi", "libimagequant", "libjpeg", "libtiff", "libwebp", "libxcrypt", "openjpeg", "pango", "pgadmin4", "pkg-config", "shared-mime-info", "tcl", "tk", "unzip", "zlib"]
+packages = ["awsebcli", "cairo", "fontconfig", "freetype", "gdk-pixbuf", "ghostscript", "glib", "harfbuzz", "lcms2", "libffi", "libimagequant", "libjpeg", "libtiff", "libwebp", "libxcrypt", "libyaml", "openjpeg", "pango", "pgadmin4", "pkg-config", "shared-mime-info", "tcl", "tk", "unzip", "zlib"]
 
 [agent]
 expertMode = true
@@ -37,3 +37,7 @@ externalPort = 80
 [[ports]]
 localPort = 37069
 externalPort = 3000
+
+[[ports]]
+localPort = 41951
+externalPort = 3001
