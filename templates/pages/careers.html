@@ -1,0 +1,124 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<!-- Hero -->
+<div class="gradient-animated text-white py-24">
+    <div class="container mx-auto px-6 text-center fade-up">
+        <h1 class="text-5xl md:text-6xl font-black mb-6">Join Our Team</h1>
+        <p class="text-xl md:text-2xl max-w-3xl mx-auto opacity-90">Help us build the future of invoicing</p>
+    </div>
+</div>
+
+<!-- Why Join -->
+<div class="container mx-auto px-6 py-20">
+    <h2 class="text-4xl font-black text-center mb-16 fade-up">Why Work at Smart Invoice?</h2>
+    <div class="grid md:grid-cols-3 gap-8">
+        <div class="bg-white rounded-2xl p-8 text-center hover-lift fade-up">
+            <div class="text-5xl mb-4">💼</div>
+            <h3 class="text-2xl font-bold mb-4">Flexible Work</h3>
+            <p class="text-gray-600">Work from anywhere with flexible hours and remote-first culture.</p>
+        </div>
+        <div class="bg-white rounded-2xl p-8 text-center hover-lift fade-up">
+            <div class="text-5xl mb-4">🚀</div>
+            <h3 class="text-2xl font-bold mb-4">Growth</h3>
+            <p class="text-gray-600">Rapid career growth with learning opportunities and mentorship.</p>
+        </div>
+        <div class="bg-white rounded-2xl p-8 text-center hover-lift fade-up">
+            <div class="text-5xl mb-4">🎯</div>
+            <h3 class="text-2xl font-bold mb-4">Impact</h3>
+            <p class="text-gray-600">Make a real impact on thousands of businesses worldwide.</p>
+        </div>
+    </div>
+</div>
+
+<!-- Open Positions -->
+<div class="bg-gray-50 py-20">
+    <div class="container mx-auto px-6">
+        <h2 class="text-4xl font-black text-center mb-16 fade-up">Open Positions</h2>
+        <div class="max-w-4xl mx-auto space-y-6">
+            <div class="bg-white rounded-2xl p-8 hover-lift fade-up">
+                <div class="flex justify-between items-start mb-4">
+                    <div>
+                        <h3 class="text-2xl font-bold mb-2">Senior Full-Stack Engineer</h3>
+                        <div class="flex items-center space-x-4 text-gray-600">
+                            <span class="flex items-center">
+                                <svg class="w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                </svg>
+                                Remote
+                            </span>
+                            <span class="flex items-center">
+                                <svg class="w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                                Full-time
+                            </span>
+                        </div>
+                    </div>
+                    <span class="bg-green-100 text-green-800 px-4 py-2 rounded-full font-semibold text-sm">Open</span>
+                </div>
+                <p class="text-gray-600 mb-6">We're looking for an experienced full-stack engineer to help build and scale our platform.</p>
+                <a href="{% url 'contact' %}" class="text-indigo-600 hover:underline font-semibold">Apply Now →</a>
+            </div>
+            
+            <div class="bg-white rounded-2xl p-8 hover-lift fade-up">
+                <div class="flex justify-between items-start mb-4">
+                    <div>
+                        <h3 class="text-2xl font-bold mb-2">Product Designer</h3>
+                        <div class="flex items-center space-x-4 text-gray-600">
+                            <span class="flex items-center">
+                                <svg class="w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                </svg>
+                                Remote
+                            </span>
+                            <span class="flex items-center">
+                                <svg class="w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                                Full-time
+                            </span>
+                        </div>
+                    </div>
+                    <span class="bg-green-100 text-green-800 px-4 py-2 rounded-full font-semibold text-sm">Open</span>
+                </div>
+                <p class="text-gray-600 mb-6">Join our design team to create beautiful, user-friendly experiences for our customers.</p>
+                <a href="{% url 'contact' %}" class="text-indigo-600 hover:underline font-semibold">Apply Now →</a>
+            </div>
+            
+            <div class="bg-white rounded-2xl p-8 hover-lift fade-up">
+                <div class="flex justify-between items-start mb-4">
+                    <div>
+                        <h3 class="text-2xl font-bold mb-2">Customer Success Manager</h3>
+                        <div class="flex items-center space-x-4 text-gray-600">
+                            <span class="flex items-center">
+                                <svg class="w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                </svg>
+                                Remote
+                            </span>
+                            <span class="flex items-center">
+                                <svg class="w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                                Full-time
+                            </span>
+                        </div>
+                    </div>
+                    <span class="bg-green-100 text-green-800 px-4 py-2 rounded-full font-semibold text-sm">Open</span>
+                </div>
+                <p class="text-gray-600 mb-6">Help our customers succeed and grow their businesses with Smart Invoice.</p>
+                <a href="{% url 'contact' %}" class="text-indigo-600 hover:underline font-semibold">Apply Now →</a>
+            </div>
+        </div>
+        
+        <div class="text-center mt-12 fade-up">
+            <p class="text-gray-600 mb-4">Don't see a role that fits?</p>
+            <a href="{% url 'contact' %}" class="text-indigo-600 hover:underline font-semibold text-lg">Send us your resume →</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

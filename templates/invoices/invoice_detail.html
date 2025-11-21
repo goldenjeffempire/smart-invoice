@@ -1,0 +1,109 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mx-auto px-6 py-10">
+    <div class="flex justify-between items-center mb-8">
+        <h1 class="text-4xl font-bold">Invoice {{ invoice.invoice_id }}</h1>
+        <div class="flex space-x-2">
+            <a href="{% url 'generate_pdf' invoice.id %}" class="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700">Download PDF</a>
+            <a href="{% url 'send_invoice_email' invoice.id %}" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">Send Email</a>
+            <a href="{% url 'whatsapp_share' invoice.id %}" class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700">WhatsApp</a>
+            <a href="{% url 'edit_invoice' invoice.id %}" class="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700">Edit</a>
+        </div>
+    </div>
+    
+    <div class="bg-white rounded-lg shadow-lg p-8">
+        <div class="grid md:grid-cols-2 gap-8 mb-8">
+            <div>
+                <h3 class="font-bold text-lg mb-2">From:</h3>
+                <p class="font-semibold">{{ invoice.business_name }}</p>
+                <p>{{ invoice.business_email }}</p>
+                <p>{{ invoice.business_phone }}</p>
+                <p class="whitespace-pre-line">{{ invoice.business_address }}</p>
+            </div>
+            <div>
+                <h3 class="font-bold text-lg mb-2">To:</h3>
+                <p class="font-semibold">{{ invoice.client_name }}</p>
+                <p>{{ invoice.client_email }}</p>
+                <p>{{ invoice.client_phone }}</p>
+                <p class="whitespace-pre-line">{{ invoice.client_address }}</p>
+            </div>
+        </div>
+        
+        <div class="grid md:grid-cols-3 gap-4 mb-8">
+            <div>
+                <p class="text-gray-600">Invoice Date</p>
+                <p class="font-semibold">{{ invoice.invoice_date|date:"M d, Y" }}</p>
+            </div>
+            <div>
+                <p class="text-gray-600">Due Date</p>
+                <p class="font-semibold">{{ invoice.due_date|date:"M d, Y"|default:"N/A" }}</p>
+            </div>
+            <div>
+                <p class="text-gray-600">Status</p>
+                <form method="post" action="{% url 'update_invoice_status' invoice.id %}" class="inline">
+                    {% csrf_token %}
+                    <select name="status" onchange="this.form.submit()" class="px-3 py-1 rounded-full text-sm {% if invoice.status == 'paid' %}bg-green-100 text-green-800{% else %}bg-red-100 text-red-800{% endif %}">
+                        <option value="unpaid" {% if invoice.status == 'unpaid' %}selected{% endif %}>Unpaid</option>
+                        <option value="paid" {% if invoice.status == 'paid' %}selected{% endif %}>Paid</option>
+                    </select>
+                </form>
+            </div>
+        </div>
+        
+        <table class="w-full mb-6">
+            <thead class="bg-gray-100">
+                <tr>
+                    <th class="px-4 py-3 text-left">Description</th>
+                    <th class="px-4 py-3 text-right">Quantity</th>
+                    <th class="px-4 py-3 text-right">Unit Price</th>
+                    <th class="px-4 py-3 text-right">Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in invoice.line_items.all %}
+                    <tr class="border-b">
+                        <td class="px-4 py-3">{{ item.description }}</td>
+                        <td class="px-4 py-3 text-right">{{ item.quantity }}</td>
+                        <td class="px-4 py-3 text-right">{{ invoice.currency }} {{ item.unit_price }}</td>
+                        <td class="px-4 py-3 text-right">{{ invoice.currency }} {{ item.total }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        
+        <div class="flex justify-end">
+            <div class="w-64">
+                <div class="flex justify-between mb-2">
+                    <span>Subtotal:</span>
+                    <span>{{ invoice.currency }} {{ invoice.subtotal }}</span>
+                </div>
+                <div class="flex justify-between mb-2">
+                    <span>Tax ({{ invoice.tax_rate }}%):</span>
+                    <span>{{ invoice.currency }} {{ invoice.tax_amount }}</span>
+                </div>
+                <div class="flex justify-between font-bold text-lg border-t pt-2">
+                    <span>Total:</span>
+                    <span>{{ invoice.currency }} {{ invoice.total }}</span>
+                </div>
+            </div>
+        </div>
+        
+        {% if invoice.bank_name %}
+            <div class="mt-8 p-4 bg-gray-100 rounded-lg">
+                <h3 class="font-bold mb-2">Bank Transfer Details</h3>
+                <p><strong>Bank:</strong> {{ invoice.bank_name }}</p>
+                <p><strong>Account Name:</strong> {{ invoice.account_name }}</p>
+                <p><strong>Account Number:</strong> {{ invoice.account_number }}</p>
+            </div>
+        {% endif %}
+        
+        {% if invoice.notes %}
+            <div class="mt-6">
+                <h3 class="font-bold mb-2">Notes</h3>
+                <p class="whitespace-pre-line">{{ invoice.notes }}</p>
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

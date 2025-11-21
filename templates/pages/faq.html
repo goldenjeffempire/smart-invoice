@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mx-auto px-6 py-20">
+    <h1 class="text-5xl font-bold text-center mb-12">Frequently Asked Questions</h1>
+    
+    <div class="max-w-3xl mx-auto space-y-6">
+        <div class="bg-white rounded-lg shadow-lg p-6">
+            <h3 class="text-2xl font-bold mb-3">How do I create an invoice?</h3>
+            <p class="text-gray-600">Simply sign up for a free account, click "Create Invoice" from the dashboard, fill in your business and client details, add line items, and generate your professional PDF invoice instantly.</p>
+        </div>
+        
+        <div class="bg-white rounded-lg shadow-lg p-6">
+            <h3 class="text-2xl font-bold mb-3">Is Smart Invoice free to use?</h3>
+            <p class="text-gray-600">Yes! Smart Invoice is completely free to use. Create unlimited invoices, send them via email or WhatsApp, and track your revenue without any cost.</p>
+        </div>
+        
+        <div class="bg-white rounded-lg shadow-lg p-6">
+            <h3 class="text-2xl font-bold mb-3">Can I customize my invoices?</h3>
+            <p class="text-gray-600">Absolutely! You can upload your logo, set your brand color, add your business name, and include custom notes on every invoice.</p>
+        </div>
+        
+        <div class="bg-white rounded-lg shadow-lg p-6">
+            <h3 class="text-2xl font-bold mb-3">What currencies are supported?</h3>
+            <p class="text-gray-600">Smart Invoice supports USD, EUR, GBP, NGN, CAD, and AUD. You can select your preferred currency for each invoice.</p>
+        </div>
+        
+        <div class="bg-white rounded-lg shadow-lg p-6">
+            <h3 class="text-2xl font-bold mb-3">How do I send invoices to clients?</h3>
+            <p class="text-gray-600">You can download the PDF and send it manually, use our built-in email feature to send it directly with the PDF attached, or share via WhatsApp with a pre-filled message.</p>
+        </div>
+        
+        <div class="bg-white rounded-lg shadow-lg p-6">
+            <h3 class="text-2xl font-bold mb-3">Can I track payment status?</h3>
+            <p class="text-gray-600">Yes! Each invoice has a status (Paid/Unpaid) that you can update. The dashboard shows your analytics including paid invoices, unpaid invoices, and total revenue.</p>
+        </div>
+        
+        <div class="bg-white rounded-lg shadow-lg p-6">
+            <h3 class="text-2xl font-bold mb-3">Is my data secure?</h3>
+            <p class="text-gray-600">Yes, all data is securely stored in the cloud with industry-standard encryption. Your invoices and client information are private and only accessible to you.</p>
+        </div>
+        
+        <div class="bg-white rounded-lg shadow-lg p-6">
+            <h3 class="text-2xl font-bold mb-3">Can I edit invoices after creation?</h3>
+            <p class="text-gray-600">Yes, you can edit any invoice from your dashboard. Simply click on the invoice and select "Edit" to make changes.</p>
+        </div>
+    </div>
+    
+    <div class="text-center mt-12">
+        <p class="text-gray-600 mb-4">Still have questions?</p>
+        <a href="{% url 'support' %}" class="bg-indigo-600 text-white px-8 py-3 rounded-lg hover:bg-indigo-700 transition inline-block">Contact Support</a>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,35 @@
+modules = ["python-3.11"]
+[nix]
+channel = "stable-25_05"
+packages = ["awsebcli", "cairo", "fontconfig", "freetype", "gdk-pixbuf", "ghostscript", "glib", "harfbuzz", "lcms2", "libffi", "libimagequant", "libjpeg", "libtiff", "libwebp", "libxcrypt", "openjpeg", "pango", "pgadmin4", "pkg-config", "shared-mime-info", "tcl", "tk", "unzip", "zlib"]
+
+[agent]
+expertMode = true
+
+[workflows]
+runButton = "Project"
+
+[[workflows.workflow]]
+name = "Project"
+mode = "parallel"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "Django Server"
+
+[[workflows.workflow]]
+name = "Django Server"
+author = "agent"
+
+[workflows.workflow.metadata]
+outputType = "webview"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "unset DATABASE_URL PGDATABASE PGHOST PGPORT PGUSER PGPASSWORD; python3.11 manage.py migrate --noinput && python3.11 manage.py runserver 0.0.0.0:5000"
+waitForPort = 5000
+
+[[ports]]
+localPort = 5000
+externalPort = 80

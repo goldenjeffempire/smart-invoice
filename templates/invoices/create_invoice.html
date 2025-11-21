@@ -1,0 +1,353 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mx-auto px-6 py-10">
+    <div class="mb-8">
+        <h1 class="text-4xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">Create New Invoice</h1>
+        <p class="text-gray-600 mt-2">Fill in the details below to generate a professional invoice</p>
+    </div>
+    
+    <div class="grid lg:grid-cols-3 gap-6">
+        <div class="lg:col-span-2">
+            <form method="post" enctype="multipart/form-data" id="invoiceForm" class="bg-white rounded-lg shadow-lg p-8">
+                {% csrf_token %}
+                
+                {% if invoice_form.non_field_errors %}
+                    <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg mb-6" role="alert">
+                        {% for error in invoice_form.non_field_errors %}
+                            <p class="font-medium">{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+                
+                {% if invoice_form.errors %}
+                    <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg mb-6" role="alert">
+                        <p class="font-medium">Please correct the following errors:</p>
+                        <ul class="list-disc list-inside mt-2">
+                            {% for field in invoice_form %}
+                                {% for error in field.errors %}
+                                    <li>{{ field.label }}: {{ error }}</li>
+                                {% endfor %}
+                            {% endfor %}
+                        </ul>
+                    </div>
+                {% endif %}
+                
+                <div class="flex items-center mb-6 pb-6 border-b">
+                    <div class="w-10 h-10 bg-indigo-100 rounded-full flex items-center justify-center mr-4">
+                        <span class="text-indigo-600 font-bold">1</span>
+                    </div>
+                    <div>
+                        <h2 class="text-2xl font-bold">Business Information</h2>
+                        <p class="text-gray-600 text-sm">Your company details that will appear on the invoice</p>
+                    </div>
+                </div>
+                <div class="grid md:grid-cols-2 gap-4 mb-8">
+                    <div>
+                        <label class="block text-gray-700 mb-2 font-semibold">Business Name *</label>
+                        {{ invoice_form.business_name }}
+                        <p class="text-sm text-gray-500 mt-1">Your company or business name</p>
+                    </div>
+                    <div>
+                        <label class="block text-gray-700 mb-2 font-semibold">Business Email *</label>
+                        {{ invoice_form.business_email }}
+                        <p class="text-sm text-gray-500 mt-1">Contact email for your business</p>
+                    </div>
+                    <div>
+                        <label class="block text-gray-700 mb-2 font-semibold">Business Phone</label>
+                        {{ invoice_form.business_phone }}
+                        <p class="text-sm text-gray-500 mt-1">Optional contact number</p>
+                    </div>
+                    <div>
+                        <label class="block text-gray-700 mb-2 font-semibold">Business Address *</label>
+                        {{ invoice_form.business_address }}
+                        <p class="text-sm text-gray-500 mt-1">Full business address</p>
+                    </div>
+                </div>
+        
+                <div class="flex items-center mb-6 pb-6 border-b">
+                    <div class="w-10 h-10 bg-indigo-100 rounded-full flex items-center justify-center mr-4">
+                        <span class="text-indigo-600 font-bold">2</span>
+                    </div>
+                    <div>
+                        <h2 class="text-2xl font-bold">Client Information</h2>
+                        <p class="text-gray-600 text-sm">Details of the customer receiving this invoice</p>
+                    </div>
+                </div>
+                <div class="grid md:grid-cols-2 gap-4 mb-8">
+                    <div>
+                        <label class="block text-gray-700 mb-2 font-semibold">Client Name *</label>
+                        {{ invoice_form.client_name }}
+                        <p class="text-sm text-gray-500 mt-1">Customer or company name</p>
+                    </div>
+                    <div>
+                        <label class="block text-gray-700 mb-2 font-semibold">Client Email *</label>
+                        {{ invoice_form.client_email }}
+                        <p class="text-sm text-gray-500 mt-1">Where to send the invoice</p>
+                    </div>
+                    <div>
+                        <label class="block text-gray-700 mb-2 font-semibold">Client Phone</label>
+                        {{ invoice_form.client_phone }}
+                        <p class="text-sm text-gray-500 mt-1">Optional contact number</p>
+                    </div>
+                    <div>
+                        <label class="block text-gray-700 mb-2 font-semibold">Client Address *</label>
+                        {{ invoice_form.client_address }}
+                        <p class="text-sm text-gray-500 mt-1">Billing address</p>
+                    </div>
+                </div>
+        
+                <div class="flex items-center mb-6 pb-6 border-b">
+                    <div class="w-10 h-10 bg-indigo-100 rounded-full flex items-center justify-center mr-4">
+                        <span class="text-indigo-600 font-bold">3</span>
+                    </div>
+                    <div>
+                        <h2 class="text-2xl font-bold">Invoice Details</h2>
+                        <p class="text-gray-600 text-sm">Configure dates and currency for this invoice</p>
+                    </div>
+                </div>
+                <div class="grid md:grid-cols-3 gap-4 mb-8">
+                    <div>
+                        <label class="block text-gray-700 mb-2 font-semibold">Invoice Date</label>
+                        {{ invoice_form.invoice_date }}
+                        <p class="text-sm text-gray-500 mt-1">Auto-filled with today's date</p>
+                    </div>
+                    <div>
+                        <label class="block text-gray-700 mb-2 font-semibold">Due Date</label>
+                        {{ invoice_form.due_date }}
+                        <p class="text-sm text-gray-500 mt-1">Payment deadline</p>
+                    </div>
+                    <div>
+                        <label class="block text-gray-700 mb-2 font-semibold">Currency</label>
+                        {{ invoice_form.currency }}
+                        <p class="text-sm text-gray-500 mt-1">Supports 6 major currencies</p>
+                    </div>
+                </div>
+        
+                <div class="flex items-center mb-6 pb-6 border-b">
+                    <div class="w-10 h-10 bg-indigo-100 rounded-full flex items-center justify-center mr-4">
+                        <span class="text-indigo-600 font-bold">4</span>
+                    </div>
+                    <div>
+                        <h2 class="text-2xl font-bold">Line Items</h2>
+                        <p class="text-gray-600 text-sm">Add products or services to invoice</p>
+                    </div>
+                </div>
+                <div id="lineItemsContainer" class="mb-6">
+                    <div class="grid md:grid-cols-4 gap-4 mb-2 font-semibold text-gray-700">
+                        <div>Description *</div>
+                        <div>Quantity *</div>
+                        <div>Unit Price *</div>
+                        <div>Actions</div>
+                    </div>
+                    <div class="line-item grid md:grid-cols-4 gap-4 mb-2">
+                        <input type="text" name="description" class="px-4 py-2 border rounded-lg focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200" placeholder="e.g., Web Design Services" title="Item or service description" aria-label="Item description" required>
+                        <input type="number" name="quantity" class="px-4 py-2 border rounded-lg focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200" value="1" step="0.01" title="Number of units" aria-label="Quantity" required>
+                        <input type="number" name="unit_price" class="px-4 py-2 border rounded-lg focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200" placeholder="0.00" step="0.01" title="Price per unit" aria-label="Unit price" required>
+                        <button type="button" class="remove-item bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition" title="Remove this item" aria-label="Remove line item">Remove</button>
+                    </div>
+                </div>
+                <button type="button" id="addLineItem" class="bg-green-500 text-white px-6 py-2 rounded-lg hover:bg-green-600 transition mb-8">
+                    <svg class="w-5 h-5 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+                    Add Line Item
+                </button>
+                <p class="text-sm text-gray-500 mb-8">Click "Add Line Item" to include multiple products or services</p>
+                
+                <div class="grid md:grid-cols-2 gap-4 mb-8">
+                    <div>
+                        <label class="block text-gray-700 mb-2 font-semibold">Tax Rate (%)</label>
+                        {{ invoice_form.tax_rate }}
+                        <p class="text-sm text-gray-500 mt-1">Optional - leave blank for 0%</p>
+                    </div>
+                    <div>
+                        <label class="block text-gray-700 mb-2 font-semibold">Payment Status</label>
+                        {{ invoice_form.status }}
+                        <p class="text-sm text-gray-500 mt-1">Mark as paid or unpaid</p>
+                    </div>
+                </div>
+        
+                <div class="flex items-center mb-6 pb-6 border-b">
+                    <div class="w-10 h-10 bg-indigo-100 rounded-full flex items-center justify-center mr-4">
+                        <span class="text-indigo-600 font-bold">5</span>
+                    </div>
+                    <div>
+                        <h2 class="text-2xl font-bold">Branding (Optional)</h2>
+                        <p class="text-gray-600 text-sm">Customize your invoice with your brand identity</p>
+                    </div>
+                </div>
+                <div class="grid md:grid-cols-3 gap-4 mb-8">
+                    <div>
+                        <label class="block text-gray-700 mb-2 font-semibold">Brand Name</label>
+                        {{ invoice_form.brand_name }}
+                        <p class="text-sm text-gray-500 mt-1">Custom name for invoice header</p>
+                    </div>
+                    <div>
+                        <label class="block text-gray-700 mb-2 font-semibold">Brand Color</label>
+                        {{ invoice_form.brand_color }}
+                        <p class="text-sm text-gray-500 mt-1">Accent color for headers</p>
+                    </div>
+                    <div>
+                        <label class="block text-gray-700 mb-2 font-semibold">Logo Upload</label>
+                        {{ invoice_form.logo }}
+                        <p class="text-sm text-gray-500 mt-1">PNG, JPG, or SVG (max 2MB)</p>
+                    </div>
+                </div>
+        
+                <div class="flex items-center mb-6 pb-6 border-b">
+                    <div class="w-10 h-10 bg-indigo-100 rounded-full flex items-center justify-center mr-4">
+                        <span class="text-indigo-600 font-bold">6</span>
+                    </div>
+                    <div>
+                        <h2 class="text-2xl font-bold">Payment Details (Optional)</h2>
+                        <p class="text-gray-600 text-sm">Add bank transfer details for easy payment</p>
+                    </div>
+                </div>
+                <div class="grid md:grid-cols-3 gap-4 mb-8">
+                    <div>
+                        <label class="block text-gray-700 mb-2 font-semibold">Bank Name</label>
+                        {{ invoice_form.bank_name }}
+                        <p class="text-sm text-gray-500 mt-1">e.g., Chase Bank</p>
+                    </div>
+                    <div>
+                        <label class="block text-gray-700 mb-2 font-semibold">Account Name</label>
+                        {{ invoice_form.account_name }}
+                        <p class="text-sm text-gray-500 mt-1">Account holder name</p>
+                    </div>
+                    <div>
+                        <label class="block text-gray-700 mb-2 font-semibold">Account Number</label>
+                        {{ invoice_form.account_number }}
+                        <p class="text-sm text-gray-500 mt-1">Bank account number</p>
+                    </div>
+                </div>
+                
+                <div class="mb-8">
+                    <label class="block text-gray-700 mb-2 font-semibold">Additional Notes</label>
+                    {{ invoice_form.notes }}
+                    <p class="text-sm text-gray-500 mt-1">Any special terms, thank you message, or additional information</p>
+                </div>
+        
+        <input type="hidden" name="line_items" id="lineItemsData">
+        
+        <div class="flex justify-end space-x-4">
+                    <a href="{% url 'dashboard' %}" class="bg-gray-500 text-white px-6 py-3 rounded-lg hover:bg-gray-600 transition">Cancel</a>
+                    <button type="submit" class="bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-8 py-3 rounded-lg hover:shadow-lg transition font-semibold">
+                        <svg class="w-5 h-5 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        Create Invoice
+                    </button>
+                </div>
+            </form>
+        </div>
+        
+        <div class="lg:col-span-1">
+            <div class="bg-gradient-to-br from-indigo-50 to-purple-50 rounded-lg shadow-lg p-6 sticky top-6">
+                <h3 class="text-xl font-bold mb-4 text-indigo-900">Quick Tips</h3>
+                <div class="space-y-4">
+                    <div class="flex items-start">
+                        <div class="flex-shrink-0 w-8 h-8 bg-indigo-100 rounded-full flex items-center justify-center mr-3">
+                            <svg class="w-4 h-4 text-indigo-600" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path></svg>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-gray-800 text-sm">Auto-generated ID</h4>
+                            <p class="text-sm text-gray-600">Invoice ID and date are automatically set</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start">
+                        <div class="flex-shrink-0 w-8 h-8 bg-indigo-100 rounded-full flex items-center justify-center mr-3">
+                            <svg class="w-4 h-4 text-indigo-600" fill="currentColor" viewBox="0 0 20 20"><path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"></path><path fill-rule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z" clip-rule="evenodd"></path></svg>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-gray-800 text-sm">Multiple Currencies</h4>
+                            <p class="text-sm text-gray-600">Support for USD, EUR, GBP, NGN, CAD, AUD</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start">
+                        <div class="flex-shrink-0 w-8 h-8 bg-indigo-100 rounded-full flex items-center justify-center mr-3">
+                            <svg class="w-4 h-4 text-indigo-600" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M4 2a2 2 0 00-2 2v11a3 3 0 106 0V4a2 2 0 00-2-2H4zm1 14a1 1 0 100-2 1 1 0 000 2zm5-1.757l4.9-4.9a2 2 0 000-2.828L13.485 5.1a2 2 0 00-2.828 0L10 5.757v8.486zM16 18H9.071l6-6H16a2 2 0 012 2v2a2 2 0 01-2 2z" clip-rule="evenodd"></path></svg>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-gray-800 text-sm">Custom Branding</h4>
+                            <p class="text-sm text-gray-600">Add your logo and brand colors</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start">
+                        <div class="flex-shrink-0 w-8 h-8 bg-indigo-100 rounded-full flex items-center justify-center mr-3">
+                            <svg class="w-4 h-4 text-indigo-600" fill="currentColor" viewBox="0 0 20 20"><path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"></path><path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"></path></svg>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-gray-800 text-sm">Instant Sending</h4>
+                            <p class="text-sm text-gray-600">Email or share via WhatsApp immediately</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start">
+                        <div class="flex-shrink-0 w-8 h-8 bg-indigo-100 rounded-full flex items-center justify-center mr-3">
+                            <svg class="w-4 h-4 text-indigo-600" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-gray-800 text-sm">PDF Export</h4>
+                            <p class="text-sm text-gray-600">High-quality professional PDF generation</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mt-6 p-4 bg-white rounded-lg">
+                    <h4 class="font-semibold text-gray-800 mb-2">Need Help?</h4>
+                    <p class="text-sm text-gray-600 mb-3">Visit our FAQ or contact support</p>
+                    <div class="flex space-x-2">
+                        <a href="{% url 'faq' %}" class="text-sm text-indigo-600 hover:text-indigo-700 font-semibold">FAQ</a>
+                        <span class="text-gray-400">|</span>
+                        <a href="{% url 'support' %}" class="text-sm text-indigo-600 hover:text-indigo-700 font-semibold">Support</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    input, select, textarea {
+        width: 100%;
+        padding: 0.5rem 1rem;
+        border: 1px solid #d1d5db;
+        border-radius: 0.5rem;
+    }
+</style>
+
+<script>
+document.getElementById('addLineItem').addEventListener('click', function() {
+    const container = document.getElementById('lineItemsContainer');
+    const newItem = document.createElement('div');
+    newItem.className = 'line-item grid md:grid-cols-4 gap-4 mb-2';
+    newItem.innerHTML = `
+        <input type="text" name="description" class="px-4 py-2 border rounded-lg focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200" placeholder="e.g., Web Design Services" title="Item or service description" aria-label="Item description" required>
+        <input type="number" name="quantity" class="px-4 py-2 border rounded-lg focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200" value="1" step="0.01" title="Number of units" aria-label="Quantity" required>
+        <input type="number" name="unit_price" class="px-4 py-2 border rounded-lg focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200" placeholder="0.00" step="0.01" title="Price per unit" aria-label="Unit price" required>
+        <button type="button" class="remove-item bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition" title="Remove this item" aria-label="Remove line item">Remove</button>
+    `;
+    container.appendChild(newItem);
+    toast.success('Line item added');
+});
+
+document.addEventListener('click', function(e) {
+    if (e.target.classList.contains('remove-item')) {
+        if (document.querySelectorAll('.line-item').length > 1) {
+            e.target.closest('.line-item').remove();
+            toast.success('Line item removed');
+        } else {
+            toast.warning('You must have at least one line item');
+        }
+    }
+});
+
+document.getElementById('invoiceForm').addEventListener('submit', function(e) {
+    const lineItems = [];
+    document.querySelectorAll('.line-item').forEach(function(item) {
+        lineItems.push({
+            description: item.querySelector('[name="description"]').value,
+            quantity: item.querySelector('[name="quantity"]').value,
+            unit_price: item.querySelector('[name="unit_price"]').value
+        });
+    });
+    document.getElementById('lineItemsData').value = JSON.stringify(lineItems);
+});
+</script>
+{% endblock %}

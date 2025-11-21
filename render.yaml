@@ -1,0 +1,38 @@
+services:
+  - type: web
+    name: smart-invoice
+    env: python
+    buildCommand: "chmod +x build.sh && ./build.sh"
+    startCommand: "gunicorn smart_invoice.wsgi:application --bind 0.0.0.0:$PORT --workers 4 --timeout 120"
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.0
+      - key: DEBUG
+        value: false
+      - key: SECRET_KEY
+        generateValue: true
+      - key: DATABASE_URL
+        fromDatabase:
+          name: smart-invoice-db
+          property: connectionString
+      - key: ALLOWED_HOSTS
+        value: ".onrender.com,smart-invoice.onrender.com"
+      - key: CSRF_TRUSTED_ORIGINS
+        value: "https://smart-invoice.onrender.com,https://*.onrender.com"
+      - key: EMAIL_HOST
+        value: "smtp.gmail.com"
+      - key: EMAIL_PORT
+        value: "587"
+      - key: EMAIL_USE_TLS
+        value: "True"
+      - key: EMAIL_HOST_USER
+        sync: false
+      - key: EMAIL_HOST_PASSWORD
+        sync: false
+      - key: DEFAULT_FROM_EMAIL
+        sync: false
+
+databases:
+  - name: smart-invoice-db
+    databaseName: smart_invoice
+    user: smart_invoice

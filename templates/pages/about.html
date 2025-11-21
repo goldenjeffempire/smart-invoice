@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<!-- Hero -->
+<div class="gradient-animated text-white py-24">
+    <div class="container mx-auto px-6 text-center fade-up">
+        <h1 class="text-5xl md:text-6xl font-black mb-6">About Smart Invoice</h1>
+        <p class="text-xl md:text-2xl max-w-3xl mx-auto opacity-90">Our mission is to simplify invoicing for businesses worldwide</p>
+    </div>
+</div>
+
+<!-- Story -->
+<div class="container mx-auto px-6 py-20">
+    <div class="max-w-4xl mx-auto">
+        <div class="bg-white rounded-2xl shadow-xl p-12 fade-up hover-lift">
+            <h2 class="text-4xl font-black mb-6">Our Story</h2>
+            <div class="prose prose-lg max-w-none">
+                <p class="text-gray-600 leading-relaxed mb-4">
+                    Smart Invoice was born from a simple frustration: creating professional invoices was too complicated and time-consuming. We believed there had to be a better way.
+                </p>
+                <p class="text-gray-600 leading-relaxed mb-4">
+                    In 2024, we set out to build the most user-friendly invoicing platform on the market. Our goal was simple: enable any business owner to create, send, and track professional invoices in minutes, not hours.
+                </p>
+                <p class="text-gray-600 leading-relaxed">
+                    Today, Smart Invoice serves over 10,000 businesses worldwide, processing millions of dollars in invoices every month. We're proud to be the invoicing solution of choice for freelancers, small businesses, and growing enterprises.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Values -->
+<div class="bg-gray-50 py-20">
+    <div class="container mx-auto px-6">
+        <h2 class="text-4xl font-black text-center mb-16 fade-up">Our Values</h2>
+        <div class="grid md:grid-cols-3 gap-8">
+            <div class="bg-white rounded-2xl p-8 text-center hover-lift fade-up">
+                <div class="text-5xl mb-4">🎯</div>
+                <h3 class="text-2xl font-bold mb-4">Simplicity</h3>
+                <p class="text-gray-600">We believe powerful tools should be easy to use. No complexity, just results.</p>
+            </div>
+            <div class="bg-white rounded-2xl p-8 text-center hover-lift fade-up">
+                <div class="text-5xl mb-4">🚀</div>
+                <h3 class="text-2xl font-bold mb-4">Innovation</h3>
+                <p class="text-gray-600">We're constantly improving and adding features that matter to our users.</p>
+            </div>
+            <div class="bg-white rounded-2xl p-8 text-center hover-lift fade-up">
+                <div class="text-5xl mb-4">❤️</div>
+                <h3 class="text-2xl font-bold mb-4">Customer First</h3>
+                <p class="text-gray-600">Your success is our success. We're here to help you grow your business.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Team -->
+<div class="container mx-auto px-6 py-20">
+    <h2 class="text-4xl font-black text-center mb-16 fade-up">Meet the Team</h2>
+    <div class="grid md:grid-cols-4 gap-8">
+        <div class="text-center fade-up tilt-card">
+            <img src="https://ui-avatars.com/api/?name=Jeffery+Onome&background=6366f1&color=fff&size=200" alt="Jeffery Onome" class="w-40 h-40 rounded-full mx-auto mb-4 ring-4 ring-indigo-100">
+            <h3 class="font-bold text-xl mb-1">Jeffery Onome</h3>
+            <p class="text-indigo-600 font-semibold mb-2">Founder & CEO</p>
+            <a href="https://onome-portfolio-ten.vercel.app/" target="_blank" class="text-gray-600 hover:text-indigo-600 transition">View Portfolio →</a>
+        </div>
+        <div class="text-center fade-up tilt-card">
+            <img src="https://ui-avatars.com/api/?name=Sarah+Johnson&background=8b5cf6&color=fff&size=200" alt="Sarah Johnson" class="w-40 h-40 rounded-full mx-auto mb-4 ring-4 ring-purple-100">
+            <h3 class="font-bold text-xl mb-1">Sarah Johnson</h3>
+            <p class="text-purple-600 font-semibold mb-2">Head of Product</p>
+            <p class="text-gray-600 text-sm">Product Strategy</p>
+        </div>
+        <div class="text-center fade-up tilt-card">
+            <img src="https://ui-avatars.com/api/?name=Michael+Chen&background=ec4899&color=fff&size=200" alt="Michael Chen" class="w-40 h-40 rounded-full mx-auto mb-4 ring-4 ring-pink-100">
+            <h3 class="font-bold text-xl mb-1">Michael Chen</h3>
+            <p class="text-pink-600 font-semibold mb-2">Lead Engineer</p>
+            <p class="text-gray-600 text-sm">Engineering</p>
+        </div>
+        <div class="text-center fade-up tilt-card">
+            <img src="https://ui-avatars.com/api/?name=Emma+Williams&background=f43f5e&color=fff&size=200" alt="Emma Williams" class="w-40 h-40 rounded-full mx-auto mb-4 ring-4 ring-red-100">
+            <h3 class="font-bold text-xl mb-1">Emma Williams</h3>
+            <p class="text-red-600 font-semibold mb-2">Head of Support</p>
+            <p class="text-gray-600 text-sm">Customer Success</p>
+        </div>
+    </div>
+</div>
+
+<!-- CTA -->
+<div class="gradient-animated text-white py-20">
+    <div class="container mx-auto px-6 text-center fade-up">
+        <h2 class="text-4xl font-black mb-6">Join Our Growing Community</h2>
+        <p class="text-xl mb-8 opacity-90 max-w-2xl mx-auto">Start creating professional invoices today</p>
+        <a href="{% url 'signup' %}" class="bg-white text-indigo-600 px-8 py-4 rounded-xl text-lg font-bold hover:bg-gray-100 transition inline-block shadow-2xl transform hover:scale-105">Get Started Free</a>
+    </div>
+</div>
+{% endblock %}

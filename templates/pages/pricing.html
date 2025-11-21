@@ -1,0 +1,157 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<!-- Hero -->
+<div class="gradient-animated text-white py-24">
+    <div class="container mx-auto px-6 text-center fade-up">
+        <h1 class="text-5xl md:text-6xl font-black mb-6">Simple, Transparent Pricing</h1>
+        <p class="text-xl md:text-2xl max-w-3xl mx-auto opacity-90">Everything you need. Nothing you don't. Always free.</p>
+    </div>
+</div>
+
+<!-- Pricing Cards -->
+<div class="container mx-auto px-6 py-20">
+    <div class="max-w-5xl mx-auto">
+        <div class="grid md:grid-cols-3 gap-8">
+            <!-- Free Plan -->
+            <div class="bg-white rounded-2xl shadow-xl p-8 hover-lift fade-up border-2 border-gray-200">
+                <h3 class="text-2xl font-bold mb-2">Free</h3>
+                <div class="text-5xl font-black mb-6">$0<span class="text-2xl text-gray-600">/mo</span></div>
+                <ul class="space-y-4 mb-8">
+                    <li class="flex items-center">
+                        <svg class="w-5 h-5 text-green-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                        </svg>
+                        Unlimited Invoices
+                    </li>
+                    <li class="flex items-center">
+                        <svg class="w-5 h-5 text-green-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                        </svg>
+                        PDF Export
+                    </li>
+                    <li class="flex items-center">
+                        <svg class="w-5 h-5 text-green-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                        </svg>
+                        Email & WhatsApp
+                    </li>
+                    <li class="flex items-center">
+                        <svg class="w-5 h-5 text-green-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                        </svg>
+                        Custom Branding
+                    </li>
+                    <li class="flex items-center">
+                        <svg class="w-5 h-5 text-green-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                        </svg>
+                        Multi-Currency
+                    </li>
+                </ul>
+                <a href="{% url 'signup' %}" class="block w-full text-center bg-gray-100 text-gray-800 px-6 py-3 rounded-lg hover:bg-gray-200 transition font-bold">Get Started</a>
+            </div>
+            
+            <!-- Pro Plan (Featured) -->
+            <div class="bg-gradient-to-br from-indigo-600 to-purple-600 rounded-2xl shadow-2xl p-8 transform scale-105 hover-lift fade-up text-white relative overflow-hidden">
+                <div class="absolute top-0 right-0 bg-yellow-400 text-gray-900 px-4 py-1 text-sm font-bold">POPULAR</div>
+                <h3 class="text-2xl font-bold mb-2">Pro</h3>
+                <div class="text-5xl font-black mb-6">$0<span class="text-2xl opacity-75">/mo</span></div>
+                <ul class="space-y-4 mb-8">
+                    <li class="flex items-center">
+                        <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                        </svg>
+                        Everything in Free
+                    </li>
+                    <li class="flex items-center">
+                        <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                        </svg>
+                        Advanced Analytics
+                    </li>
+                    <li class="flex items-center">
+                        <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                        </svg>
+                        Priority Support
+                    </li>
+                    <li class="flex items-center">
+                        <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                        </svg>
+                        Custom Templates
+                    </li>
+                    <li class="flex items-center">
+                        <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                        </svg>
+                        API Access
+                    </li>
+                </ul>
+                <a href="{% url 'signup' %}" class="block w-full text-center bg-white text-indigo-600 px-6 py-3 rounded-lg hover:bg-gray-100 transition font-bold">Coming Soon</a>
+            </div>
+            
+            <!-- Enterprise Plan -->
+            <div class="bg-white rounded-2xl shadow-xl p-8 hover-lift fade-up border-2 border-gray-200">
+                <h3 class="text-2xl font-bold mb-2">Enterprise</h3>
+                <div class="text-5xl font-black mb-6">Custom</div>
+                <ul class="space-y-4 mb-8">
+                    <li class="flex items-center">
+                        <svg class="w-5 h-5 text-green-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                        </svg>
+                        Everything in Pro
+                    </li>
+                    <li class="flex items-center">
+                        <svg class="w-5 h-5 text-green-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                        </svg>
+                        Dedicated Support
+                    </li>
+                    <li class="flex items-center">
+                        <svg class="w-5 h-5 text-green-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                        </svg>
+                        Custom Integrations
+                    </li>
+                    <li class="flex items-center">
+                        <svg class="w-5 h-5 text-green-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                        </svg>
+                        SLA Guarantee
+                    </li>
+                    <li class="flex items-center">
+                        <svg class="w-5 h-5 text-green-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                        </svg>
+                        Team Training
+                    </li>
+                </ul>
+                <a href="{% url 'contact' %}" class="block w-full text-center bg-gray-100 text-gray-800 px-6 py-3 rounded-lg hover:bg-gray-200 transition font-bold">Contact Sales</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- FAQ -->
+<div class="bg-gray-50 py-20">
+    <div class="container mx-auto px-6">
+        <h2 class="text-4xl font-black text-center mb-12 fade-up">Pricing FAQ</h2>
+        <div class="max-w-3xl mx-auto space-y-6">
+            <div class="bg-white rounded-xl p-6 shadow fade-up">
+                <h3 class="font-bold text-lg mb-2">Is Smart Invoice really free?</h3>
+                <p class="text-gray-600">Yes! All core features are completely free with no hidden costs. Create unlimited invoices, use custom branding, and access all features.</p>
+            </div>
+            <div class="bg-white rounded-xl p-6 shadow fade-up">
+                <h3 class="font-bold text-lg mb-2">Do I need a credit card to sign up?</h3>
+                <p class="text-gray-600">No credit card required. Simply create an account and start using Smart Invoice immediately.</p>
+            </div>
+            <div class="bg-white rounded-xl p-6 shadow fade-up">
+                <h3 class="font-bold text-lg mb-2">Can I upgrade or downgrade my plan?</h3>
+                <p class="text-gray-600">Yes, you can change your plan at any time. Changes take effect immediately.</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

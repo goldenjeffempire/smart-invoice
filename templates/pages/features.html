@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="gradient-bg text-white py-20">
+    <div class="container mx-auto px-6 text-center">
+        <h1 class="text-5xl md:text-6xl font-bold mb-6">Features</h1>
+        <p class="text-xl md:text-2xl opacity-90">Everything you need to manage invoices professionally</p>
+    </div>
+</div>
+
+<div class="container mx-auto px-6 py-20">
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div class="bg-white rounded-lg shadow-lg p-8 card-hover">
+            <div class="text-5xl mb-4">📄</div>
+            <h3 class="text-2xl font-bold mb-4">Instant PDF Export</h3>
+            <p class="text-gray-600">Generate professional, high-quality PDF invoices instantly. Each invoice includes your branding, line items, totals, and payment details beautifully formatted.</p>
+        </div>
+        
+        <div class="bg-white rounded-lg shadow-lg p-8 card-hover">
+            <div class="text-5xl mb-4">🎨</div>
+            <h3 class="text-2xl font-bold mb-4">Custom Branding</h3>
+            <p class="text-gray-600">Upload your company logo, choose your brand color, and add your business name. Make every invoice uniquely yours with personalized branding.</p>
+        </div>
+        
+        <div class="bg-white rounded-lg shadow-lg p-8 card-hover">
+            <div class="text-5xl mb-4">☁️</div>
+            <h3 class="text-2xl font-bold mb-4">Cloud-Based</h3>
+            <p class="text-gray-600">Access your invoices from anywhere, anytime. All your data is securely stored in the cloud and synced across devices.</p>
+        </div>
+        
+        <div class="bg-white rounded-lg shadow-lg p-8 card-hover">
+            <div class="text-5xl mb-4">📧</div>
+            <h3 class="text-2xl font-bold mb-4">Email Integration</h3>
+            <p class="text-gray-600">Send invoices directly to your clients via email with the PDF automatically attached. Track sent invoices from your dashboard.</p>
+        </div>
+        
+        <div class="bg-white rounded-lg shadow-lg p-8 card-hover">
+            <div class="text-5xl mb-4">💬</div>
+            <h3 class="text-2xl font-bold mb-4">WhatsApp Sharing</h3>
+            <p class="text-gray-600">Share invoices instantly via WhatsApp with pre-filled messages. Perfect for quick communication with clients who prefer messaging apps.</p>
+        </div>
+        
+        <div class="bg-white rounded-lg shadow-lg p-8 card-hover">
+            <div class="text-5xl mb-4">💰</div>
+            <h3 class="text-2xl font-bold mb-4">Multi-Currency Support</h3>
+            <p class="text-gray-600">Work with clients globally. Support for USD, EUR, GBP, NGN, CAD, and AUD currencies with proper formatting.</p>
+        </div>
+        
+        <div class="bg-white rounded-lg shadow-lg p-8 card-hover">
+            <div class="text-5xl mb-4">📊</div>
+            <h3 class="text-2xl font-bold mb-4">Smart Analytics</h3>
+            <p class="text-gray-600">Track your business metrics with real-time analytics. See total invoices, payment status, revenue, and client counts at a glance.</p>
+        </div>
+        
+        <div class="bg-white rounded-lg shadow-lg p-8 card-hover">
+            <div class="text-5xl mb-4">🏦</div>
+            <h3 class="text-2xl font-bold mb-4">Bank Details</h3>
+            <p class="text-gray-600">Add bank transfer information to every invoice. Include bank name, account name, and account number for easy client payments.</p>
+        </div>
+        
+        <div class="bg-white rounded-lg shadow-lg p-8 card-hover">
+            <div class="text-5xl mb-4">📱</div>
+            <h3 class="text-2xl font-bold mb-4">Mobile Responsive</h3>
+            <p class="text-gray-600">Create and manage invoices on any device. Fully responsive design works perfectly on desktop, tablet, and mobile.</p>
+        </div>
+        
+        <div class="bg-white rounded-lg shadow-lg p-8 card-hover">
+            <div class="text-5xl mb-4">✏️</div>
+            <h3 class="text-2xl font-bold mb-4">Easy Editing</h3>
+            <p class="text-gray-600">Made a mistake? No problem. Edit any invoice after creation. Update details, add items, or change payment status anytime.</p>
+        </div>
+        
+        <div class="bg-white rounded-lg shadow-lg p-8 card-hover">
+            <div class="text-5xl mb-4">🔒</div>
+            <h3 class="text-2xl font-bold mb-4">Secure & Private</h3>
+            <p class="text-gray-600">Your data is protected with industry-standard security. All invoices are private and only accessible to you.</p>
+        </div>
+        
+        <div class="bg-white rounded-lg shadow-lg p-8 card-hover">
+            <div class="text-5xl mb-4">⚡</div>
+            <h3 class="text-2xl font-bold mb-4">Lightning Fast</h3>
+            <p class="text-gray-600">Create professional invoices in under 2 minutes. Our streamlined interface makes invoicing quick and painless.</p>
+        </div>
+    </div>
+</div>
+
+<div class="bg-gray-100 py-20">
+    <div class="container mx-auto px-6 text-center">
+        <h2 class="text-4xl font-bold mb-6">Ready to start invoicing?</h2>
+        <a href="{% url 'signup' %}" class="bg-indigo-600 text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-indigo-700 transition inline-block">Get Started Free</a>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,193 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mx-auto px-6 py-10">
+    <h1 class="text-4xl font-bold mb-8">Edit Invoice {{ invoice.invoice_id }}</h1>
+    
+    <form method="post" enctype="multipart/form-data" id="invoiceForm" class="bg-white rounded-lg shadow-lg p-8">
+        {% csrf_token %}
+        
+        <h2 class="text-2xl font-bold mb-4">Business Information</h2>
+        <div class="grid md:grid-cols-2 gap-4 mb-6">
+            <div>
+                <label class="block text-gray-700 mb-2">Business Name *</label>
+                {{ invoice_form.business_name }}
+            </div>
+            <div>
+                <label class="block text-gray-700 mb-2">Business Email *</label>
+                {{ invoice_form.business_email }}
+            </div>
+            <div>
+                <label class="block text-gray-700 mb-2">Business Phone</label>
+                {{ invoice_form.business_phone }}
+            </div>
+            <div>
+                <label class="block text-gray-700 mb-2">Business Address *</label>
+                {{ invoice_form.business_address }}
+            </div>
+        </div>
+        
+        <h2 class="text-2xl font-bold mb-4 mt-8">Client Information</h2>
+        <div class="grid md:grid-cols-2 gap-4 mb-6">
+            <div>
+                <label class="block text-gray-700 mb-2">Client Name *</label>
+                {{ invoice_form.client_name }}
+            </div>
+            <div>
+                <label class="block text-gray-700 mb-2">Client Email *</label>
+                {{ invoice_form.client_email }}
+            </div>
+            <div>
+                <label class="block text-gray-700 mb-2">Client Phone</label>
+                {{ invoice_form.client_phone }}
+            </div>
+            <div>
+                <label class="block text-gray-700 mb-2">Client Address *</label>
+                {{ invoice_form.client_address }}
+            </div>
+        </div>
+        
+        <h2 class="text-2xl font-bold mb-4 mt-8">Invoice Details</h2>
+        <div class="grid md:grid-cols-3 gap-4 mb-6">
+            <div>
+                <label class="block text-gray-700 mb-2">Invoice Date</label>
+                {{ invoice_form.invoice_date }}
+            </div>
+            <div>
+                <label class="block text-gray-700 mb-2">Due Date</label>
+                {{ invoice_form.due_date }}
+            </div>
+            <div>
+                <label class="block text-gray-700 mb-2">Currency</label>
+                {{ invoice_form.currency }}
+            </div>
+        </div>
+        
+        <h2 class="text-2xl font-bold mb-4 mt-8">Line Items</h2>
+        <div id="lineItemsContainer" class="mb-6">
+            <div class="grid md:grid-cols-4 gap-4 mb-2 font-semibold">
+                <div>Description</div>
+                <div>Quantity</div>
+                <div>Unit Price</div>
+                <div>Actions</div>
+            </div>
+        </div>
+        <button type="button" id="addLineItem" class="bg-green-500 text-white px-6 py-2 rounded-lg hover:bg-green-600 mb-6">Add Line Item</button>
+        
+        <div class="grid md:grid-cols-2 gap-4 mb-6">
+            <div>
+                <label class="block text-gray-700 mb-2">Tax Rate (%)</label>
+                {{ invoice_form.tax_rate }}
+            </div>
+            <div>
+                <label class="block text-gray-700 mb-2">Status</label>
+                {{ invoice_form.status }}
+            </div>
+        </div>
+        
+        <h2 class="text-2xl font-bold mb-4 mt-8">Branding (Optional)</h2>
+        <div class="grid md:grid-cols-3 gap-4 mb-6">
+            <div>
+                <label class="block text-gray-700 mb-2">Brand Name</label>
+                {{ invoice_form.brand_name }}
+            </div>
+            <div>
+                <label class="block text-gray-700 mb-2">Brand Color</label>
+                {{ invoice_form.brand_color }}
+            </div>
+            <div>
+                <label class="block text-gray-700 mb-2">Logo</label>
+                {{ invoice_form.logo }}
+            </div>
+        </div>
+        
+        <h2 class="text-2xl font-bold mb-4 mt-8">Bank Details (Optional)</h2>
+        <div class="grid md:grid-cols-3 gap-4 mb-6">
+            <div>
+                <label class="block text-gray-700 mb-2">Bank Name</label>
+                {{ invoice_form.bank_name }}
+            </div>
+            <div>
+                <label class="block text-gray-700 mb-2">Account Name</label>
+                {{ invoice_form.account_name }}
+            </div>
+            <div>
+                <label class="block text-gray-700 mb-2">Account Number</label>
+                {{ invoice_form.account_number }}
+            </div>
+        </div>
+        
+        <div class="mb-6">
+            <label class="block text-gray-700 mb-2">Notes</label>
+            {{ invoice_form.notes }}
+        </div>
+        
+        <input type="hidden" name="line_items" id="lineItemsData">
+        
+        <div class="flex justify-end space-x-4">
+            <a href="{% url 'invoice_detail' invoice.id %}" class="bg-gray-500 text-white px-6 py-3 rounded-lg hover:bg-gray-600">Cancel</a>
+            <button type="submit" class="bg-indigo-600 text-white px-6 py-3 rounded-lg hover:bg-indigo-700">Update Invoice</button>
+        </div>
+    </form>
+</div>
+
+<style>
+    input, select, textarea {
+        width: 100%;
+        padding: 0.5rem 1rem;
+        border: 1px solid #d1d5db;
+        border-radius: 0.5rem;
+    }
+</style>
+
+<script>
+const existingLineItems = {{ line_items_json|safe }};
+const container = document.getElementById('lineItemsContainer');
+
+existingLineItems.forEach(function(item) {
+    const newItem = document.createElement('div');
+    newItem.className = 'line-item grid md:grid-cols-4 gap-4 mb-2';
+    newItem.innerHTML = `
+        <input type="text" name="description" class="px-4 py-2 border rounded-lg" value="${item.description}" required>
+        <input type="number" name="quantity" class="px-4 py-2 border rounded-lg" value="${item.quantity}" step="0.01" required>
+        <input type="number" name="unit_price" class="px-4 py-2 border rounded-lg" value="${item.unit_price}" step="0.01" required>
+        <button type="button" class="remove-item bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600">Remove</button>
+    `;
+    container.appendChild(newItem);
+});
+
+document.getElementById('addLineItem').addEventListener('click', function() {
+    const newItem = document.createElement('div');
+    newItem.className = 'line-item grid md:grid-cols-4 gap-4 mb-2';
+    newItem.innerHTML = `
+        <input type="text" name="description" class="px-4 py-2 border rounded-lg" placeholder="Description" required>
+        <input type="number" name="quantity" class="px-4 py-2 border rounded-lg" value="1" step="0.01" required>
+        <input type="number" name="unit_price" class="px-4 py-2 border rounded-lg" placeholder="0.00" step="0.01" required>
+        <button type="button" class="remove-item bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600">Remove</button>
+    `;
+    container.appendChild(newItem);
+});
+
+document.addEventListener('click', function(e) {
+    if (e.target.classList.contains('remove-item')) {
+        if (document.querySelectorAll('.line-item').length > 1) {
+            e.target.closest('.line-item').remove();
+        } else {
+            alert('You must have at least one line item.');
+        }
+    }
+});
+
+document.getElementById('invoiceForm').addEventListener('submit', function(e) {
+    const lineItems = [];
+    document.querySelectorAll('.line-item').forEach(function(item) {
+        lineItems.push({
+            description: item.querySelector('[name="description"]').value,
+            quantity: item.querySelector('[name="quantity"]').value,
+            unit_price: item.querySelector('[name="unit_price"]').value
+        });
+    });
+    document.getElementById('lineItemsData').value = JSON.stringify(lineItems);
+});
+</script>
+{% endblock %}

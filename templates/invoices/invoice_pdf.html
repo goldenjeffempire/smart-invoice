@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+            color: #333;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 20px;
+            background-color: {{ invoice.brand_color|default:'#6366f1' }};
+            color: white;
+        }
+        .info-section {
+            margin-bottom: 30px;
+        }
+        .info-section h3 {
+            border-bottom: 2px solid {{ invoice.brand_color|default:'#6366f1' }};
+            padding-bottom: 5px;
+            margin-bottom: 10px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        th {
+            background-color: {{ invoice.brand_color|default:'#6366f1' }};
+            color: white;
+            padding: 10px;
+            text-align: left;
+        }
+        td {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+        .totals {
+            margin-left: auto;
+            width: 300px;
+            margin-top: 20px;
+        }
+        .totals div {
+            display: flex;
+            justify-content: space-between;
+            padding: 5px 0;
+        }
+        .total-final {
+            font-weight: bold;
+            font-size: 1.2em;
+            border-top: 2px solid #333;
+            padding-top: 10px;
+        }
+        .bank-details {
+            background-color: #f3f4f6;
+            padding: 15px;
+            margin-top: 30px;
+            border-radius: 5px;
+        }
+        .footer {
+            margin-top: 40px;
+            text-align: center;
+            font-size: 0.9em;
+            color: #666;
+            border-top: 1px solid #ddd;
+            padding-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>{{ invoice.brand_name|default:'INVOICE' }}</h1>
+        <h2>{{ invoice.invoice_id }}</h2>
+    </div>
+    
+    <div class="info-section">
+        <table style="width: 100%; border: none;">
+            <tr>
+                <td style="width: 50%; vertical-align: top; border: none;">
+                    <h3>From:</h3>
+                    <strong>{{ invoice.business_name }}</strong><br>
+                    {{ invoice.business_email }}<br>
+                    {% if invoice.business_phone %}{{ invoice.business_phone }}<br>{% endif %}
+                    {{ invoice.business_address|linebreaksbr }}
+                </td>
+                <td style="width: 50%; vertical-align: top; border: none;">
+                    <h3>To:</h3>
+                    <strong>{{ invoice.client_name }}</strong><br>
+                    {{ invoice.client_email }}<br>
+                    {% if invoice.client_phone %}{{ invoice.client_phone }}<br>{% endif %}
+                    {{ invoice.client_address|linebreaksbr }}
+                </td>
+            </tr>
+        </table>
+    </div>
+    
+    <div class="info-section">
+        <p><strong>Invoice Date:</strong> {{ invoice.invoice_date|date:"M d, Y" }}</p>
+        {% if invoice.due_date %}<p><strong>Due Date:</strong> {{ invoice.due_date|date:"M d, Y" }}</p>{% endif %}
+        <p><strong>Status:</strong> {{ invoice.get_status_display }}</p>
+    </div>
+    
+    <table>
+        <thead>
+            <tr>
+                <th>Description</th>
+                <th style="text-align: right;">Quantity</th>
+                <th style="text-align: right;">Unit Price</th>
+                <th style="text-align: right;">Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in invoice.line_items.all %}
+                <tr>
+                    <td>{{ item.description }}</td>
+                    <td style="text-align: right;">{{ item.quantity }}</td>
+                    <td style="text-align: right;">{{ invoice.currency }} {{ item.unit_price }}</td>
+                    <td style="text-align: right;">{{ invoice.currency }} {{ item.total }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    
+    <div class="totals">
+        <div>
+            <span>Subtotal:</span>
+            <span>{{ invoice.currency }} {{ invoice.subtotal }}</span>
+        </div>
+        <div>
+            <span>Tax ({{ invoice.tax_rate }}%):</span>
+            <span>{{ invoice.currency }} {{ invoice.tax_amount }}</span>
+        </div>
+        <div class="total-final">
+            <span>Total:</span>
+            <span>{{ invoice.currency }} {{ invoice.total }}</span>
+        </div>
+    </div>
+    
+    {% if invoice.bank_name %}
+        <div class="bank-details">
+            <h3>Bank Transfer Details</h3>
+            <p><strong>Bank:</strong> {{ invoice.bank_name }}</p>
+            <p><strong>Account Name:</strong> {{ invoice.account_name }}</p>
+            <p><strong>Account Number:</strong> {{ invoice.account_number }}</p>
+        </div>
+    {% endif %}
+    
+    {% if invoice.notes %}
+        <div class="info-section">
+            <h3>Notes</h3>
+            <p>{{ invoice.notes|linebreaksbr }}</p>
+        </div>
+    {% endif %}
+    
+    <div class="footer">
+        <p>Built by Jeffery Onome — <a href="https://onome-portfolio-ten.vercel.app/">https://onome-portfolio-ten.vercel.app/</a></p>
+    </div>
+</body>
+</html>

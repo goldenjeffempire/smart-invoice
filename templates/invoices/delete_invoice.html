@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mx-auto px-6 py-10">
+    <div class="max-w-md mx-auto bg-white rounded-lg shadow-lg p-8">
+        <h2 class="text-3xl font-bold mb-6 text-center text-red-600">Delete Invoice</h2>
+        
+        <p class="text-center mb-6">Are you sure you want to delete invoice <strong>{{ invoice.invoice_id }}</strong> for <strong>{{ invoice.client_name }}</strong>?</p>
+        
+        <p class="text-center text-sm text-gray-600 mb-8">This action cannot be undone.</p>
+        
+        <form method="post">
+            {% csrf_token %}
+            <div class="flex space-x-4">
+                <a href="{% url 'invoice_detail' invoice.id %}" class="flex-1 bg-gray-500 text-white text-center px-6 py-3 rounded-lg hover:bg-gray-600">Cancel</a>
+                <button type="submit" class="flex-1 bg-red-600 text-white px-6 py-3 rounded-lg hover:bg-red-700">Delete</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

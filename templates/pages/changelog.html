@@ -1,0 +1,96 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mx-auto px-6 py-20 max-w-4xl">
+    <h1 class="text-5xl font-black mb-2 fade-up">Changelog</h1>
+    <p class="text-gray-600 mb-10 fade-up">Latest updates and improvements to Smart Invoice</p>
+    
+    <div class="space-y-8">
+        <!-- Version 1.2.0 -->
+        <div class="bg-white rounded-2xl shadow-lg p-8 fade-up hover-lift">
+            <div class="flex items-center justify-between mb-4">
+                <h2 class="text-3xl font-bold">Version 1.2.0</h2>
+                <span class="bg-indigo-100 text-indigo-800 px-4 py-2 rounded-full font-semibold text-sm">Latest</span>
+            </div>
+            <p class="text-gray-600 mb-6">November 20, 2025</p>
+            
+            <div class="space-y-4">
+                <div>
+                    <h3 class="font-bold text-lg mb-2 text-green-600">✨ New Features</h3>
+                    <ul class="list-disc list-inside text-gray-600 space-y-2">
+                        <li>Added WhatsApp sharing for invoices</li>
+                        <li>Introduced smart analytics dashboard</li>
+                        <li>Multi-currency support expanded to 6 currencies</li>
+                        <li>Bank transfer details on all invoices</li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="font-bold text-lg mb-2 text-blue-600">🔧 Improvements</h3>
+                    <ul class="list-disc list-inside text-gray-600 space-y-2">
+                        <li>Enhanced PDF generation quality</li>
+                        <li>Improved mobile responsiveness</li>
+                        <li>Faster invoice creation workflow</li>
+                        <li>Better email delivery rates</li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="font-bold text-lg mb-2 text-orange-600">🐛 Bug Fixes</h3>
+                    <ul class="list-disc list-inside text-gray-600 space-y-2">
+                        <li>Fixed tax calculation rounding issues</li>
+                        <li>Resolved logo upload problems</li>
+                        <li>Fixed dashboard filter persistence</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Version 1.1.0 -->
+        <div class="bg-white rounded-2xl shadow-lg p-8 fade-up hover-lift">
+            <h2 class="text-3xl font-bold mb-2">Version 1.1.0</h2>
+            <p class="text-gray-600 mb-6">October 15, 2025</p>
+            
+            <div class="space-y-4">
+                <div>
+                    <h3 class="font-bold text-lg mb-2 text-green-600">✨ New Features</h3>
+                    <ul class="list-disc list-inside text-gray-600 space-y-2">
+                        <li>Custom branding with logo uploads</li>
+                        <li>Invoice filtering and search</li>
+                        <li>Email template customization</li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="font-bold text-lg mb-2 text-blue-600">🔧 Improvements</h3>
+                    <ul class="list-disc list-inside text-gray-600 space-y-2">
+                        <li>Redesigned user interface</li>
+                        <li>Performance optimizations</li>
+                        <li>Enhanced security measures</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Version 1.0.0 -->
+        <div class="bg-white rounded-2xl shadow-lg p-8 fade-up hover-lift">
+            <h2 class="text-3xl font-bold mb-2">Version 1.0.0</h2>
+            <p class="text-gray-600 mb-6">September 1, 2025</p>
+            
+            <div class="space-y-4">
+                <div>
+                    <h3 class="font-bold text-lg mb-2 text-green-600">🎉 Initial Release</h3>
+                    <ul class="list-disc list-inside text-gray-600 space-y-2">
+                        <li>Invoice creation and management</li>
+                        <li>PDF generation</li>
+                        <li>Email delivery</li>
+                        <li>User authentication</li>
+                        <li>Dashboard analytics</li>
+                        <li>Multi-line item support</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
