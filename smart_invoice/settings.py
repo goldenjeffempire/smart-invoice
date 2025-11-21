@@ -37,9 +37,20 @@ if not DEBUG and not IS_REPLIT:
             "Example: ALLOWED_HOSTS=your-domain.com,www.your-domain.com"
         )
     ALLOWED_HOSTS = allowed_hosts
+    
+    # Production security hardening
+    SECURE_SSL_REDIRECT = True
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True
+    SECURE_HSTS_SECONDS = 31536000
+    SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+    SECURE_HSTS_PRELOAD = True
 else:
     # Development or Replit: allow configured hosts or wildcard
     ALLOWED_HOSTS = env.list("ALLOWED_HOSTS", default=["*"])
+    SECURE_SSL_REDIRECT = False
+    SESSION_COOKIE_SECURE = False
+    CSRF_COOKIE_SECURE = False
 
 CSRF_TRUSTED_ORIGINS = env.list(
     "CSRF_TRUSTED_ORIGINS",
